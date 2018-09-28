@@ -1,6 +1,40 @@
-var notes = [60, 60, 72, 60, 70, 72, 60, 70, 72, 60, 72];
+class Algorithm {
 
-var rythm = [1, 0, 0, 1, 1, 0, 1, 0, 1, 0, 0, 1, 1, 0, 0, 1];
+  constructor() {
+    this.notes = [];
+    this.rythm = [];
+    this.constructNotes();
+    this.constructRythm();
+  }
+
+  constructNotes(){
+    for(var i = 0; i < 7; i++){
+      this.notes[i] = 60 + ((Math.round(Math.random(1))) * 12);
+   }
+   console.log(this.notes);
+  }
+
+  constructRythm(){
+    this.rythm = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1];
+  }
+
+  getNotes(){
+    return this.notes;
+  }
+
+  getRythm(){
+    return this.rythm;
+  }
+}
+
+
+//==============================================================================
+
+const algo = new Algorithm;
+
+var notes = algo.getNotes();
+
+var rythm = algo.getRythm();
 
 //Envelope======================================================================
 var attackLevel = 1.0;
