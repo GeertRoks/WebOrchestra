@@ -89,6 +89,7 @@ function setup() {
   env.setADSR(attackTime, decayTime, susPercent, releaseTime);
   env.setRange(attackLevel, releaseLevel);
 
+  
   triOsc = new p5.Oscillator('triangle');
   triOsc.amp(env);
   triOsc.start();

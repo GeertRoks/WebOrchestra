@@ -1,32 +1,54 @@
+// window.mixin = function (target, source) {
+//   Object.keys(source).forEach(function (k) {
+//     if (target[k] == undefined) target[k] = source[k];
+//   });
+//   return target;
+// }
+//
+//
+//
+// window.MyClass = function () {
+//   this.myProp = value;
+// };
+//
+// myClass.prototype.constructNotes = function () {
+//
+// }
+//
+// var t = new MyClass();
+//
+// mixin(t, {
+//
+//
+// })
+//
+
+
 class Algorithm {
 
-  constructor() {
-    this.notes = [];
-    this.rythm = [];
-    this.constructNotes();
-    this.constructRythm();
-  }
-
-  constructNotes(){
-    for(var i = 0; i < 7; i++){
-      this.notes[i] = 60 + ((Math.round(Math.random(1))) * 12);
+  _constructNotes () {
+    const notes = [];
+    for (let i = 0; i < 7; i++){
+      notes[i] = 60 + ((Math.round(Math.random(1))) * 12);
    }
-   console.log(this.notes);
+   return notes;
+   // console.log(this.notes);
   }
 
-  constructRythm(){
-    this.rythm = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1];
+  constructRythm () {
+    this.rhythm = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1];
   }
 
-  getNotes(){
-    return this.notes;
+  get notes () {
+    let c = this._notes;
+    if (!c) c = this._notes = this._constructNotes();
+    return c;
   }
 
-  getRythm(){
-    return this.rythm;
+  get rhythm () {
+    return this.rhythm;
   }
-}
-
+  }
 
 //==============================================================================
 
@@ -34,7 +56,7 @@ const algo = new Algorithm;
 
 var notes = algo.getNotes();
 
-var rythm = algo.getRythm();
+var rythm = algo.getRhythm();
 
 //Envelope======================================================================
 var attackLevel = 1.0;
