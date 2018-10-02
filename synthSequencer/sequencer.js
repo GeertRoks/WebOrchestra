@@ -1,28 +1,3 @@
-// window.mixin = function (target, source) {
-//   Object.keys(source).forEach(function (k) {
-//     if (target[k] == undefined) target[k] = source[k];
-//   });
-//   return target;
-// }
-//
-//
-//
-// window.MyClass = function () {
-//   this.myProp = value;
-// };
-//
-// myClass.prototype.constructNotes = function () {
-//
-// }
-//
-// var t = new MyClass();
-//
-// mixin(t, {
-//
-//
-// })
-//
-
 
 class Algorithm {
 

@@ -1,18 +1,18 @@
-var reverbPing     = [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
-var pingRythm      = [0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0];
-var ruisRythm      = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-var snareRuisRythm = [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-var snareRythm     = [0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-var kickRythm      = [1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1];
+var rhythmList = [[1, 0, 0, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1, 0, 1, 1],
+[0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0],
+[0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0],
+[1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0],
+[0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0]];
 
 //Envelope======================================================================
-var attackLevel = 1.0;
+var attackLevel = 0.2;
 var releaseLevel = 0;
 
 var attackTime = 0.001
 var decayTime = 0.2;
 var susPercent = 0.2;
-var releaseTime = 0.5;
+var releaseTime = 0.2;
 //==============================================================================
 
 //Sequencer=====================================================================
@@ -21,11 +21,13 @@ var triggerTime;
 var triggerLenght;
 var index = 0;
 var count = 0;
+var sound = 0;
 var firstSeq = true;
 
 //==============================================================================
 
-var env;
+var env = [];
+var samples = [];
 
 function preload() {
   soundFormats('mp3', 'wav');
@@ -39,21 +41,30 @@ function preload() {
 
 function setup() {
   var cnv = createCanvas(100, 100);
+  var amountSamples = 6;
 
   textAlign(CENTER);
   // text('click to play', width/2, height/2);
 
-  env = new p5.Envelope();
-  env.setADSR(attackTime, decayTime, susPercent, releaseTime);
-  env.setRange(attackLevel, releaseLevel);
+  for(var i = 0; i < amountSamples; i++){
+    env.push(new p5.Envelope);
+    env[i].setADSR(attackTime, decayTime, susPercent, releaseTime);
+    env[i].setRange(attackLevel, releaseLevel);
+  }
 
-  kick.setVolume(0.1);
-  rPing.setVolume(0.1);
-  ping.setVolume(0.1);
-  ruis.setVolume(0.1);
-  snareRuis.setVolume(0.1);
-  snare.setVolume(0.1);
+  kick.setVolume(env[0]);
+  rPing.setVolume(env[1]);
+  ping.setVolume(env[2]);
+  ruis.setVolume(env[3]);
+  snareRuis.setVolume(env[4]);
+  snare.setVolume(env[5]);
 
+  samples[0] = kick;
+  samples[1] = rPing;
+  samples[2] = ping;
+  samples[3] = ruis;
+  samples[4] = snareRuis;
+  samples[5] = snare;
 
 }
 
@@ -78,25 +89,11 @@ function sequence() {
 
   if(millis() >= triggerTime){
 
-    if(kickRythm[count % kickRythm.length] == 1){
-      kick.play();
-      // env.play();
-      index++;
-    }
-    if(reverbPing[count % reverbPing.length] == 1){
-      rPing.play();
-    }
-    if(pingRythm[count % pingRythm.length] == 1){
-      ping.play();
-    }
-    if(ruisRythm[count % ruisRythm.length] == 1){
-      ruis.play();
-    }
-    if(snareRuisRythm[count % snareRuisRythm.length] == 1){
-      snareRuis.play();
-    }
-    if(snareRythm[count % snareRythm.length] == 1){
-      snare.play();
+  for(var i = 0; i < 6; i++){
+    if(rhythmList[i][count % 16] == 1){
+        samples[i].play();
+        env[i].play();
+      }
     }
     count++;
   }
