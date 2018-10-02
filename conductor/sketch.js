@@ -13,28 +13,36 @@ function setup()
 	mouseY = height/2;
 	balls.push(new Ball());
 
-	background(0);
-	noStroke();
+	background(255);
+	strokeWeight(10);
+	fill(0, 50);
 }
 
 function draw()
 {
-	background(50, 5);
+	background(255, 50);
 
 	for (var i=0; i<balls.length; i++)
 	{
 		balls[i].display();
 	}
 
+	// Parameters om door te sturen?
 	param1 = balls.length;
-	param2 = 0;
+	param2 = param2 * 0.99;
+	print(param1, round(param2 * 100) / 100);
 }
 
-function windowResized()
+function mousePressed()
 {
-	resizeCanvas(windowWidth, windowHeight)
+	balls.push(new Ball());	
 }
 
+function ballDie()
+{
+	// hier een actie uitvoeren?
+	param2 += 1;
+}
 
 function Ball()
 {
@@ -47,23 +55,14 @@ function Ball()
 
 	this.display = function()
 	{
-		fill(25 * this.strength, 25 * this.strength, 200 + 20 * this.strength);
+		stroke(10 * this.strength, 10 * this.strength, 100 + 20 * this.strength);
 		ellipse(this.x, this.y, ballSize, ballSize);
-		fill(0);
-		ellipse(this.x, this.y, ballSize - 25, ballSize - 25);
 		this.move();
 		this.collide();
 	};
 
 	this.move = function()
 	{
-		/*
-		this.x = (this.x + this.xSpeed) % windowWidth;
-		this.y = (this.y + this.ySpeed) % windowHeight;
-
-		if (this.x < 0) this.x = windowWidth;
-		if (this.y < 0) this.y = windowHeight;
-		*/
 		this.x += this.xSpeed;
 		this.y += this.ySpeed;
 
@@ -88,12 +87,13 @@ function Ball()
 
 				// Remove the ball we ran into
 				balls.splice(i, 1);
+				ballDie();
 			}
 		}
 	}
 }
 
-function mousePressed()
+function windowResized()
 {
-	balls.push(new Ball());	
+	resizeCanvas(windowWidth, windowHeight)
 }
