@@ -59,14 +59,31 @@ var notes = algo.notes;
 
 var rhythm = algo.rhythm;
 
+var length = 2;
+
 //Envelope======================================================================
+
+if(length == 1){
+
+var attackLevel = 0.2;
+var releaseLevel = 0;
+
+var attackTime = 0.001
+var decayTime = 0.02;
+var susPercent = 0.05;
+var releaseTime = 0.5;
+}
+
+if(length == 2){
+
 var attackLevel = 0.2;
 var releaseLevel = 0;
 
 var attackTime = 0.001
 var decayTime = 0.2;
-var susPercent = 0.2;
+var susPercent = 0.5;
 var releaseTime = 0.5;
+}
 //==============================================================================
 
 //Sequencer=====================================================================
@@ -125,7 +142,12 @@ function sequence() {
 
   if(firstSeq){
   startTime = millis();
-  triggerLenght = 100;
+  if(length == 1){
+    length = 100;
+  } else {
+    length = 200;
+  }
+  triggerLenght = length;
   count = 0;
   firstSeq = false;
   }
