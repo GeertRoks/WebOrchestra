@@ -2,9 +2,9 @@
 class Algorithm {
 
     constructor () {
-      console.log("hallo");
       this.first = true;
       this.notePicked = 0;
+      this.chordInterval = 3;
     }
 
   _constructNotes () {
@@ -26,17 +26,18 @@ class Algorithm {
         this.notePicked = notes[0][Math.round((Math.random() * 2) % 3)];
       }
       //noot afstand = 5 (1, 2, 3, 4)
-      this.notePicked = (this.notePicked + 3) % 8;
+      this.notePicked = (this.notePicked + this.chordInterval) % 8;
     }
    return notes;
   }
 
   _constructRhythm () {
     const rhythm = [1, 0, 1, 0, 1, 1, 1];
-    // for (let i = 0; i < 7; i++){
-    //   rhythm[i] = Math.round(Math.random(1));
-    // }
     return rhythm;
+  }
+
+  _setInterval (chordInterval) {
+    this.chordInterval = chordInterval;
   }
 
   get notes () {
