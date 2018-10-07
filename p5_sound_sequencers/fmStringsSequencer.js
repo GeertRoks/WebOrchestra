@@ -1,3 +1,5 @@
+const algo = new Algorithm;
+var notes = algo.notes;
 
 var numVoices = 3;
 var numCar = 3;
@@ -17,6 +19,9 @@ var isExp = true;
 
 
 function initSynthVoice(numVoices){
+
+  var modFreqs = [4.8, -4.8, 0];
+  var modAmps = [2, 2, 0];
 
   for (var y = 0; y < numVoices; y++){
     envAmp.push(new p5.Env());
@@ -47,13 +52,9 @@ function initSynthVoice(numVoices){
       // add the modulator's output to modulate the carrier's frequency
       modulators[i].disconnect();
       carriers[i].freq(modulators[i]);
+      modulators[y + i].freq(modFreqs[i]);
+      modulators[y + i].amp(modAmps[i]);
     }
-    modulators[y].freq(4.8);
-    modulators[y].amp(2);
-    modulators[1 + y].freq(-4.8);
-    modulators[1 + y].amp(2);
-    modulators[2 + y].freq(0);
-    modulators[2 + y].amp(0);
   }
 }
 
@@ -62,17 +63,16 @@ function mtof(midiPitch) {
 }
 
 function setNotes() {
-    var add = Math.round(Math.random() * 10);
-    notes = [50 + add, 53 + add, 57 + add];
+  algo._constructNotes();
+  notes = algo.notes;
 
-    for(var y = 0; y < numVoices; y++){
-      freqq = mtof(notes[y]);
+  for(var y = 0; y < numVoices; y++){
+      freqq = mtof(notes[0][y] - 12);
       for(var i = 0; i < numCar; i++){
         carriers[i + y].freq(freqq);
       }
     }
 }
-
 
 function setup() {
 
@@ -95,7 +95,7 @@ function sequence() {
 
   if(firstSeq){
   startTime = millis();
-  triggerLenght = 6000;
+  triggerLenght = 2000;
   count = 0;
   firstSeq = false;
   }
