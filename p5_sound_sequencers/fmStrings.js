@@ -26,7 +26,7 @@ class FmStrings {
     for (var y = 0; y < numVoices; y++){
       this.envAmp.push(new p5.Env());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
-      this.envAmp[y].setRange(0.3, 0);
+      this.envAmp[y].setRange(0.2 , 0);
       this.envAmp[y].setExp(1);
 
       this.envFilter.push(new p5.Env());
