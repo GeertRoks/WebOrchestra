@@ -8,6 +8,8 @@ var balls = [];
 var ballSize = 200;
 var ballRad = ballSize / 2;
 
+
+// ================ SETUP
 function setup()
 {
 	createCanvas(displayWidth, displayHeight);
@@ -15,7 +17,6 @@ function setup()
 
 	mouseX = width/2;
 	mouseY = height/2;
-	balls.push(new Ball);
 
 	background(0);
 	strokeWeight(10);
@@ -23,6 +24,8 @@ function setup()
 	fill(0, 50);
 }
 
+
+// ================ DRAW
 function draw()
 {
 	background(0, 50);
@@ -35,9 +38,22 @@ function draw()
 	param2 = param2 * 0.99;
 }
 
+
+// ================ INTERFACE
+function mousePressed()
+{
+	balls.push(new Ball());	
+}
+
+function windowResized()
+{
+	resizeCanvas(windowWidth, windowHeight)
+}
+
+
+// ================ BALL BEHAVIOUR
 function Ball()
 {
-	// Constructor
 	this.x = mouseX;
 	this.y = mouseY;
 	this.xSpeed = random(-5, 5);
@@ -81,29 +97,15 @@ function Ball()
 
 				// Remove the ball we ran into
 				balls.splice(i, 1);
-				ballDie();
 
 				// Celebrate the victory
+				param2 += 1;
 				this.killCount++;
 
+				// Kill a random ball if a certain ball proves to be a real killer
 				if (this.killCount > 5)
 					balls.pop();
 			}
 		}
 	}
-}
-
-function ballDie()
-{
-	param2 += 1;
-}
-
-function mousePressed()
-{
-	balls.push(new Ball());	
-}
-
-function windowResized()
-{
-	resizeCanvas(windowWidth, windowHeight)
 }
