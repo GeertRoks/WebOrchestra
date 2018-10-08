@@ -37,6 +37,10 @@ io.sockets.on('connection', function(socket) {
       console.log('client ' + j + ': ' + Object.entries(clients[j]));
     }
   });
+
+  socket.on('timestamp', function (timestamp) {
+    console.log(timestamp);
+  });
 });
 
 // Building block for a client object
