@@ -11,7 +11,9 @@ const port = 3000;
 
 var clients = [];
 
-//Web sockets
+
+
+//---------Web sockets---------//
 // What to do when a client connects
 io.sockets.on('connection', function(socket) {
   // For it to work:
@@ -25,7 +27,7 @@ io.sockets.on('connection', function(socket) {
     console.log('client ' + j + ': ' + Object.entries(clients[j]));
   }
 
-// What to do when a client disconnects
+  // What to do when a client disconnects
   socket.on('disconnect', function() {
     console.log('Client disconnect!');
 
@@ -50,14 +52,24 @@ function Client(type, id) {
 };
 
 
-//Http server
+
+
+//-----------Http server-------------//
 // Start the server on the given port
 server.listen(port, function() {
   console.log("Server is running on port " +port);
 });
 
 // Lets the server reach all paths in the public folder
-app.use(express.static(path.join(__dirname,'/public/')));
+app.use('/', express.static(path.join(__dirname,'/public/')));
+app.use('/timesync/', express.static(path.join(__dirname, '/node_modules/timesync/dist')));
+app.post('/timesync', function (req, res) {
+  var data = {
+    id: (req.body && 'id' in req.body) ? req.body.id : null,
+    result: Date.now()
+  };
+  res.json(data);
+});
 
 // Generate error message when given page doesn't exist
 app.use(function(req,res,next) {
