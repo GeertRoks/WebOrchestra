@@ -3,5 +3,7 @@ p5.min.js
 p5.pre-min.js
 addons/
 
+old_classExample.js
+p5Classes/lfo.js
 node_modules
 network_test/node_modules
