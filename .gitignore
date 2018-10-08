@@ -5,3 +5,4 @@ addons/
 
 node_modules
 network_test/node_modules
+package-lock.json
