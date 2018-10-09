@@ -3,19 +3,14 @@
 
 To Do
 
-PARAMETERS:
+Network:
+  - [ ] Sync computers over their timestamp
+  - [ ] Distrubute notes over client computers
 
-lead:
-  - Nootduur
-  - nootdichtheid
-  - octaaf
+  *Optional:*
+  - [ ] Server page
+    - Amount and types of clients
+    - Password?
+    - Recall function for certain rooms
+    - Placement of client computers
 
-fmSynth:
-  - Nootduur
-  - octaaf
-
-globaal:
-  - Akkoorden
-
-Drumalgoritme:
-  - nog niks
