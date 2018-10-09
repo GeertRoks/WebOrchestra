@@ -1,7 +1,7 @@
 var socket;
 
 //kick sync test v
-var kickRhythm      = [1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0];
+var kickRhythm      = [1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1];
 //Sequencer=====================================================================
 var startTime;
 var triggerTime;
@@ -12,9 +12,12 @@ var firstSeq = true;
 //==============================================================================
 var env;
 
+
+var trigger = false;
+
 function preload() {
   soundFormats('wav');
-  kick = loadSound('kick.wav');
+  kick = loadSound('tick.wav');
 }
 //kick sync test ^
 
@@ -71,11 +74,17 @@ function draw() {
 function sequence() {
   var d = new Date();
 
-  if(d.getMilliseconds() <= 20 || (d.getMilliseconds() >= 490 && d.getMilliseconds() <= 510)){
+  if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
     if(kickRhythm[count % kickRhythm.length] == 1){
       kick.play();
     }
+    trigger = true;
+    count++;
+  }
+
+  if(d.getMilliseconds() % 125 >= 50 && trigger){
+    trigger = false;
   }
 }
 //kick sync test ^
