@@ -16,3 +16,8 @@ function draw()
 {
 	bsodDraw();
 }
+
+function keyTyped()
+{
+	onNote();
+}

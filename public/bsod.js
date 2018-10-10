@@ -9,43 +9,116 @@ var line3 = "For more information about this issue and";
 var line4 = "possible fixes, visit";
 var line5 = "https://github.com/GeertRoks/WebOrchestra";
 var line6 = "If you call a support person, give them this info:";
-var line7 = "Stop code: CRITICAL_BEAT_PLAYED";
+var line7 = "Stop code: CRITICAL_";
 const hOffset = 200;
 const vOffset = 100;
 const qrOffset = 240;
 const qrSize = 230;
+const qrBlock = qrSize / 29;
+
+var instrumentType = "drone";
 
 // ================ SETUP
 function bsodSetup()
 {
 	// Text
-	fill(255);
+
 	textAlign(LEFT, TOP);
 	noStroke();
+
+	drawQR();
 }
 
 // ================ DRAW
 function bsodDraw()
 {
-	background(0, 100, 200);
+	switch(instrumentType) {
+		case 'drone':	background(0, 100, 200);	break;
+		case 'melody':	background(100, 0, 200);	break;
+		case 'rhythm':	background(200, 100, 0);	break;
+	}
 	
+	fill(255);
+
 	// Text
 	textSize(128);
 	text(line0, hOffset, vOffset)
-	textSize(32);
+	textSize(32 + (progress * progress * (0.0001)));
 	text(stringGlitch(line1, progress), hOffset, vOffset + 200);
 	text(stringGlitch(line2, progress), hOffset, vOffset + 240);
 	text(progress + stringGlitch("% complete", progress * 0.1), hOffset, vOffset + 320);
 	text(stringGlitch(line3, progress), hOffset + qrOffset, vOffset + 400);
 	text(stringGlitch(line4, progress), hOffset + qrOffset, vOffset + 440);
-	text(stringGlitch(line5, progress * 0.01), hOffset + qrOffset, vOffset + 480);
+	text(stringGlitch(line5, progress * 0.05), hOffset + qrOffset, vOffset + 480);
 	text(stringGlitch(line6, progress), hOffset + qrOffset, vOffset + 560);
-	text(stringGlitch(line7, progress * 0.1), hOffset + qrOffset, vOffset + 600);
+	text(stringGlitch(line7+instrumentType.toUpperCase(), progress * 0.03), hOffset + qrOffset, vOffset + 600);
+	
+	
+	if (progress < random(255))
+		drawQR();
+	
+	progress = int(progress * 0.99);
 
-	// QR
-	rect(hOffset, vOffset + 400, qrSize, qrSize);
+	// print(progress);
+}
 
-	progress += int(random(-1, 2));
+function onNote()
+{
+	progress += 30;
+}
+
+function drawQR()
+{
+	fill(255);
+
+	rect(hOffset, vOffset + 400, qrSize, qrSize);	// main
+	
+	// Noise
+	noStroke();
+	for (var i = 0; i < 729; i++)
+	{
+		// Random color
+		if (int(random(2)))
+			switch(instrumentType) {
+				case 'drone':	fill(0, 100, 200);	break;
+				case 'melody':	fill(100, 0, 200);	break;
+				case 'rhythm':	fill(200, 100, 0);	break;
+			}
+			
+		else
+			fill(255)
+		rect(hOffset + ((i  % 27)+1) * qrBlock, vOffset + 400 + (int(i / 27)+1) * qrBlock, qrBlock, qrBlock);	
+	}
+
+	// Identifiers
+	fill(255);
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock, 		qrBlock*7, 		qrBlock*7); 	// TOP LEFT
+	rect(hOffset+qrBlock*21, 	vOffset+400+qrBlock, 		qrBlock*7, 		qrBlock*7); 	// TOP RIGHT
+	rect(hOffset+qrBlock,		vOffset+400+qrBlock*21, 	qrBlock*7, 		qrBlock*7); 	// BOTTOM LEFT
+	switch(instrumentType) {
+		case 'drone':	fill(0, 100, 200);	break;
+		case 'melody':	fill(100, 0, 200);	break;
+		case 'rhythm':	fill(200, 100, 0);	break;
+	}
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*1, 		qrBlock*6, 		qrBlock);		// top
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*6, 		qrBlock*6,		qrBlock);		// bottom
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*1, 		qrBlock, 		qrBlock*6);		// left
+	rect(hOffset+qrBlock*6, 	vOffset+400+qrBlock, 		qrBlock, 		qrBlock*6);		// right
+	rect(hOffset+qrBlock*3, 	vOffset+400+qrBlock*3, 		qrBlock*2, 		qrBlock*2);		// isle
+
+	rect(hOffset+qrBlock*22, 	vOffset+400+qrBlock*1, 		qrBlock*6, 		qrBlock);		// top
+	rect(hOffset+qrBlock*22, 	vOffset+400+qrBlock*6, 		qrBlock*6,		qrBlock);		// bottom
+	rect(hOffset+qrBlock*22, 	vOffset+400+qrBlock*1, 		qrBlock, 		qrBlock*6);		// left
+	rect(hOffset+qrBlock*27, 	vOffset+400+qrBlock, 		qrBlock, 		qrBlock*6);		// right
+	rect(hOffset+qrBlock*24, 	vOffset+400+qrBlock*3, 		qrBlock*2, 		qrBlock*2);		// isle
+
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*22,		qrBlock*6, 		qrBlock);		// top
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*27,		qrBlock*6,		qrBlock);		// bottom
+	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*22,		qrBlock, 		qrBlock*6);		// left
+	rect(hOffset+qrBlock*6, 	vOffset+400+qrBlock*22,		qrBlock, 		qrBlock*6);		// right
+	rect(hOffset+qrBlock*3, 	vOffset+400+qrBlock*24, 	qrBlock*2, 		qrBlock*2);		// isle
+
+
 }
 
 // ================ INTERFACE
