@@ -22,6 +22,9 @@ function setup()
 	strokeWeight(10);
 	stroke(255);
 	fill(0, 50);
+
+
+
 }
 
 
@@ -42,7 +45,12 @@ function draw()
 // ================ INTERFACE
 function mousePressed()
 {
-	balls.push(new Ball());	
+	balls.push(new Ball());
+
+	socket.emit('ball', {
+		x: param1,
+		y: param2
+	});
 }
 
 function windowResized()
