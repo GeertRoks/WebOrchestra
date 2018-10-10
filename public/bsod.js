@@ -38,12 +38,49 @@ function bsodDraw()
 		case 'rhythm':	background(200, 100, 0);	break;
 	}
 	
+	drawText();
+	
+	if (progress < random(255))
+		drawQR();
+
+	lineGlitch();
+	
+	progress = int(progress * 0.95);
+
+}
+
+function onNote()
+{
+	progress += 50;
+}
+
+function lineGlitch()
+{
+	// stroke(255);
+	fill(255);
+	for (var i=0; i<int(progress*0.1); i++)
+	{
+		let x = random(width);
+		let y = random(height);
+
+		rect(x,y,random(width-x),random(5));
+	}
+
+}
+
+function drawText()
+{
 	fill(255);
 
 	// Text
 	textSize(128);
-	text(line0, hOffset, vOffset)
-	textSize(32 + (progress * progress * (0.0001)));
+	
+	if (progress > 10)
+		text(":)", hOffset, vOffset); // happy
+	else
+		text(":(", hOffset, vOffset); // sad
+
+	textSize(32 + (progress * progress * (0.0001) * (0.8 + random(0.2))));
 	text(stringGlitch(line1, progress), hOffset, vOffset + 200);
 	text(stringGlitch(line2, progress), hOffset, vOffset + 240);
 	text(progress + stringGlitch("% complete", progress * 0.1), hOffset, vOffset + 320);
@@ -52,19 +89,6 @@ function bsodDraw()
 	text(stringGlitch(line5, progress * 0.05), hOffset + qrOffset, vOffset + 480);
 	text(stringGlitch(line6, progress), hOffset + qrOffset, vOffset + 560);
 	text(stringGlitch(line7+instrumentType.toUpperCase(), progress * 0.03), hOffset + qrOffset, vOffset + 600);
-	
-	
-	if (progress < random(255))
-		drawQR();
-	
-	progress = int(progress * 0.99);
-
-	// print(progress);
-}
-
-function onNote()
-{
-	progress += 30;
 }
 
 function drawQR()
