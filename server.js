@@ -43,6 +43,10 @@ io.sockets.on('connection', function(socket) {
     }
     console.log(' ');
   });
+
+  socket.on('mouse', function(data) {
+    console.log(data);
+  });
 });
 
 // Building block for a client object
