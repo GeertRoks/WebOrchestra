@@ -11,7 +11,7 @@ function preload()
 function setup()
 {
 	createCanvas(displayWidth, displayHeight);
-	socket = io.connect("http://localhost:3000");
+	socket = io.connect("http://192.168.0.100:3000");
 
 	matrixSetup();
 }
@@ -29,3 +29,10 @@ function windowResized()
 	resizeCanvas(windowWidth, windowHeight);
 	background(0);
 }
+
+/*var data = {
+   x: mouseX,
+    y: mouseY
+  }
+  socket.emit('mouse', data);
+  */
