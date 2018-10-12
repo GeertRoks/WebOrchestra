@@ -32,10 +32,18 @@ function setup() {
     //console.log('receive', data);
     ts.receive(null, data);
   });
+ 
+  bsodSetup();
 }
 
-
-
+// ================ DRAW
 function draw() {
     sequence();
+    bsodDraw();
 }
+
+function keyTyped()
+{
+	onNote();
+}
+
