@@ -18,6 +18,7 @@ var rhythm = algo.rhythm;
 var trigger = false;
 var count = 0;
 
+// ================ SETUP
 function setup() {
 
   createCanvas(displayWidth, displayHeight);
@@ -80,7 +81,8 @@ function setup() {
   lead._setRhythm(rhythm);
   lead2._setRhythm(rhythm);
   updateParams();
-
+  
+  bsodSetup();
 }
 
 function updateParams(){
@@ -100,8 +102,10 @@ function updateNotes() {
   lead2._setNotes(fmNotes);
 }
 
+// ================ DRAW
 function draw() {
     sequence();
+    bsodDraw();
 }
 
 //kick sync test v
@@ -132,4 +136,12 @@ function sequence() {
   if(d.getMilliseconds() % 125 >= 50 && trigger){
     trigger = false;
   }
+
+
+
+
+
+function keyTyped()
+{
+	onNote();
 }
