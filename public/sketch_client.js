@@ -1,31 +1,52 @@
 var socket;
 
-//kick sync test v
-var kickRhythm      = [1, 1, 1, 1, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1];
-//Sequencer=====================================================================
-var startTime;
-var triggerTime;
-var triggerLength;
-var index = 0;
-var count = 0;
-var firstSeq = true;
-//==============================================================================
-var env;
+const fmSynth = new FmStrings(3);
+const algo = new Algorithm;
+const lead = new Lead;
+const lead2 = new Lead;
 
+var noteLengthSlider;
+var intervalSilder;
+var octaveLeadSlider;
+var octaveChordsSlider;
+
+var numberOfSliders = 4;
+
+var fmNotes = algo.notes;
+var rhythm = algo.rhythm;
 
 var trigger = false;
-
-function preload() {
-  soundFormats('wav');
-  kick = loadSound('tick.wav');
-}
-//kick sync test ^
+var count = 0;
 
 function setup() {
+
   createCanvas(displayWidth, displayHeight);
   socket = io.connect("http://localhost:3000");
 
-  //Time sync code from their express example
+  background(0);
+
+  //Slider controls ============================================================
+  slider = createSlider(0, 255, 100);
+  intervalSilder = createSlider(1, 12, 3);
+  noteLengthSlider = createSlider(0, 10, 1);
+  octaveLeadSlider= createSlider(-2, 2, 0);
+  octaveChordsSlider = createSlider(-2, 2, 0);
+
+  var sliderPos = width/numberOfSliders;
+
+  intervalSilder.position(10 + (0 * sliderPos), 10);
+  intervalSilder.style('width', '80px');
+  noteLengthSlider.position(10 + (1 * sliderPos), 10);
+  noteLengthSlider.style('width', '80px');
+  octaveLeadSlider.position(10 + (2 * sliderPos), 10);
+  octaveLeadSlider.style('width', '80px');
+  octaveChordsSlider.position(10 + (3 * sliderPos), 10);
+  octaveChordsSlider.style('width', '80px');
+
+  //============================================================================
+
+
+//  Time sync code from their express example ==================================
   var ts = timesync.create({
     server: /timesync/,
     interval: 5000
@@ -59,25 +80,52 @@ function setup() {
     });
   };
 
-//Kick sync test v
-  var cnv = createCanvas(100, 100);
-  kick.setVolume(0.9);
-//Kick sync test ^
+//==============================================================================
+
+  lead._setRhythm(rhythm);
+  lead2._setRhythm(rhythm);
+  updateParams();
+}
+
+function updateParams(){
+  algo._setInterval(intervalSilder.value());
+  fmSynth._setOctave(octaveChordsSlider.value());
+  lead._setOctave(octaveLeadSlider.value());
+  lead2._setOctave(octaveLeadSlider.value() + 1);
+  lead._setNoteDuration(noteLengthSlider.value());
+  lead2._setNoteDuration(noteLengthSlider.value());
+}
+
+function updateNotes() {
+  algo._constructNotes();
+  var fmNotes = algo.notes;
+  fmSynth._setNotes(fmNotes);
+  lead._setNotes(fmNotes);
+  lead2._setNotes(fmNotes);
 }
 
 function draw() {
-  sequence();
+    sequence();
 }
-
 
 //kick sync test v
 function sequence() {
   var d = new Date();
+  updateParams();
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    if(kickRhythm[count % kickRhythm.length] == 1){
-      kick.play();
+    if(count % 2 == 0) {
+      lead._sequence();
+    }
+
+    if(count % 2 == 1) {
+      lead2._sequence();
+    }
+
+    if(count % 32 == 0) {
+      fmSynth._sequence();
+      updateNotes();
     }
     trigger = true;
     count++;
@@ -87,4 +135,3 @@ function sequence() {
     trigger = false;
   }
 }
-//kick sync test ^
