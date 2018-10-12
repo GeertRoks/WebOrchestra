@@ -9,14 +9,14 @@ var line3 = "For more information about this issue and";
 var line4 = "possible fixes, visit";
 var line5 = "https://github.com/GeertRoks/WebOrchestra";
 var line6 = "If you call a support person, give them this info:";
-var line7 = "Stop code: CRITICAL_";
+var line7 = "Stop code: CRITICAL_BEAT_PLAYED";
 const hOffset = 200;
 const vOffset = 100;
 const qrOffset = 240;
 const qrSize = 230;
 const qrBlock = qrSize / 29;
 
-var instrumentType = "drone";
+var instrumentType = 0;
 
 // ================ SETUP
 function bsodSetup()
@@ -33,9 +33,10 @@ function bsodSetup()
 function bsodDraw()
 {
 	switch(instrumentType) {
-		case 'drone':	background(0, 100, 200);	break;
-		case 'melody':	background(100, 0, 200);	break;
-		case 'rhythm':	background(200, 100, 0);	break;
+		case 0:	background(0, 100, 200);	break;
+		case 1:	background(200, 100, 100);	break;
+		case 2:	background(200, 100, 0);	break;
+		case 3: background(100, 150, 0);	break;
 	}
 	
 	drawText();
@@ -88,7 +89,7 @@ function drawText()
 	text(stringGlitch(line4, progress), hOffset + qrOffset, vOffset + 440);
 	text(stringGlitch(line5, progress * 0.05), hOffset + qrOffset, vOffset + 480);
 	text(stringGlitch(line6, progress), hOffset + qrOffset, vOffset + 560);
-	text(stringGlitch(line7+instrumentType.toUpperCase(), progress * 0.03), hOffset + qrOffset, vOffset + 600);
+	text(stringGlitch(line7, progress * 0.03), hOffset + qrOffset, vOffset + 600);
 }
 
 function drawQR()
@@ -104,9 +105,10 @@ function drawQR()
 		// Random color
 		if (int(random(2)))
 			switch(instrumentType) {
-				case 'drone':	fill(0, 100, 200);	break;
-				case 'melody':	fill(100, 0, 200);	break;
-				case 'rhythm':	fill(200, 100, 0);	break;
+				case 0:	fill(0, 100, 200);		break;
+				case 1:	fill(200, 100, 100);	break;
+				case 2:	fill(200, 100, 0);		break;
+				case 3: fill(100, 150, 0);		break;
 			}
 			
 		else
@@ -120,9 +122,10 @@ function drawQR()
 	rect(hOffset+qrBlock*21, 	vOffset+400+qrBlock, 		qrBlock*7, 		qrBlock*7); 	// TOP RIGHT
 	rect(hOffset+qrBlock,		vOffset+400+qrBlock*21, 	qrBlock*7, 		qrBlock*7); 	// BOTTOM LEFT
 	switch(instrumentType) {
-		case 'drone':	fill(0, 100, 200);	break;
-		case 'melody':	fill(100, 0, 200);	break;
-		case 'rhythm':	fill(200, 100, 0);	break;
+		case 0:	fill(0, 100, 200);		break;
+		case 1:	fill(200, 100, 100);	break;
+		case 2:	fill(200, 100, 0);		break;
+		case 3: fill(100, 150, 0);		break;
 	}
 	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*1, 		qrBlock*6, 		qrBlock);		// top
 	rect(hOffset+qrBlock, 		vOffset+400+qrBlock*6, 		qrBlock*6,		qrBlock);		// bottom
