@@ -2,6 +2,7 @@ class Lead {
 
   constructor () {
 
+    this.arp = 1;
     this.octave = 0;
     this.duration = 1;
 
@@ -44,6 +45,7 @@ class Lead {
       this.delay.process(this.distortion, .50, .30, 2300);
     }
   }
+
   _setNotes (notesList) {
     this.notes = notesList;
   }
@@ -56,8 +58,11 @@ class Lead {
   return Math.pow(2.0,(midiPitch-69.0)/12.0) * 440.0;
   }
 
+  _setArp (arp) {
+    this.arp = arp;
+  }
 
-  //danger
+  //werkt wel, later nog wat mooier maken
   _setNoteDuration (duration) {
 
     this.duration = duration;
@@ -78,10 +83,16 @@ class Lead {
   _sequence() {
 
     if(this.rhythm[this.count % 7] == 1){
-      this.triOsc[this.index % 3].freq(this._mtof(this.notes[0][this.index % 3] + (12 * this.octave)));
-      this.env[this.index % 3].play();
-      this.index++;
+      if(this.arp == 1){
+        this.triOsc[this.index % 3].freq(this._mtof(this.notes[0][this.index % 3] + (12 * this.octave)));
+        this.env[this.index % 3].play();
+        this.index++;
+      } else {
+        for (var i = 0; i < 3; i++){
+          this.triOsc[i].freq(this._mtof(this.notes[0][i % 3] + (12 * this.octave)));
+        }
       }
+    }
     this.count++;
   }
 }

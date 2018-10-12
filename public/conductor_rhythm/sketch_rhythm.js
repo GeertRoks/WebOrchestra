@@ -1,18 +1,38 @@
 var socket;
 
-function setup() {
-  createCanvas(displayWidth, displayHeight);
-  socket = io.connect("http://localhost:3000");
+// ================ PRELOAD
+function preload()
+{
+	matrixPreload();
 }
 
-function draw() {
-  ellipse(mouseX, mouseY, 100);
+
+// ================ SETUP
+function setup()
+{
+	createCanvas(displayWidth, displayHeight);
+	socket = io.connect("http://192.168.0.100:3000");
+
+	matrixSetup();
 }
 
-function mouseClicked() {
-  var data = {
-    x: mouseX,
+// ================ DRAW
+function draw()
+{
+	matrixDraw();
+}
+
+
+// ================ INTERFACES
+function windowResized()
+{
+	resizeCanvas(windowWidth, windowHeight);
+	background(0);
+}
+
+/*var data = {
+   x: mouseX,
     y: mouseY
   }
   socket.emit('mouse', data);
-}
+  */

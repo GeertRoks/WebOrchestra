@@ -7,48 +7,63 @@ var path = require('path');
 var io = require('socket.io')(app);
 
 const port = 3000;
-
 var clients = [];
 
 
 //-----------Http server-------------//
-// Start the server on the given port
-function handler (req, res) {
-  console.log('request', req.url);
+function send404(response){
+  response.writeHead(404, {'Content-Type': 'text/plain'});
+  response.write('Error 404: Resource not found.');
+  response.end();
+}
 
-// Lets the server reach all paths in the public folder
-  if (req.url === '/timesync/timesync.js') {
-    res.setHeader('Content-Type', 'application/javascript');
-    return sendFile(path.join(__dirname, '/node_modules/timesync/dist/timesync.js'), res);
-  }
-
-  if (req.url === '/' || req.url === 'index.html') {
-    return sendFile(__dirname + '/public/index.html', res);
-  }
-  if (req.url === '/' || req.url === '/sketch_client.js') {
-    return sendFile(__dirname + '/public/sketch_client.js', res);
-  }
-  if (req.url === '/' || req.url === '/kick.wav') {
-    return sendFile(__dirname + '/public/kick.wav', res);
-  }
-
-  // Generate error message when given page doesn't exist
-  res.writeHead(404);
-  res.end('Not found');
+const mimeLookup = {
+  '.js': 'application/javascript',
+  '.html': 'text/html',
+  '.wav': 'audio/wave',
+  '.otf': 'application/x-font-otf',
+  '.ttf': 'application/x-font-ttf'
 };
 
-function sendFile(filename, res) {
-  fs.readFile(filename,
-      function (err, data) {
-        if (err) {
-          res.writeHead(500);
-          return res.end('Error loading ' + filename.split('/').pop());
-        }
+// Start the server on the given port
+function handler (req, res) {
+  if (req.method == 'GET') {
+    //load Timesync
+    let fileurl;
 
-        res.writeHead(200);
-        res.end(data);
-      });
-}
+    if (req.url === '/timesync/timesync.js') {
+      fileurl = '/node_modules/timesync/dist/timesync.js';
+    } else if (req.url == '/') {
+       fileurl = '/public/index.html';
+    } else if (req.url == '/conductor_rhythm') {
+      fileurl = '/public/conductor_rhythm/index.html';
+    } else if (req.url == '/conductor_melody') {
+      fileurl = '/public/conductor_melody/index.html';
+    } else if (req.url == '/conductor_drone') {
+      fileurl = '/public/conductor_drone/index.html';
+    } else {
+       fileurl = '/public' + req.url;
+    }
+     let filepath = path.resolve('./' + fileurl);
+
+     let fileExt = path.extname(filepath);
+     let mimeType = mimeLookup[fileExt];
+
+     if (!mimeType) {
+       send404(res);
+       return;
+     }
+
+     fs.exists(filepath, (exists) => {
+       if (!exists) {
+         send404(res);
+         return;
+       }
+       res.writeHead(200, {'Content-Type': mimeType});
+       fs.createReadStream(filepath).pipe(res);
+     });
+  }
+};
 
 app.listen(port);
 console.log('Server listening at http://192.168.0.100:' + port);
@@ -65,7 +80,7 @@ io.sockets.on('connection', function(socket) {
 
   // Add the new client to the clients array with its socket id.
   clients.push(new Client("client", socket.id));
-  // Debug code
+  console.log('A client connected!');
   console.log('Current clients: ');
   for (var j = 0; j < clients.length; j++) {
     console.log('client ' + j + ': ' + Object.entries(clients[j]));
@@ -79,7 +94,6 @@ io.sockets.on('connection', function(socket) {
     // remove the right ID out of the clients array.
     var i = clients.findIndex(i => i.id === socket.id);
     clients.splice(i, 1);
-    // Debug code
     console.log('Current clients: ');
     for (var j = 0; j < clients.length; j++) {
       console.log('client ' + j + ': ' + Object.entries(clients[j]));
@@ -87,12 +101,7 @@ io.sockets.on('connection', function(socket) {
     console.log(' ');
   });
 
-  socket.on('mouse', function(data) {
-    console.log(data);
-  });
-
   socket.on('timesync', function (data) {
-    console.log('message', data);
     socket.emit('timesync', {
       id: data && 'id' in data ? data.id : null,
       result: Date.now()
