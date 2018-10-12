@@ -71,10 +71,34 @@ class Algorithm {
     return rhythm;
   }
 
+  //beinvloed nootmateriaal
   _setInterval (chordInterval) {
     this.chordInterval = chordInterval;
   }
 
+//akkoorden of arpeggio ========================================================
+  _setArpMelody (arpM) {
+
+  }
+
+  _setArpDrone (arpD) {
+
+  }
+
+//nootdichtheid ================================================================
+  _setNoteDensityMelody (densityMelody) {
+
+  }
+
+  _setNoteDensityDrone (densityDrone) {
+
+  }
+
+  _setNoteDensityRhythm (densityMelody) {
+
+  }
+
+//getters ======================================================================
   get notes () {
     let c = this._notes = this._constructNotes();
     return c;
