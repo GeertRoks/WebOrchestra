@@ -18,16 +18,15 @@ var count = 0;
 
 function setupSequencer () {
 
-  background(0);
+  // background(0);
 
   //Slider controls ============================================================
-  slider = createSlider(0, 255, 100);
   intervalSilder = createSlider(1, 12, 3);
   noteLengthSlider = createSlider(0, 10, 1);
   octaveLeadSlider= createSlider(-2, 2, 0);
   octaveChordsSlider = createSlider(-2, 2, 0);
 
-  var sliderPos = width/numberOfSliders;
+  var sliderPos = displayWidth/numberOfSliders;
 
   intervalSilder.position(10 + (0 * sliderPos), 10);
   intervalSilder.style('width', '80px');
