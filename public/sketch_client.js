@@ -2,13 +2,11 @@ var socket;
 var count = 0;
 
 function setup() {
-
-  setupSequencer();
-
+  //Server Setup
   createCanvas(displayWidth, displayHeight);
   socket = io.connect("http://192.168.0.100:3000");
 
-//  Time sync code from their express example ==================================
+//  Time sync code from their socket example ==================================
   var ts = timesync.create({
     server: socket,
     interval: 5000
@@ -34,6 +32,8 @@ function setup() {
     ts.receive(null, data);
   });
 
+  //P5 setup
+  setupSequencer();
   bsodSetup();
 }
 
