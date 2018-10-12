@@ -20,44 +20,35 @@ function preload() {
 
 function setup() {
   createCanvas(displayWidth, displayHeight);
-  socket = io.connect("http://localhost:3000");
+  socket = io.connect("http://192.168.0.100:3000");
 
-  //Time sync code from their express example
   var ts = timesync.create({
-    server: /timesync/,
+    server: socket,
     interval: 5000
   });
   ts.on('sync', function (state) {
-    console.log('sync ' + state + '. Current date is: ' + Date());
+    console.log('sync ' + state + '');
   });
-  ts.on('change', function (offset){
+  ts.on('change', function (offset) {
     console.log('changed offset: ' + offset + ' ms');
   });
-  ts.send = function (to, data, timeout) {
+  ts.send = function (socket, data, timeout) {
     //console.log('send', data);
     return new Promise(function (resolve, reject) {
-      $.ajax({
-        url: to,
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType : 'application/json',
-        dataType: 'json', // response type
-        timeout: timeout
-      })
-      .done(function (data) {
-        //console.log('receive', data);
-        ts.receive(to, data);
+      var timeoutFn = setTimeout(reject, timeout);
+      socket.emit('timesync', data, function () {
+        clearTimeout(timeoutFn);
         resolve();
-      })
-      .fail(function (err) {
-        console.log('Error', err);
-        reject(err);
-      })
+      });
     });
   };
+  socket.on('timesync', function (data) {
+    //console.log('receive', data);
+    ts.receive(null, data);
+  });
 
 //Kick sync test v
-  var cnv = createCanvas(100, 100);
+  createCanvas(100, 100);
   kick.setVolume(0.9);
 //Kick sync test ^
 }
@@ -75,6 +66,7 @@ function sequence() {
 
     if(kickRhythm[count % kickRhythm.length] == 1){
       kick.play();
+      console.log("date: " + d);
     }
   }
 }

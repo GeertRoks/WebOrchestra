@@ -1,17 +1,54 @@
 // Server based on oscServer.js by csdhku:
 // https://github.com/csdhku/csdosc/blob/master/oscServer.js
 
-const express = require('express');
-const app = express();
-const path = require('path');
-const server = require('http').Server(app);
-const io = require('socket.io')(server);
+var app = require('http').createServer(handler);
+var fs = require('fs');
+var path = require('path');
+var io = require('socket.io')(app);
 
 const port = 3000;
 
 var clients = [];
 
 
+function handler (req, res) {
+  console.log('request', req.url);
+
+  if (req.url === '/timesync/timesync.js') {
+    res.setHeader('Content-Type', 'application/javascript');
+    return sendFile(path.join(__dirname, '/node_modules/timesync/dist/timesync.js'), res);
+  }
+
+  if (req.url === '/' || req.url === 'index.html') {
+    return sendFile(__dirname + '/public/index.html', res);
+  }
+  if (req.url === '/' || req.url === '/sketch_client.js') {
+    return sendFile(__dirname + '/public/sketch_client.js', res);
+  }
+  if (req.url === '/' || req.url === '/kick.wav') {
+    return sendFile(__dirname + '/public/kick.wav', res);
+  }
+
+
+  res.writeHead(404);
+  res.end('Not found');
+};
+
+function sendFile(filename, res) {
+  fs.readFile(filename,
+      function (err, data) {
+        if (err) {
+          res.writeHead(500);
+          return res.end('Error loading ' + filename.split('/').pop());
+        }
+
+        res.writeHead(200);
+        res.end(data);
+      });
+}
+
+app.listen(port);
+console.log('Server listening at http://localhost:' + port);
 
 //---------Web sockets---------//
 // What to do when a client connects
@@ -47,6 +84,14 @@ io.sockets.on('connection', function(socket) {
   socket.on('mouse', function(data) {
     console.log(data);
   });
+
+  socket.on('timesync', function (data) {
+    console.log('message', data);
+    socket.emit('timesync', {
+      id: data && 'id' in data ? data.id : null,
+      result: Date.now()
+    });
+  });
 });
 
 // Building block for a client object
@@ -57,7 +102,7 @@ function Client(type, id) {
 
 
 
-
+/*
 //-----------Http server-------------//
 // Start the server on the given port
 server.listen(port, function() {
@@ -66,18 +111,10 @@ server.listen(port, function() {
 
 // Lets the server reach all paths in the public folder
 app.use('/', express.static(path.join(__dirname,'/public/')));
-
-// Timesync code from their express example
 app.use('/timesync/', express.static(path.join(__dirname, '/node_modules/timesync/dist')));
-app.post('/timesync', function (req, res) {
-  var data = {
-    id: (req.body && 'id' in req.body) ? req.body.id : null,
-    result: Date.now()
-  };
-  res.json(data);
-});
 
 // Generate error message when given page doesn't exist
 app.use(function(req,res,next) {
   res.status(400).send("Error 400: Bad Request. This folder doesn't exist");
 });
+*/
