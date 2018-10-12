@@ -11,9 +11,12 @@ const port = 3000;
 var clients = [];
 
 
+//-----------Http server-------------//
+// Start the server on the given port
 function handler (req, res) {
   console.log('request', req.url);
 
+// Lets the server reach all paths in the public folder
   if (req.url === '/timesync/timesync.js') {
     res.setHeader('Content-Type', 'application/javascript');
     return sendFile(path.join(__dirname, '/node_modules/timesync/dist/timesync.js'), res);
@@ -29,7 +32,7 @@ function handler (req, res) {
     return sendFile(__dirname + '/public/kick.wav', res);
   }
 
-
+  // Generate error message when given page doesn't exist
   res.writeHead(404);
   res.end('Not found');
 };
@@ -48,7 +51,10 @@ function sendFile(filename, res) {
 }
 
 app.listen(port);
-console.log('Server listening at http://localhost:' + port);
+console.log('Server listening at http://192.168.0.100:' + port);
+
+
+
 
 //---------Web sockets---------//
 // What to do when a client connects
@@ -99,22 +105,3 @@ function Client(type, id) {
   this.type = type;
   this.id = id;
 };
-
-
-
-/*
-//-----------Http server-------------//
-// Start the server on the given port
-server.listen(port, function() {
-  console.log("Server is running on port " +port);
-});
-
-// Lets the server reach all paths in the public folder
-app.use('/', express.static(path.join(__dirname,'/public/')));
-app.use('/timesync/', express.static(path.join(__dirname, '/node_modules/timesync/dist')));
-
-// Generate error message when given page doesn't exist
-app.use(function(req,res,next) {
-  res.status(400).send("Error 400: Bad Request. This folder doesn't exist");
-});
-*/
