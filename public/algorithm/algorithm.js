@@ -20,19 +20,19 @@ class Algorithm {
     }
 
 
-    for (let i = 0; i < 3; i++){
-        notes[0][i] = scale[this.notePicked];
-      if (!this.first) {
-        this.notePicked = notes[0][Math.round((Math.random() * 2) % 3)];
+      for (let i = 0; i < 3; i++){
+          notes[0][i] = scale[this.notePicked];
+        if (!this.first) {
+          this.notePicked = notes[0][Math.round((Math.random() * 2) % 3)];
+        }
+        //noot afstand = 5 (1, 2, 3, 4)
+        this.notePicked = (this.notePicked + this.chordInterval) % 8;
       }
-      //noot afstand = 5 (1, 2, 3, 4)
-      this.notePicked = (this.notePicked + this.chordInterval) % 8;
-    }
 
     //TODO create 2 lists one for drone one for melody. If the arp is set to one
     //devide notes over list else put all the chord notes at the same index:
     //[[1, 2, 3]]
-    
+
     return notes;
   }
 

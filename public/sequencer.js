@@ -1,5 +1,6 @@
-const fmSynth = new FmStrings(3);
 const algo = new Algorithm;
+const drums = new Drums;
+const fmSynth = new FmStrings(3);
 const lead = new Lead;
 const lead2 = new Lead;
 
@@ -12,6 +13,7 @@ var numberOfSliders = 4;
 
 var fmNotes = algo.notes;
 var rhythm = algo.rhythm;
+var chordRhythm = fmSynth._getRhythm();
 
 var trigger = false;
 var countSequence = 0;
@@ -52,6 +54,7 @@ function updateParams(){
   lead2._setNoteDuration(noteLengthSlider.value());
 }
 
+//update notes moet gekoppeld worden aan de server
 function updateNotes() {
   algo._constructNotes();
   var fmNotes = algo.notes;
@@ -66,6 +69,10 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
+    if(countSequence % 1 == 0) {
+      drums._sequence();
+    }
+
     if(countSequence % 2 == 0) {
       lead._sequence();
     }
@@ -73,20 +80,20 @@ function sequence() {
 
     if(countSequence % 2 == 1) {
       lead2._sequence();
-
     }
 
-    if(countSequence % 32 == 0) {
-      console.log("count = ", count % 32);
-      fmSynth._sequence();
+
+    if(chordRhythm[countSequence % chordRhythm.length] == 1){
       updateNotes();
-    }
-    console.log("count = ", count);
+      fmSynth._sequence();
+      }
+
+    // console.log("count = ", count);
     trigger = true;
     countSequence++;
   }
 
-  if(d.getMilliseconds() % 125 >= 50 && trigger){
+  if(d.getMilliseconds() % 125 >= 40 && trigger){
     trigger = false;
   }
 }

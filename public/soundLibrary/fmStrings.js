@@ -3,7 +3,9 @@ class FmStrings {
 
   constructor(numVoices){
 
+    this.arp = 0;
     this.octave = 1;
+    this.rhythm = [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0];
 
     this.numVoices = numVoices;
     this.numCar = 3;
@@ -13,7 +15,8 @@ class FmStrings {
     this.carriers = []
     this.modulators = []
 
-    this.firstSeq = true;
+    this.index = 0;
+    this.carIndex = 0;
 
     this.envAmp = [];
     this.envFilter = [];
@@ -26,11 +29,13 @@ class FmStrings {
     for (var y = 0; y < numVoices; y++){
       this.envAmp.push(new p5.Envelope());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
+      // this.envAmp[y].setADSR(0.8, 1, 0.2, 0.2);
       this.envAmp[y].setRange(0.2 , 0);
       this.envAmp[y].setExp(1);
 
       this.envFilter.push(new p5.Envelope());
       this.envFilter[y].setADSR(1.2, 1.2, 50, 1);
+      // this.envFilter[y].setADSR(0.1, 1, 50, 0.2);
       this.envFilter[y].setRange(72, 0);
       this.envFilter[y].setExp(1);
 
@@ -69,20 +74,44 @@ class FmStrings {
   _setNotes (notesList) {
 
   this.notes = notesList;
+  this._updateNotes();
+  }
 
-  for(let y = 0; y < this.numVoices; y++){
-      let freqq = this._mtof(this.notes[0][y] + (12 * this.octave));
-      for(let i = 0; i < this.numCar; i++){
-        this.carriers[i + y].freq(freqq);
+  _updateNotes () {
+
+  if(this.arp == 0) {
+    for(let y = 0; y < this.numVoices; y++){
+        let freqq = this._mtof(this.notes[0][y] + (12 * this.octave * y));
+        for(let i = 0; i < this.numCar; i++){
+          this.carriers[i + y].freq(freqq);
+        }
+      }
+    } else {
+        let freqq = this._mtof(this.notes[0][this.carIndex] + (12 * this.octave * this.carIndex));
+        for(let i = 0; i < this.numCar; i++){
+          this.carriers[i + this.carIndex].freq(freqq);
+        }
+        this.carIndex = (this.carIndex + 1) % this.numVoices;
       }
     }
-  }
 
 
   _sequence () {
-    for(let y = 0; y < this.numVoices; y++){
-      this.envAmp[y].triggerAttack();
-      this.envFilter[y].triggerAttack();
+
+    if(this.rhythm[this.index] == 1){
+      for(let y = 0; y < this.numVoices; y++){
+          this.envAmp[y].triggerAttack();
+          this.envFilter[y].triggerAttack()
+          if(this.arp == 1){
+            this._updateNotes();
+          }
+          this.index++;
+      }
     }
+}
+
+  _getRhythm () {
+    let r = this.rhythm;
+    return r;
   }
 }
