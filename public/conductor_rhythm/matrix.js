@@ -10,8 +10,8 @@ var hackingProgress = 0;
 // ================ PRELOAD
 function matrixPreload()
 {
-	rainFont = loadFont('assets/matrix code nfi.otf');
-	monoFont = loadFont('../assets/dejavu/ttf/DejaVuSansMono.ttf');
+	rainFont = loadFont('fonts/matrix_code_nfi/matrix_code_nfi.otf ');
+	monoFont = loadFont('fonts/dejavu/ttf/DejaVuSansMono.ttf');
 }
 
 
@@ -86,7 +86,7 @@ function RainDrop()
 		// Small chance to move
 		if (random(100) > 90 && this.y === 0)
 			this.x = int(random(width / rainDropSize)) * rainDropSize;
-		
+
 		// Age and kill
 		this.age++;
 		if (this.age > random(100))
@@ -105,7 +105,7 @@ function keyPressed()
 			break;
 
 		case RETURN:
-			
+
 			for (var i=0; i<100; i++)
 				rain.push(new RainDrop());
 
@@ -113,7 +113,7 @@ function keyPressed()
 
 			input = '';
 
-			break;	
+			break;
 	}
 }
 
@@ -126,7 +126,5 @@ function keyTyped()
 	if (keyCode >= 32 && keyCode <= 126 && input.length < 20)
 		input += key.toUpperCase();
 
-	
+
 }
-
-
