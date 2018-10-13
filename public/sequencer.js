@@ -14,7 +14,7 @@ var fmNotes = algo.notes;
 var rhythm = algo.rhythm;
 
 var trigger = false;
-var count = 0;
+var countSequence = 0;
 
 function setupSequencer () {
 
@@ -66,22 +66,24 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    if(count % 2 == 0) {
+    if(countSequence % 2 == 0) {
       lead._sequence();
     }
 
 
-    if(count % 2 == 1) {
+    if(countSequence % 2 == 1) {
       lead2._sequence();
 
     }
 
-    if(count % 32 == 0) {
+    if(countSequence % 32 == 0) {
+      console.log("count = ", count % 32);
       fmSynth._sequence();
       updateNotes();
     }
+    console.log("count = ", count);
     trigger = true;
-    count++;
+    countSequence++;
   }
 
   if(d.getMilliseconds() % 125 >= 50 && trigger){
