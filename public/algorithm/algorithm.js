@@ -40,13 +40,13 @@ class Algorithm {
 
     let divideList = []
     let numerator = Math.round(Math.random() * 10);
-    console.log("numerator = ", numerator);
+    // console.log("numerator = ", numerator);
     const deviders = [[],[],[]];
 
     //kijkt naar hoe de maat onderverdeeld kan worden
     for (let checkValue = 2; checkValue < 5; checkValue++){
       let ticksInBar = numerator;
-      console.log("ticksInBar = ", ticksInBar, " ", "checkValue = ", checkValue);
+      // console.log("ticksInBar = ", ticksInBar, " ", "checkValue = ", checkValue);
 
       while (ticksInBar > 0) {
         ticksInBar -= checkValue;
@@ -70,8 +70,6 @@ class Algorithm {
     //   }
     // }
 
-    console.log("deviders = ", deviders);
-
     const rhythm = [1, 0, 1, 0, 1, 1, 1];
     return rhythm;
   }
@@ -82,26 +80,26 @@ class Algorithm {
   }
 
 //akkoorden of arpeggio ========================================================
-  _setArpMelody (arpM) {
-
-  }
-
-  _setArpDrone (arpD) {
-
-  }
+  // _setArpMelody (arpM) {
+  //
+  // }
+  //
+  // _setArpDrone (arpD) {
+  //
+  // }
 
 //nootdichtheid ================================================================
-  _setNoteDensityMelody (densityMelody) {
-
-  }
-
-  _setNoteDensityDrone (densityDrone) {
-
-  }
-
-  _setNoteDensityRhythm (densityMelody) {
-
-  }
+  // _setNoteDensityMelody (densityMelody) {
+  //
+  // }
+  //
+  // _setNoteDensityDrone (densityDrone) {
+  //
+  // }
+  //
+  // _setNoteDensityRhythm (densityMelody) {
+  //
+  // }
 
 //getters ======================================================================
   get notes () {

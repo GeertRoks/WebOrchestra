@@ -1,4 +1,5 @@
 const algo = new Algorithm;
+const score = new Score;
 const drums = new Drums;
 const fmSynth = new FmStrings(3);
 const lead = new Lead;
@@ -20,7 +21,7 @@ var countSequence = 0;
 
 function setupSequencer () {
 
-  // background(0);
+  score._renderMelody();
 
   //Slider controls ============================================================
   intervalSilder = createSlider(1, 12, 3);
