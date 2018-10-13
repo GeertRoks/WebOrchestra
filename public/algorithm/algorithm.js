@@ -7,6 +7,10 @@ class Algorithm {
       this.notePicked = 0;
       this.chordInterval = 3;
       // this.numerator = 8;
+      this._constructNotes ();
+      this._constructMelodyRhythm();
+      this._constructChordRhythm();
+      this._constructDrumRhythm();
     }
 
   _constructNotes () {
@@ -83,6 +87,7 @@ class Algorithm {
     this.chordInterval = chordInterval;
   }
 
+
   _constructDrumRhythm () {
     const drumRhythm = new Array();
 
@@ -91,6 +96,10 @@ class Algorithm {
     drumRhythm[2] = new Array(0, 1, 1, 1, 0, 1, 0, 1);
 
     return drumRhythm;
+  }
+
+  _returnDrumVoices(){
+    return this.drumVoices;
   }
 
 // //akkoorden of arpeggio ========================================================
@@ -129,18 +138,18 @@ class Algorithm {
 
   get chordRythm () {
     let cr = this._chordRythm;
-    if (!cr) cr = this._chordRhythm = _constructChordRhythm();
+    if (!cr) cr = this._chordRhythm = this._constructChordRhythm();
     return cr;
   }
 
   get drumRhythm () {
     let d = this._drumRhythm;
-    if (!d) d = this._drumRhythm = _constructDrumRhythm();
+    if (!d) d = this._drumRhythm = this._constructDrumRhythm();
     return d;
   }
 
-  get drumVoices () {
-    let dv = this.drumVoices;
-    return dv;
-  }
+  // get drumVoices () {
+  //   let dv = this._returnDrumVoices;
+  //   return dv;
+  // }
 }//Algorithm

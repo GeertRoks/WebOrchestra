@@ -41,6 +41,7 @@ class Score {
           this.melodyList[beatsPerMeasure] = 0;
         }
       }
+      console.log("melodyList = ", this.melodyList);
     }
 
   _renderChords () {
@@ -53,6 +54,7 @@ class Score {
           }
         }
       }
+      console.log("chordList = ", this.chordList);
     }
 
   _renderDrumRhythm () {
@@ -67,11 +69,13 @@ class Score {
           }
         }
       }
+      console.log("drumList = ", this.drumList);
   }
 
 //Getters=======================================================================
 
   get scoreMelody () {
+    
     return this.melodyList;
   }
 
