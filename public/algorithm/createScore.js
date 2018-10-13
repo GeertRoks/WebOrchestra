@@ -7,13 +7,20 @@ class Score {
     this.scoreNotes = algo.notes;
     this.melodyRhythm = algo.rhythm;
     this.chordRythm = algo.rhythm;
-    this.noteIndex = 0;
+    this.drumList = algo.drumRhythm;
     this.melodyList = [];
     this.chordList = new Array();
+    this.drumList = new Array();
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++){
-    this.chordList[beatsPerMeasure] = new Array(0, 0, 0);
+      this.chordList[beatsPerMeasure] = new Array(0, 0, 0);
     }
+
+    for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++){
+      this.drumList[beatsPerMeasure] = new Array();
+    }
+
+
   }
 
   _renderMelody () {
@@ -21,7 +28,6 @@ class Score {
     this.scoreNotes = algo.notes;
     this.melodyRhythm = algo.rhythm;
 
-    console.log("ALGORITHM R = ", this.melodyRhythm);
     console.log("ALGORITMH M = ", this.scoreNotes);
 
     let notess = 0;
@@ -34,22 +40,48 @@ class Score {
         } else {
           this.melodyList[beatsPerMeasure] = 0;
         }
-        this.noteIndex = (this.noteIndex + 1) % this.scoreNotes.length;
       }
     }
-
 
   _renderChords () {
     for (let measures = 0; measures < 8; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++)
         if (this.chordRythm == 1){
-          for (voices = 0; voices < 3; voices++){
+          for (let voices = 0; voices < 3; voices++){
             this.scoreNotes = algorithm.notes;
             this.chordList[beatsPerMeasure][voices] = this.scoreNotes[voices];
           }
         }
-        this.noteIndex = (this.noteIndex + 1) % this.scoreNotes.length;
       }
-      console.log(melodyList);
+    }
+
+  _renderDrumRhythm () {
+    let drumVoices = algo.drumVoices;
+    this.drumRhythm = algo.drumRhythm;
+
+    for (let measures = 0; measures < 8; measures++){
+      for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++)
+        if (this.chordRythm == 1){
+          for (let voices = 0; voices < drumVoices; voices++){
+            this.drumList[beatsPerMeasure][voices].push(this.drumRhythm[beatsPerMeasure % this.drumRhythm.length][voices]);
+          }
+        }
+      }
   }
-}
+
+//Getters=======================================================================
+
+  get scoreMelody () {
+    return this.melodyList;
+  }
+
+  get scoreChords () {
+    return this.chordList;
+  }
+
+  get scoreDrums () {
+    return this.drumList;
+  }
+
+
+}//end Score

@@ -114,4 +114,4 @@ class FmStrings {
     let r = this.rhythm;
     return r;
   }
-}
+}//end FmStrings
