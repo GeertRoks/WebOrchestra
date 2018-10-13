@@ -30,7 +30,7 @@ class Lead {
 
     for (let i = 0; i < this.Nosc; i++){
 
-      this.env.push(new p5.Envelope());
+      this.env.push(new p5.Env());
 
       this.env[i].setADSR(this.attackTime, this.decayTime, this.susPercent, this.releaseTime);
       this.env[i].setRange(this.attackLevel, this.releaseLevel);

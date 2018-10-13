@@ -24,12 +24,12 @@ class FmStrings {
     this.modAmps = [2, 2, 0];
 
     for (var y = 0; y < numVoices; y++){
-      this.envAmp.push(new p5.Envelope());
+      this.envAmp.push(new p5.Env());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
       this.envAmp[y].setRange(0.2 , 0);
       this.envAmp[y].setExp(1);
 
-      this.envFilter.push(new p5.Envelope());
+      this.envFilter.push(new p5.Env());
       this.envFilter[y].setADSR(1.2, 1.2, 50, 1);
       this.envFilter[y].setRange(72, 0);
       this.envFilter[y].setExp(1);
