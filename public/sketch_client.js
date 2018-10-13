@@ -4,7 +4,9 @@ var count = 0;
 function setup() {
   //Server Setup
   createCanvas(displayWidth, displayHeight);
-  socket = io.connect("http://192.168.0.100:3000");
+  // socket = io.connect("http://192.168.0.100:3000");
+  socket = io.connect("localhost:3000");
+
 
 //  Time sync code from their socket example ==================================
   var ts = timesync.create({

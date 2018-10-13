@@ -31,7 +31,13 @@ Network:
 
 
 Algorithm:
-  -
+  - [ ] Implement a rhythm part in the algorithm
+
+  - [ ] Mapping conductor output to algorithm parameters
+      - The following parameter methods will be used:
+          - setTimbre()
+          - setNoteDensity()
+
 
 Client page:
   -
@@ -53,8 +59,3 @@ Conductor Drone:
   ~~~
   Found this open issue on it: https://github.com/Tonejs/Tone.js/issues/392
   Maybe its fixed in Chrome 70 (16 october 2018)?
-
-  - Check the Env function. It gives a error in the console:
-  ~~~
-  p5.sound.js:6800 WARNING: p5.Env is now deprecated and may be removed in future versions. Please use the new p5.Envelope instead.
-  ~~~

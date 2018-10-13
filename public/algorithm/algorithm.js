@@ -28,7 +28,12 @@ class Algorithm {
       //noot afstand = 5 (1, 2, 3, 4)
       this.notePicked = (this.notePicked + this.chordInterval) % 8;
     }
-   return notes;
+
+    //TODO create 2 lists one for drone one for melody. If the arp is set to one
+    //devide notes over list else put all the chord notes at the same index:
+    //[[1, 2, 3]]
+    
+    return notes;
   }
 
   _constructRhythm () {
