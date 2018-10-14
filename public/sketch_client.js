@@ -4,8 +4,7 @@ var count = 0;
 function setup() {
   //Server Setup
   createCanvas(displayWidth, displayHeight);
-  //TODO change localhost before uploading
-  socket = io.connect("http://192.168.0.100:3000");
+  socket = io.connect("https://" + hostname + ":" + port);
 
 //  Time sync code from their socket example ==================================
   var ts = timesync.create({
