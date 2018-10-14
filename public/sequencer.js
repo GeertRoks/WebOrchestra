@@ -51,7 +51,7 @@ function setupSequencer () {
 function updateParams(){
   // algo._setInterval(intervalSilder.value());
   fmSynth._setOctave(-1);
-  lead._setOctave(2);
+  lead._setOctave(1);
   lead2._setOctave(2);
   lead._setNoteDuration(2);
   lead2._setNoteDuration(2);
