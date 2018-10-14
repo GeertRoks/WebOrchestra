@@ -12,9 +12,7 @@ class Drums {
     let susPercentDrums = 0.02;
     let releaseTimeDrums = 0.05;
     //==========================================================================
-
-    //Sequencer=================================================================
-    this.count = 0;
+    
     //==========================================================================
 
     this.kick = new p5.Oscillator('sine');
@@ -48,15 +46,17 @@ class Drums {
 
   _sequence () {
 
-      if(this.drumRhythm[0][this.count % this.drumRhythm[0].length] == 1){
-        this.envKick.play();
-      }
-      if(this.drumRhythm[1][this.count % this.drumRhythm[1].length] == 1){
-        this.envSnare.play();
-      }
-      if(this.drumRhythm[2][this.count % this.drumRhythm[2].length] == 1){
-        this.envHihat.play();
-      }
-    this.count++;
+    if(this.drumRhythm[0][0] == 1){
+      this.envKick.play();
     }
+    if(this.drumRhythm[1][0] == 1){
+      this.envSnare.play();
+    }
+    if(this.drumRhythm[2][0] == 1){
+      this.envHihat.play();
+    }
+    for (let drumIndex = 0; drumIndex < this.drumRhythm.length; drumIndex++){
+      this.drumRhythm[drumIndex].shift();
+    }
+  }
 }//end Drums

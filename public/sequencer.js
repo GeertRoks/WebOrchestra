@@ -49,7 +49,7 @@ function setupSequencer () {
 }
 
 function updateParams(){
-  algo._setInterval(intervalSilder.value());
+  // algo._setInterval(intervalSilder.value());
   fmSynth._setOctave(octaveChordsSlider.value());
   lead._setOctave(octaveLeadSlider.value());
   lead2._setOctave(octaveLeadSlider.value() + 1);
@@ -78,20 +78,19 @@ function sequence() {
     if(countSequence % 1 == 0) {
       drums._sequence();
     }
-    //
-    if(countSequence % 2 == 0) {
-      lead._sequence();
-    }
-    //
-    //
-    if(countSequence % 2 == 1) {
-      lead2._sequence();
-    }
+
+    // if(countSequence % 2 == 0) {
+    //   lead._sequence();
+    // }
+
+    // if(countSequence % 2 == 1) {
+    //   lead2._sequence();
+    // }
 
 
-    if(countSequence % 2 == 0){
-      fmSynth._sequence();
-      }
+    // if(countSequence % 2 == 0){
+    //   fmSynth._sequence();
+    //   }
     // console.log("count = ", count);
     trigger = true;
     countSequence++;
