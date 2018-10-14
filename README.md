@@ -10,7 +10,7 @@
     - installeer node met: `sudo apt install nodejs`
     - installeer npm met:  `sudo apt install npm`
     - ga naar de WebOrchestra map en type daar:  `npm install`. Dit alle alle gebruikte packages binnen.
-    - In alle `sketch_<something>.js` bestanden staat de url `192.168.0.100:3000`. Voor development verander deze naar `localhost:3000` zodat je op je eigen laptop kan checken, maar als je gaat commiten **zorg dan dat je de standaard url weer terug zet!**.
+    - In het `server_settings/setup.js` bestand staat de hostname `192.168.0.100`. Voor development verander deze naar `localhost` zodat je op je eigen laptop kan checken, maar als je gaat commiten **zorg dan dat je de standaard hostname weer terug zet!**.
     - run de server door in de `WebOrchestra` map te staan en type daar `node server.js`. Als alles goed is start deze om met de message: `Server listening at http://192.168.0.100:3000`. Ook kan je de lijst van verbonden clients zien. Als je dit niet kan zien dan ben je iets in stap 4 vergeten.
 
 
@@ -43,13 +43,15 @@ Client page:
   -
 
 Conductor Rhythm:
-  -
+  - Parameters need to be send via server.
+    - parameter 1 needs to go to ...?
+    - parameter 2 needs to go to ...?
 
 Conductor Melody:
-  -
+  - Needs UI
 
 Conductor Drone:
-  -
+  - Needs UI
 
 
 ### Bugs:
