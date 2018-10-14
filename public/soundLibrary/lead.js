@@ -82,11 +82,12 @@ class Lead {
 
   _sequence() {
 
-    if(this.notes[this.count] > 0){
-        this.triOsc[this.index % 3].freq(this._mtof(this.notes[this.count] + (12 * this.octave)));
+    if(this.notes[0] > 0){
+        this.triOsc[this.index % 3].freq(this._mtof(this.notes[0] + (12 * this.octave)));
         this.env[this.index % 3].play();
         this.index++;
       }
-      this.count = (this.count + 1) % this.notes.length;
+      this.notes.shift();
+      // this.count = (this.count + 1) % this.notes.length;
   }
 }
