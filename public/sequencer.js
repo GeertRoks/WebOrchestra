@@ -1,4 +1,3 @@
-const algo = new Algorithm;
 const score = new Score;
 const drums = new Drums;
 const fmSynth = new FmStrings(3);
@@ -93,7 +92,6 @@ function sequence() {
     if(countSequence % 2 == 0){
       fmSynth._sequence();
       }
-
     // console.log("count = ", count);
     trigger = true;
     countSequence++;
