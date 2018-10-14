@@ -3,7 +3,10 @@ class FmStrings {
 
   constructor(numVoices){
 
+    this.arp = 0;
     this.octave = 1;
+    this.beatsPerMeasure = 0;
+
 
     this.numVoices = numVoices;
     this.numCar = 3;
@@ -13,7 +16,8 @@ class FmStrings {
     this.carriers = []
     this.modulators = []
 
-    this.firstSeq = true;
+    this.index = 0;
+    this.carIndex = 0;
 
     this.envAmp = [];
     this.envFilter = [];
@@ -23,14 +27,22 @@ class FmStrings {
     this.modFreqs = [4.8, -4.8, 0];
     this.modAmps = [2, 2, 0];
 
+    this.chordList = new Array();
+
+    for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
+        this.chordList[beatsPerMeasure] = new Array();
+    }
+
     for (var y = 0; y < numVoices; y++){
-      this.envAmp.push(new p5.Env());
+      this.envAmp.push(new p5.Envelope());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
+      // this.envAmp[y].setADSR(0.8, 1, 0.2, 0.2);
       this.envAmp[y].setRange(0.2 , 0);
       this.envAmp[y].setExp(1);
 
-      this.envFilter.push(new p5.Env());
+      this.envFilter.push(new p5.Envelope());
       this.envFilter[y].setADSR(1.2, 1.2, 50, 1);
+      // this.envFilter[y].setADSR(0.1, 1, 50, 0.2);
       this.envFilter[y].setRange(72, 0);
       this.envFilter[y].setExp(1);
 
@@ -66,23 +78,32 @@ class FmStrings {
     this.octave = octave;
   }
 
-  _setNotes (notesList) {
-
-  this.notes = notesList;
-
-  for(let y = 0; y < this.numVoices; y++){
-      let freqq = this._mtof(this.notes[0][y] + (12 * this.octave));
-      for(let i = 0; i < this.numCar; i++){
-        this.carriers[i + y].freq(freqq);
-      }
-    }
+  _setScore (score) {
+    this.chordList = score;
   }
-
 
   _sequence () {
-    for(let y = 0; y < this.numVoices; y++){
-      this.envAmp[y].triggerAttack();
-      this.envFilter[y].triggerAttack();
-    }
+
+    var freqq = [];
+
+      for (let strings = 0; strings < this.chordList.length; strings++){
+        if (this.chordList[strings][this.beatsPerMeasure] > 0){
+          freqq[strings] = this._mtof(this.chordList[strings][this.beatsPerMeasure]);
+        for(let i = 0; i < this.numCar; i++){
+            this.carriers[i + strings].freq(freqq[strings]);
+            }
+            this.envAmp[strings].triggerAttack();
+            this.envFilter[strings].triggerAttack();
+            }
+          }
+          this.beatsPerMeasure = (this.beatsPerMeasure + 1) % this.chordList[0].length;
+        }
+
+
+
+  _getRhythm () {
+    let r = this.rhythm;
+    return r;
   }
-}
+
+}//end FmStrings

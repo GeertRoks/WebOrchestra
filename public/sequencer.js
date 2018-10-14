@@ -1,5 +1,7 @@
-const fmSynth = new FmStrings(3);
 const algo = new Algorithm;
+const score = new Score;
+const drums = new Drums;
+const fmSynth = new FmStrings(3);
 const lead = new Lead;
 const lead2 = new Lead;
 
@@ -10,15 +12,17 @@ var octaveChordsSlider;
 
 var numberOfSliders = 4;
 
-var fmNotes = algo.notes;
-var rhythm = algo.rhythm;
+var fmNotes;
+var rhythm;
+var chordRhythm;
 
 var trigger = false;
-var count = 0;
+var countSequence = 0;
 
 function setupSequencer () {
 
-  // background(0);
+  score._renderScore();
+  // drums._setScore(score.scoreDrums);
 
   //Slider controls ============================================================
   intervalSilder = createSlider(1, 12, 3);
@@ -39,7 +43,9 @@ function setupSequencer () {
 
   lead._setRhythm(rhythm);
   lead2._setRhythm(rhythm);
+  updateNotes();
   updateParams();
+
 
 }
 
@@ -52,12 +58,16 @@ function updateParams(){
   lead2._setNoteDuration(noteLengthSlider.value());
 }
 
+//update notes moet gekoppeld worden aan de server
 function updateNotes() {
-  algo._constructNotes();
-  var fmNotes = algo.notes;
-  fmSynth._setNotes(fmNotes);
-  lead._setNotes(fmNotes);
-  lead2._setNotes(fmNotes);
+  score._renderScore();
+  //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
+  fmSynth._setScore(score.scoreChords);
+  //scoreMelody = []
+  lead._setScore(score.scoreMelody);
+  lead2._setScore(score.scoreMelody);
+  //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
+  drums._setScore(score.scoreDrums);
 }
 
 function sequence() {
@@ -66,25 +76,30 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    if(count % 2 == 0) {
+    if(countSequence % 1 == 0) {
+      drums._sequence();
+    }
+    //
+    if(countSequence % 2 == 0) {
       lead._sequence();
     }
-
-
-    if(count % 2 == 1) {
+    //
+    //
+    if(countSequence % 2 == 1) {
       lead2._sequence();
-
     }
 
-    if(count % 32 == 0) {
+
+    if(countSequence % 2 == 0){
       fmSynth._sequence();
-      updateNotes();
-    }
+      }
+
+    // console.log("count = ", count);
     trigger = true;
-    count++;
+    countSequence++;
   }
 
-  if(d.getMilliseconds() % 125 >= 50 && trigger){
+  if(d.getMilliseconds() % 125 >= 40 && trigger){
     trigger = false;
   }
 }

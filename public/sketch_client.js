@@ -34,19 +34,19 @@ function setup() {
 
   //P5 setup
   setupSequencer();
-  bsodSetup();
+  // bsodSetup();
 }
 
 // ================ DRAW
 function draw() {
   sequence();
-  if(count % 4 == 0){
-    bsodDraw();
+  if(count % 20 == 0){
+    // bsodDraw();
   }
   count++;
 }
 
 function keyTyped()
 {
-	onNote();
+	// onNote();
 }

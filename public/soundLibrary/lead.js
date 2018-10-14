@@ -8,7 +8,7 @@ class Lead {
 
     this.env = [];
     this.triOsc = [];
-    this.notes = [[0],[0]];
+    this.notes = [];
     this.rhythm = [];
 
     this.index = 0;
@@ -30,7 +30,7 @@ class Lead {
 
     for (let i = 0; i < this.Nosc; i++){
 
-      this.env.push(new p5.Env());
+      this.env.push(new p5.Envelope());
 
       this.env[i].setADSR(this.attackTime, this.decayTime, this.susPercent, this.releaseTime);
       this.env[i].setRange(this.attackLevel, this.releaseLevel);
@@ -39,14 +39,14 @@ class Lead {
       this.triOsc[i].amp(this.env[i]);
       this.triOsc[i].pan(((2.0 / this.numSines) * i) - 1);
       this.triOsc[i].start();
-      this.triOsc[i].freq(this._mtof(this.notes[0][i]));
+      this.triOsc[i].freq(this._mtof(this.notes[i]));
       this.triOsc[i].disconnect();
       this.triOsc[i].connect(this.distortion);
       this.delay.process(this.distortion, .50, .30, 2300);
     }
   }
 
-  _setNotes (notesList) {
+  _setScore (notesList) {
     this.notes = notesList;
   }
 
@@ -82,17 +82,11 @@ class Lead {
 
   _sequence() {
 
-    if(this.rhythm[this.count % 7] == 1){
-      if(this.arp == 1){
-        this.triOsc[this.index % 3].freq(this._mtof(this.notes[0][this.index % 3] + (12 * this.octave)));
+    if(this.notes[this.count] > 0){
+        this.triOsc[this.index % 3].freq(this._mtof(this.notes[this.count] + (12 * this.octave)));
         this.env[this.index % 3].play();
         this.index++;
-      } else {
-        for (var i = 0; i < 3; i++){
-          this.triOsc[i].freq(this._mtof(this.notes[0][i % 3] + (12 * this.octave)));
-        }
       }
-    }
-    this.count++;
+      this.count = (this.count + 1) % this.notes.length;
   }
 }
