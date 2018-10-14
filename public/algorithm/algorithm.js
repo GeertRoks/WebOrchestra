@@ -15,20 +15,17 @@ class Algorithm {
 
   _constructNotes () {
     const scale = [60, 62, 63, 65, 67, 68, 70, 72];
-    const notes = new Array(1);
+    const notes = [];
 
-    for (let i = 0; i < notes.length; i++) {
-      notes[i] = new Array(3);
-    }
 
     if(this.first){
       this.notePicked = Math.round((Math.random() * 10) % 8);
     }
 
       for (let i = 0; i < 3; i++){
-          notes[0][i] = scale[this.notePicked];
+          notes[i] = scale[this.notePicked];
         if (!this.first) {
-          this.notePicked = notes[0][Math.round((Math.random() * 2) % 3)];
+          this.notePicked = notes[Math.round((Math.random() * 2) % 3)];
         }
         //noot afstand = 5 (1, 2, 3, 4)
         this.notePicked = (this.notePicked + this.chordInterval) % 8;

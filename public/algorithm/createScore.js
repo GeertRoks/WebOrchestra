@@ -7,9 +7,10 @@ class Score {
     this.beatsPerMeasure = 32;
     this.scoreNotes = this.algo.notes;
     this.melodyRhythm = this.algo.rhythm;
-    this.chordRythm = this.algo.rhythm;
+    this.chordRythm = this.algo.chordRhythm;
     this.drumList = this.algo.drumRhythm;
     this.drumVoices = this.algo.drumVoices;
+    this.scoreNotesChords = new Array();
     this.melodyList = [];
     this.chordList = new Array();
     this.drumList = new Array();
@@ -19,6 +20,10 @@ class Score {
     }
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
+      this.scoreNotesChords[beatsPerMeasure] = new Array();
+    }
+
+    for (let beatsPerMeasure = 0; beatsPerMeasure < 3; beatsPerMeasure++){
       this.drumList[beatsPerMeasure] = new Array();
     }
   }
@@ -26,6 +31,7 @@ class Score {
   _updateAlgorithm () {
     this._getAlgorithmNotes();
     this._getAlgorithmMelodyRhythm();
+    this._getAlgorithmChordRhythm();
     this._getAlgorithmDrumRhythm();
   }
 
@@ -37,60 +43,67 @@ class Score {
     this.melodyRhythm = this.algo.rhythm;
   }
 
+  _getAlgorithmChordRhythm () {
+    this.chordRythm = this.algo.chordRythm;
+  }
+
   _getAlgorithmDrumRhythm () {
     this.drumVoices = this.algo.drumVoices;
     this.drumRhythm = this.algo.drumRhythm;
   }
 
-  _renderMelody () {
-
-    console.log("ALGORITMH M = ", this.scoreNotes);
-
-    let notess = 0;
-
-    for (let measures = 0; measures < 8; measures++){
-      for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++)
-        if (this.melodyRhythm[beatsPerMeasure % this.melodyRhythm.length] == 1){
-          this.melodyList.push(this.scoreNotes[0][notess % 3]);
-          notess++;
-        } else {
-          this.melodyList[beatsPerMeasure] = 0;
-        }
-      }
-      console.log("melodyList = ", this.melodyList);
-    }
 
   _renderChords () {
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
         if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
+          this.scoreNotes = this.algo.notes;
           this.chordList[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
         } else {
           this.chordList[beatsPerMeasure + (measures * 32)].push(0);
         }
+        this.scoreNotesChords[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
       }
     }
     console.log("chordList = ", this.chordList);
+    console.log("scoreNoteList = ", this.scoreNotesChords);
+    this._renderMelody();
+  }
+
+  _renderMelody () {
+
+    let notess = 0;
+
+    for (let measures = 0; measures < this.measures; measures++){
+      for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
+        if (this.melodyRhythm[beatsPerMeasure % this.melodyRhythm.length] == 1){
+          this.melodyList[beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][0][notess % 3];
+        } else {
+          this.melodyList[beatsPerMeasure + (measures * 32)] = 0;
+        }
+        notess++;
+      }
+    }
+    console.log("melodyList = ", this.melodyList);
   }
 
   _renderDrumRhythm () {
 
-    for (let measures = 0; measures < 8; measures++){
-      for (let beatsPerMeasure = 0; beatsPerMeasure < 32; beatsPerMeasure++)
-        if (this.chordRythm == 1){
-          for (let voices = 0; voices < this.drumVoices; voices++){
-            this.drumList[beatsPerMeasure + (measures * 32)][voices].push(this.drumRhythm[beatsPerMeasure % this.drumRhythm.length][voices]);
-          }
+    for (let measures = 0; measures < this.measures; measures++){
+      for (let voices = 0; voices < this.drumVoices; voices++){
+        for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
+              this.drumList[voices].push(this.drumRhythm[voices][beatsPerMeasure % this.drumRhythm[voices].length]);
         }
       }
-      console.log("drumList = ", this.drumList);
+    }
+    console.log("drumRhythm = ", this.drumList);
   }
 
   _renderScore () {
     this._updateAlgorithm();
     this._renderChords();
-    this._renderMelody();
+    // this._renderMelody();
     this._renderDrumRhythm();
   }
 

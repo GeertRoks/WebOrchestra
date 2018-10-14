@@ -1,14 +1,15 @@
 class Drums {
 
   constructor () {
-    this.reverbPing     = [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
-    this.ruisRythm      = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    this.snareRuisRythm = [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-    this.reverbPing     = [0, 1, 0, 1, 0, 1, 0, 1];
-    this.hihatRythm     = [0, 1, 1, 1, 0, 1, 0, 1];
-    this.snareRythm     = [0, 0, 0, 0, 1, 0, 0, 0];
-    this.kickRythm      = [1, 0, 0, 0, 0, 0, 1, 0];
+    // this.reverbPing     = [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
+    // this.ruisRythm      = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    // this.snareRuisRythm = [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
+    // this.reverbPing     = [0, 1, 0, 1, 0, 1, 0, 1];
+    // this.hihatRythm     = [0, 1, 1, 1, 0, 1, 0, 1];
+    // this.snareRythm     = [0, 0, 0, 0, 1, 0, 0, 0];
+    // this.kickRythm      = [1, 0, 0, 0, 0, 0, 1, 0];
 
+    this.drumRhythm = [[],[],[]];
     //Envelope======================================================================
     let attackLevelDrums = 0.4;
     let releaseLevelDrums = 0;
@@ -48,15 +49,19 @@ class Drums {
     this.hihat.start();
     }
 
-  _sequence () {
+  _setScore (score) {
+    this.drumRhythm = score;
+  }
 
-      if(this.kickRythm[this.count % this.kickRythm.length] == 1){
+  _sequence () {
+    
+      if(this.drumRhythm[0][this.count % this.drumRhythm[0].length] == 1){
         this.envKick.play();
       }
-      if(this.snareRythm[this.count % this.snareRythm.length] == 1){
+      if(this.drumRhythm[1][this.count % this.drumRhythm[1].length] == 1){
         this.envSnare.play();
       }
-      if(this.hihatRythm[this.count % this.reverbPing.length] == 1){
+      if(this.drumRhythm[2][this.count % this.drumRhythm[2].length] == 1){
         this.envHihat.play();
       }
     this.count++;
