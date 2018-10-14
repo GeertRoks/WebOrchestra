@@ -4,6 +4,7 @@ var count = 0;
 function setup() {
   //Server Setup
   createCanvas(displayWidth, displayHeight);
+  //TODO change localhost before uploading
   socket = io.connect("http://192.168.0.100:3000");
 
 //  Time sync code from their socket example ==================================
@@ -34,19 +35,19 @@ function setup() {
 
   //P5 setup
   setupSequencer();
-  bsodSetup();
+  // bsodSetup();
 }
 
 // ================ DRAW
 function draw() {
   sequence();
-  if(count % 4 == 0){
-    bsodDraw();
+  if(count % 20 == 0){
+    // bsodDraw();
   }
   count++;
 }
 
 function keyTyped()
 {
-	onNote();
+	// onNote();
 }

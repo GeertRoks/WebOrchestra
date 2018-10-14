@@ -2,51 +2,49 @@
 class Algorithm {
 
     constructor () {
+      this.drumVoices = 3;
       this.first = true;
       this.notePicked = 0;
       this.chordInterval = 3;
+      // this.numerator = 8;
+      this._constructNotes ();
+      this._constructMelodyRhythm();
+      this._constructChordRhythm();
+      this._constructDrumRhythm();
     }
 
   _constructNotes () {
     const scale = [60, 62, 63, 65, 67, 68, 70, 72];
-    const notes = new Array(1);
+    const notes = [];
 
-    for (let i = 0; i < notes.length; i++) {
-      notes[i] = new Array(3);
-    }
 
     if(this.first){
       this.notePicked = Math.round((Math.random() * 10) % 8);
     }
 
-
-    for (let i = 0; i < 3; i++){
-        notes[0][i] = scale[this.notePicked];
-      if (!this.first) {
-        this.notePicked = notes[0][Math.round((Math.random() * 2) % 3)];
+      for (let i = 0; i < 3; i++){
+          notes[i] = scale[this.notePicked];
+        if (!this.first) {
+          this.notePicked = notes[Math.round((Math.random() * 2) % 3)];
+        }
+        //noot afstand = 5 (1, 2, 3, 4)
+        this.notePicked = (this.notePicked + this.chordInterval) % 8;
       }
-      //noot afstand = 5 (1, 2, 3, 4)
-      this.notePicked = (this.notePicked + this.chordInterval) % 8;
-    }
 
-    //TODO create 2 lists one for drone one for melody. If the arp is set to one
-    //devide notes over list else put all the chord notes at the same index:
-    //[[1, 2, 3]]
-    
     return notes;
   }
 
-  _constructRhythm () {
+  _constructMelodyRhythm () {
 
     let divideList = []
     let numerator = Math.round(Math.random() * 10);
-    console.log("numerator = ", numerator);
+    // console.log("numerator = ", numerator);
     const deviders = [[],[],[]];
 
     //kijkt naar hoe de maat onderverdeeld kan worden
     for (let checkValue = 2; checkValue < 5; checkValue++){
       let ticksInBar = numerator;
-      console.log("ticksInBar = ", ticksInBar, " ", "checkValue = ", checkValue);
+      // console.log("ticksInBar = ", ticksInBar, " ", "checkValue = ", checkValue);
 
       while (ticksInBar > 0) {
         ticksInBar -= checkValue;
@@ -70,10 +68,15 @@ class Algorithm {
     //   }
     // }
 
-    console.log("deviders = ", deviders);
-
     const rhythm = [1, 0, 1, 0, 1, 1, 1];
     return rhythm;
+  }
+
+  _constructChordRhythm () {
+    //TODO maak een globale maatsoort
+
+    const chrodRhythm = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    return chrodRhythm;
   }
 
   //beinvloed nootmateriaal
@@ -81,14 +84,29 @@ class Algorithm {
     this.chordInterval = chordInterval;
   }
 
-//akkoorden of arpeggio ========================================================
-  _setArpMelody (arpM) {
 
+  _constructDrumRhythm () {
+    const drumRhythm = new Array();
+
+    drumRhythm[0] = new Array(1, 0, 0, 0, 0, 0, 1, 0);
+    drumRhythm[1] = new Array(0, 0, 0, 0, 1, 0, 0, 0);
+    drumRhythm[2] = new Array(0, 1, 1, 1, 0, 1, 0, 1);
+
+    return drumRhythm;
   }
 
-  _setArpDrone (arpD) {
-
+  _returnDrumVoices(){
+    return this.drumVoices;
   }
+
+// //akkoorden of arpeggio ========================================================
+//   _setArpMelody (arpM) {
+//
+//   }
+//
+//   _setArpDrone (arpD) {
+//
+//   }
 
 //nootdichtheid ================================================================
   _setNoteDensityMelody (densityMelody) {
@@ -105,13 +123,26 @@ class Algorithm {
 
 //getters ======================================================================
   get notes () {
-    let c = this._notes = this._constructNotes();
-    return c;
+    let n = this._notes = this._constructNotes();
+    return n;
   }
 
   get rhythm () {
     let r = this._rhythm;
-    if (!r) r = this._rhythm = this._constructRhythm();
+    if (!r) r = this._rhythm = this._constructMelodyRhythm();
     return r;
   }
-}
+
+  get chordRythm () {
+    let cr = this._chordRythm;
+    if (!cr) cr = this._chordRhythm = this._constructChordRhythm();
+    return cr;
+  }
+
+  get drumRhythm () {
+    let d = this._drumRhythm;
+    if (!d) d = this._drumRhythm = this._constructDrumRhythm();
+    return d;
+  }
+
+}//Algorithm
