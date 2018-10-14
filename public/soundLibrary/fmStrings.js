@@ -4,7 +4,7 @@ class FmStrings {
   constructor(numVoices){
 
     this.arp = 0;
-    this.octave = 1;
+    this.octave = 0;
     this.beatsPerMeasure = 0;
 
 
@@ -37,7 +37,7 @@ class FmStrings {
       this.envAmp.push(new p5.Envelope());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
       // this.envAmp[y].setADSR(0.8, 1, 0.2, 0.2);
-      this.envAmp[y].setRange(0.2 , 0);
+      this.envAmp[y].setRange(0.05 + (y * 0.05 ) , 0);
       this.envAmp[y].setExp(1);
 
       this.envFilter.push(new p5.Envelope());
@@ -87,8 +87,8 @@ class FmStrings {
     var freqq = [];
 
       for (let strings = 0; strings < this.chordList.length; strings++){
-        if (this.chordList[strings][this.beatsPerMeasure] > 0){
-          freqq[strings] = this._mtof(this.chordList[strings][this.beatsPerMeasure]);
+        if (this.chordList[strings][0] > 0){
+          freqq[strings] = this._mtof(this.chordList[strings][0] + (12 * this.octave * strings));
         for(let i = 0; i < this.numCar; i++){
             this.carriers[i + strings].freq(freqq[strings]);
             }
@@ -96,7 +96,10 @@ class FmStrings {
             this.envFilter[strings].triggerAttack();
             }
           }
-          this.beatsPerMeasure = (this.beatsPerMeasure + 1) % this.chordList[0].length;
+          // this.beatsPerMeasure = (this.beatsPerMeasure + 1) % this.chordList[0].length;
+          for (var numStrings = 0; numStrings < this.chordList.length; numStrings++){
+            this.chordList[numStrings].shift();
+          }
         }
 
 

@@ -64,7 +64,7 @@ class Score {
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
         if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
           this.scoreNotes = this.algo.notes;
-          this.chordList[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
+          this.chordList[beatsPerMeasure + (measures * 32)][beatsPerMeasure] = this.scoreNotes;
           for (let stringVoices = 0; stringVoices < 3; stringVoices++){
             this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
           }
@@ -74,9 +74,12 @@ class Score {
             this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
           }
         }
-        this.scoreNotesChords[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
+        this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.scoreNotes;
       }
     }
+    // console.log("in _renderChords = ", this.chordList);
+    // console.log("in _renderChords = ", this.strings);
+    // console.log("in _renderChords = ", this.scoreNotesChords);
     //split chord list into three lists
     this._renderMelody();
   }
@@ -88,7 +91,7 @@ class Score {
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
         if (this.melodyRhythm[beatsPerMeasure % this.melodyRhythm.length] == 1){
-          this.melodyList[beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][0][notess % 3];
+          this.melodyList[beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][notess % 3];
         } else {
           this.melodyList[beatsPerMeasure + (measures * 32)] = 0;
         }

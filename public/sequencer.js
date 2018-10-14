@@ -50,11 +50,11 @@ function setupSequencer () {
 
 function updateParams(){
   // algo._setInterval(intervalSilder.value());
-  fmSynth._setOctave(octaveChordsSlider.value());
-  lead._setOctave(octaveLeadSlider.value());
-  lead2._setOctave(octaveLeadSlider.value() + 1);
-  lead._setNoteDuration(noteLengthSlider.value());
-  lead2._setNoteDuration(noteLengthSlider.value());
+  fmSynth._setOctave(-1);
+  lead._setOctave(2);
+  lead2._setOctave(2);
+  lead._setNoteDuration(2);
+  lead2._setNoteDuration(2);
 }
 
 //update notes moet gekoppeld worden aan de server
@@ -62,11 +62,14 @@ function updateNotes() {
   score._renderScore();
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(score.scoreChords);
-  //scoreMelody = []
-  lead._setScore(score.scoreMelody);
-  lead2._setScore(score.scoreMelody);
+  //scoreMelody = [] , used slice() to create a copy of the list
+  lead._setScore(score.scoreMelody.slice());
+  lead2._setScore(score.scoreMelody.slice());
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   drums._setScore(score.scoreDrums);
+
+  console.log("score melody = ", score.scoreMelody);
+  console.log("score chords = ", score.scoreChords);
 }
 
 function sequence() {
@@ -79,18 +82,18 @@ function sequence() {
       drums._sequence();
     }
 
-    // if(countSequence % 2 == 0) {
-    //   lead._sequence();
-    // }
+    if(countSequence % 2 == 0) {
+      lead._sequence();
+    }
 
-    // if(countSequence % 2 == 1) {
-    //   lead2._sequence();
-    // }
+    if(countSequence % 2 == 1) {
+      lead2._sequence();
+    }
 
 
-    // if(countSequence % 2 == 0){
-    //   fmSynth._sequence();
-    //   }
+    if(countSequence % 2 == 0){
+      fmSynth._sequence();
+      }
     // console.log("count = ", count);
     trigger = true;
     countSequence++;
