@@ -1,13 +1,6 @@
 class Drums {
 
   constructor () {
-    // this.reverbPing     = [0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0];
-    // this.ruisRythm      = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    // this.snareRuisRythm = [0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0];
-    // this.reverbPing     = [0, 1, 0, 1, 0, 1, 0, 1];
-    // this.hihatRythm     = [0, 1, 1, 1, 0, 1, 0, 1];
-    // this.snareRythm     = [0, 0, 0, 0, 1, 0, 0, 0];
-    // this.kickRythm      = [1, 0, 0, 0, 0, 0, 1, 0];
 
     this.drumRhythm = [[],[],[]];
     //Envelope======================================================================
@@ -54,7 +47,7 @@ class Drums {
   }
 
   _sequence () {
-    
+
       if(this.drumRhythm[0][this.count % this.drumRhythm[0].length] == 1){
         this.envKick.play();
       }

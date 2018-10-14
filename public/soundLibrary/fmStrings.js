@@ -5,7 +5,8 @@ class FmStrings {
 
     this.arp = 0;
     this.octave = 1;
-    // this.rhythm = [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+    this.beatsPerMeasure = 0;
+
 
     this.numVoices = numVoices;
     this.numCar = 3;
@@ -83,20 +84,22 @@ class FmStrings {
 
   _sequence () {
 
-    // console.log("this chordList = ", this.chordList);
-    console.log("hallo",this.chordList);
-    if(this.chordList[this.index][0] > 0){
-      for(let y = 0; y < this.numVoices; y++){
-        let freqq = this._mtof(this.chordList[this.index][y] + (12 * this.octave * y));
+    var freqq = [];
+
+      for (let strings = 0; strings < this.chordList.length; strings++){
+        if (this.chordList[strings][this.beatsPerMeasure] > 0){
+          freqq[strings] = this._mtof(this.chordList[strings][this.beatsPerMeasure]);
         for(let i = 0; i < this.numCar; i++){
-          this.carriers[i + y].freq(freqq);
+            this.carriers[i + strings].freq(freqq[strings]);
+            }
+            this.envAmp[strings].triggerAttack();
+            this.envFilter[strings].triggerAttack();
+            }
+          }
+          this.beatsPerMeasure = (this.beatsPerMeasure + 1) % this.chordList[0].length;
         }
-        this.envAmp[y].triggerAttack();
-        this.envFilter[y].triggerAttack();
-      }
-    }
-    this.index = (this.index + 1) % this.chordList.length;
-}
+
+
 
   _getRhythm () {
     let r = this.rhythm;
@@ -104,12 +107,3 @@ class FmStrings {
   }
 
 }//end FmStrings
-
-
-
-    // for(let y = 0; y < this.numVoices; y++){
-    //     let freqq = this._mtof(this.notes[0][y] + (12 * this.octave * y));
-    //     for(let i = 0; i < this.numCar; i++){
-    //       this.carriers[i + y].freq(freqq);
-    //     }
-    //   }

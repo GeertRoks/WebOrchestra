@@ -14,6 +14,7 @@ class Score {
     this.melodyList = [];
     this.chordList = new Array();
     this.drumList = new Array();
+    this.strings = new Array();
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
       this.chordList[beatsPerMeasure] = new Array();
@@ -21,6 +22,10 @@ class Score {
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
       this.scoreNotesChords[beatsPerMeasure] = new Array();
+    }
+
+    for (let beatsPerMeasure = 0; beatsPerMeasure < 3; beatsPerMeasure++){
+      this.strings[beatsPerMeasure] = new Array();
     }
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < 3; beatsPerMeasure++){
@@ -60,14 +65,19 @@ class Score {
         if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
           this.scoreNotes = this.algo.notes;
           this.chordList[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
+          for (let stringVoices = 0; stringVoices < 3; stringVoices++){
+            this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
+          }
         } else {
           this.chordList[beatsPerMeasure + (measures * 32)].push(0);
+          for (let stringVoices = 0; stringVoices < 3; stringVoices++){
+            this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
+          }
         }
         this.scoreNotesChords[beatsPerMeasure + (measures * 32)].push(this.scoreNotes);
       }
     }
-    console.log("chordList = ", this.chordList);
-    console.log("scoreNoteList = ", this.scoreNotesChords);
+    //split chord list into three lists
     this._renderMelody();
   }
 
@@ -85,7 +95,6 @@ class Score {
         notess++;
       }
     }
-    console.log("melodyList = ", this.melodyList);
   }
 
   _renderDrumRhythm () {
@@ -97,7 +106,6 @@ class Score {
         }
       }
     }
-    console.log("drumRhythm = ", this.drumList);
   }
 
   _renderScore () {
@@ -116,7 +124,7 @@ class Score {
   }
 
   get scoreChords () {
-    return this.chordList;
+    return this.strings;
   }
 
   get scoreDrums () {

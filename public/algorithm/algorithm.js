@@ -75,7 +75,7 @@ class Algorithm {
   _constructChordRhythm () {
     //TODO maak een globale maatsoort
 
-    const chrodRhythm = [1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+    const chrodRhythm = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     return chrodRhythm;
   }
 
@@ -145,8 +145,4 @@ class Algorithm {
     return d;
   }
 
-  // get drumVoices () {
-  //   let dv = this._returnDrumVoices;
-  //   return dv;
-  // }
 }//Algorithm

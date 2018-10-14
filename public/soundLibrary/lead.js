@@ -88,24 +88,5 @@ class Lead {
         this.index++;
       }
       this.count = (this.count + 1) % this.notes.length;
-      console.log("this notes length", this.notes);
   }
 }
-
-
-//   _sequence() {
-//
-//     if(this.rhythm[this.count % 7] == 1){
-//       if(this.arp == 1){
-//         this.triOsc[this.index % 3].freq(this._mtof(this.notes[0][this.index % 3] + (12 * this.octave)));
-//         this.env[this.index % 3].play();
-//         this.index++;
-//       } else {
-//         for (var i = 0; i < 3; i++){
-//           this.triOsc[i].freq(this._mtof(this.notes[0][i % 3] + (12 * this.octave)));
-//         }
-//       }
-//     }
-//     this.count++;
-//   }
-// }
