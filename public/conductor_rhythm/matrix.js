@@ -25,39 +25,49 @@ function matrixSetup()
 	background(0);
 	// rectMode(CENTER);
 	textAlign(CENTER, CENTER);
+	strokeWeight(2)
 }
 
 
 // ================ DRAW
 function matrixDraw()
 {
-	background(0, 10);
-
+	// MATRIX
 	textFont(rainFont);
 	textSize(rainDropSize * 0.9);
+	if ((frameCount % rainSpeed) === 0) {
 
-	if ((frameCount % rainSpeed) === 0)
+		background(0, 20);
 		for (var i=0; i<rain.length; i++)
 			rain[i].display();
+	}
 
 	// Codebox
 	fill(0);
-	stroke(0, 255, 0);
+	stroke(matrixColor[0], matrixColor[1], matrixColor[2]);
 	rect(windowWidth*.5 - 200,windowHeight*.5 - 50, 400, 100);
 
 
-	// Hacker text
-	fill(0, 255, 0);
+	// Codebox text
+	fill(matrixColor[0], matrixColor[1], matrixColor[2]);
 	textFont(monoFont);
+	textSize(50);
 	text(input, windowWidth*.5,windowHeight*.5);
 
 	// Progress bar
 	rect(windowWidth*.5 - 200,windowHeight*.5 - 50, hackingProgress * 4, 10);
 
-	hackingProgress = hackingProgress * 0.99;
+	// hackingProgress = hackingProgress * 0.997;
+	if (hackingProgress > 0)
+		hackingProgress-= 0.5;
 
 	if (hackingProgress > 100 && random(100) > 90)
 		background(random(255));
+
+	// Makes sure there are at least 10 raindrops
+	if (rain.length < 10) {
+		rain.push(new RainDrop());
+	}
 }
 
 function RainDrop()
@@ -69,8 +79,9 @@ function RainDrop()
 
 	this.display = function()
 	{
+		noStroke();
 		if (hackingProgress < 100)
-			fill(100, 255, 100);
+			fill(0, 255, 0);
 		else
 			fill(255);
 
@@ -89,7 +100,7 @@ function RainDrop()
 
 		// Age and kill
 		this.age++;
-		if (this.age > random(100))
+		if (this.age > random(10, 200))
 			rain.pop();
 	}
 }
@@ -105,14 +116,11 @@ function keyPressed()
 			break;
 
 		case RETURN:
-
-			for (var i=0; i<100; i++)
+			for (var i=0; i<(input.length * 15); i++)
 				rain.push(new RainDrop());
 
-			hackingProgress += (input.length) * 10;
-
+			hackingProgress += (input.length) * 5;
 			input = '';
-
 			break;
 	}
 }
@@ -123,7 +131,7 @@ function keyTyped()
 	rain.push(new RainDrop());
 
 	// Filter out non keyboard characters and constrain length
-	if (keyCode >= 32 && keyCode <= 126 && input.length < 20)
+	if (keyCode >= 32 && keyCode <= 126 && input.length < 12)
 		input += key.toUpperCase();
 
 

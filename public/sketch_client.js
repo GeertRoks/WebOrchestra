@@ -37,20 +37,19 @@ function setup() {
   });
 
   //P5 setup
-  //setupSequencer();
-  //bsodSetup();
+  setupSequencer();
+  bsodSetup();
 }
 
 // ================ DRAW
 function draw() {
   sequence();
-  if(count % 20 == 0){
-    //bsodDraw();
+  if(frameCount % 2 == 0) {
+    bsodDraw();
   }
-  count++;
 }
 
 function keyTyped()
 {
-	//onNote();
+	onNote();
 }

@@ -119,6 +119,10 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('genscore');
   });
 
+  socket.on('conductor', function (data) {
+    // console.log(data.id + ' conductor: ' + data.x +' '+ data.y);
+  })
+
 });
 
 // Building block for a client object
