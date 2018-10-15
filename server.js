@@ -46,24 +46,24 @@ function handler (req, res) {
     } else {
        fileurl = '/public' + req.url;
     }
-     let filepath = path.resolve('./' + fileurl);
+    let filepath = path.resolve('./' + fileurl);
 
-     let fileExt = path.extname(filepath);
-     let mimeType = mimeLookup[fileExt];
+    let fileExt = path.extname(filepath);
+    let mimeType = mimeLookup[fileExt];
 
-     if (!mimeType) {
+    if (!mimeType) {
+     send404(res);
+     return;
+    }
+
+    fs.exists(filepath, (exists) => {
+     if (!exists) {
        send404(res);
        return;
      }
-
-     fs.exists(filepath, (exists) => {
-       if (!exists) {
-         send404(res);
-         return;
-       }
-       res.writeHead(200, {'Content-Type': mimeType});
-       fs.createReadStream(filepath).pipe(res);
-     });
+     res.writeHead(200, {'Content-Type': mimeType});
+     fs.createReadStream(filepath).pipe(res);
+    });
   }
 };
 

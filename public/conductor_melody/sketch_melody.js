@@ -26,8 +26,7 @@ function draw()
 	{
 		socket.emit('conductor', {
 			id: 'melody',
-			x: mouseX,
-			y: mouseY
+			val: mouseX
 		});
 	}
 }
