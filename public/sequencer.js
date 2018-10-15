@@ -59,24 +59,24 @@ function updateParams(){
 
 //update notes moet gekoppeld worden aan de server
 function updateNotes(scorelist) {
-//   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-
-//   fmSynth._setScore(score.scoreChords);
-//   //scoreMelody = [] , used slice() to create a copy of the list
-//   lead._setScore(score.scoreMelody.slice());
-//   lead2._setScore(score.scoreMelody.slice());
-//   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-//   drums._setScore(score.scoreDrums);
-
-//   console.log("score melody = ", score.scoreMelody);
-//   console.log("score chords = ", score.scoreChords);
-
-  fmSynth._setScore(scorelist.chords);
-  //scoreMelody = []
-  lead._setScore(scorelist.melody);
-  lead2._setScore(scorelist.melody);
+  //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
+  fmSynth._setScore(score.scoreChords);
+  //scoreMelody = [] , used slice() to create a copy of the list
+  lead._setScore(score.scoreMelody.slice());
+  lead2._setScore(score.scoreMelody.slice());
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  drums._setScore(scorelist.drums);
+  drums._setScore(score.scoreDrums);
+
+  console.log("score melody = ", score.scoreMelody);
+  console.log("score chords = ", score.scoreChords);
+  
+//   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
+//   fmSynth._setScore(scorelist.chords);
+//   //scoreMelody = []
+//   lead._setScore(scorelist.melody);
+//   lead2._setScore(scorelist.melody);
+//   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
+//   drums._setScore(scorelist.drums);
 }
 
 function sequence() {
