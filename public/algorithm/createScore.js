@@ -4,53 +4,81 @@ class Score {
 
     this.algo = new Algorithm;
 
+    this.stringsArp;
+    this.stringsOctave;
+    this.stringsOctaveSpread;
+    this.stringsHalfTimeVar = 1;
+    this.stringsIsHalfTime = true;
 
-    this.stringsArp = 1;
-    this.melodyArp = 0;
+    this.melodyArp;
+    this.melodyOctave;
+    this.melodyOctaveSpread;
+    this.melodyHalfTime = 1;
+    this.melodyOffset;
+
     this.measures = 8;
     this.beatsPerMeasure = 32;
-    this.scoreNotes = this.algo.notes;
-    this.melodyRhythm = this.algo.rhythm;
-    this.chordRythm = this.algo.chordRhythm;
-    this.drumList = this.algo.drumRhythm;
     this.drumVoices = this.algo.drumVoices;
-    this.scoreNotesChords = new Array();
-    this.melodyList = new Array();
+
+    this.scoreNotes = [];
+    this.melodyRhythm = [];
+    this.chordRythm = [];
+
+    this.strings = [[],[],[]];
+    this.melodyList = [[],[],[]];
+    this.drumList = [[],[],[]];
+
     this.chordList = new Array();
-    this.drumList = new Array();
-    this.strings = new Array();
+    this.scoreNotesChords = new Array();
 
     for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
       this.chordList[beatsPerMeasure] = new Array();
       this.scoreNotesChords[beatsPerMeasure] = new Array();
     }
+  }
 
-    for (let beatsPerMeasure = 0; beatsPerMeasure < 3; beatsPerMeasure++){
-      this.strings[beatsPerMeasure] = new Array();
-      this.melodyList[beatsPerMeasure] = new Array();
-      this.drumList[beatsPerMeasure] = new Array();
+  _setMelodyState (state) {
+
+    switch (state) {
+      case 1:
+        this.melodyArp = 0;
+        break;
+      case 2:
+        this.melodyArp = 1;
+        break;
+      }
+  }
+
+  _setStringsState (state) {
+
+    switch (state) {
+      case 1:
+        this.stringsArp = 0;
+        this.stringsOctave = -1
+        break;
+      case 2:
+        this.stringsArp = 0;
+        this.stringsOctaveSpread = -1;
+        this.stringsOctave = 0;
+        this.stringsIsHalfTime = true;
+        break;
+      case 3:
+        this.stringsArp = 0;
+        this.stringsOctaveSpread = -1;
+        this.stringsOctave = 0;
+        this.stringsIsHalfTime = false;
+        break;
+      }
+  }
+
+  _setDrumState (state) {
+
+    switch (state) {
+      case 1:
+        break;
     }
-
   }
 
-  _updateAlgorithm () {
-    this._getAlgorithmNotes();
-    this._getAlgorithmMelodyRhythm();
-    this._getAlgorithmChordRhythm();
-    this._getAlgorithmDrumRhythm();
-  }
-
-  _getAlgorithmNotes () {
-    this.scoreNotes = this.algo.notes;
-  }
-
-  _getAlgorithmMelodyRhythm () {
-    this.melodyRhythm = this.algo.rhythm;
-  }
-
-  _getAlgorithmChordRhythm () {
-    this.chordRythm = this.algo.chordRythm;
-  }
 
   _getAlgorithmDrumRhythm () {
     this.drumVoices = this.algo.drumVoices;
@@ -69,66 +97,69 @@ class Score {
   _renderChords () {
 
     let stringVoices = 0;
+    this.chordRythm = this.algo.chordRythm;
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
-        if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
-          this.scoreNotes = this.algo.notes;
-          // this.scoreNotes = this._reverseArray(this.scoreNotes);
-          if (this.stringsArp == 0){ // if no arpeggio
-            this.chordList[beatsPerMeasure + (measures * 32)][beatsPerMeasure] = this.scoreNotes;
-            for (let stringVoices = 0; stringVoices < 3; stringVoices++){
-              this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
+
+        if (this.stringsHalfTimeVar == 1 || !this.stringsIsHalfTime) {
+
+          if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
+
+            this.scoreNotes = this.algo.notes;
+            this.chordNotes = this.scoreNotes.slice();
+
+            //set octave for strings:
+            for (let notes = 0; notes < this.chordNotes.length; notes++){
+              this.chordNotes[notes] = this.chordNotes[notes] +
+              (12 * this.stringsOctaveSpread * notes) +
+              (12 * this.stringsOctave);
+            }
+
+            // this.scoreNotes = this._reverseArray(this.scoreNotes);
+            if (this.stringsArp == 0){ // if no arpeggio
+              this.chordList[beatsPerMeasure + (measures * 32)][beatsPerMeasure] = this.chordNotes;
+              for (let stringVoices = 0; stringVoices < 3; stringVoices++){
+                this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.chordNotes[stringVoices];
+              }
+            } else {
+              this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.chordNotes[stringVoices];
+              this.strings[(stringVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
+              this.strings[(stringVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
             }
           } else {
-            this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
+            if(this.stringsArp == 0){
+            this.chordList[beatsPerMeasure + (measures * 32)].push(0);
+            for (let stringVoices = 0; stringVoices < 3; stringVoices++){
+              this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
+            }
+          } else {
+            this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.chordNotes[stringVoices];
             this.strings[(stringVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
             this.strings[(stringVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
           }
+        }
+          stringVoices = (stringVoices + 1) % this.strings.length;
+          this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.chordNotes;
+          this.stringsHalfTimeVar = 0;
         } else {
-          if(this.stringsArp == 0){
-          this.chordList[beatsPerMeasure + (measures * 32)].push(0);
+
           for (let stringVoices = 0; stringVoices < 3; stringVoices++){
             this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
           }
-        } else {
-          this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
-          this.strings[(stringVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
-          this.strings[(stringVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
-        }
-      }
-        stringVoices = (stringVoices + 1) % this.strings.length;
-        this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.scoreNotes;
+          this.stringsHalfTimeVar = 1;
       }
     }
     this._renderMelody();
   }
-
-
-
-
-  _renderMelody1 () {
-
-    let notess = 0;
-
-    for (let measures = 0; measures < this.measures; measures++){
-      for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
-        if (this.melodyRhythm[beatsPerMeasure % this.melodyRhythm.length] == 1){
-          this.melodyList[beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][notess % 3];
-        } else {
-          this.melodyList[beatsPerMeasure + (measures * 32)] = 0;
-        }
-        notess++;
-      }
-    }
-  }
-
+}
 
   //method that renders the notes from chordList to a melody which is used as a score for lead.js
   _renderMelody () {
 
     let notess = 0;
     let melodyVoices = 0;
+    this.melodyRhythm = this.algo.rhythm;
 
     for ( let measures = 0; measures < this.measures; measures++ ){
       for ( let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++ ){
@@ -160,22 +191,30 @@ class Score {
     console.log("melodyList in render melody = ", this.melodyList);
   }
 
-
   _renderDrumRhythm () {
+
+    this.drumVoices = this.algo.drumVoices;
+    this.drumRhythm = this.algo.drumRhythm;
+    let count = 0;
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let voices = 0; voices < this.drumVoices; voices++){
         for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
               this.drumList[voices].push(this.drumRhythm[voices][beatsPerMeasure % this.drumRhythm[voices].length]);
+              // count++;
         }
       }
     }
   }
 
   _renderScore () {
-    this._updateAlgorithm();
+    let count = 0;
+
     this._renderChords();
     this._renderDrumRhythm();
+    // console.log("drumList @_renderScore = ", this.drumList);
+    count++;
+    console.log("counter = ", count);
   }
 
 
@@ -196,30 +235,3 @@ class Score {
 
 
 }//end Score
-
-
-// _renderChords1 () {
-//
-//   let stringVoices = 0;
-//
-//   for (let measures = 0; measures < this.measures; measures++){
-//     for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
-//
-//       if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
-//         this.scoreNotes = this.algo.notes;
-//       }
-//
-//       this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotes[stringVoices];
-//       this.strings[(stringVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
-//       this.strings[(stringVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
-//
-//       stringVoices = (stringVoices + 1) % this.strings.length;
-//       this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.scoreNotes;
-//       }
-//     }
-//   // console.log("in _renderChords = ", this.chordList);
-//   console.log("in _renderChords stringList = ", this.strings);
-//   // console.log("in _renderChords = ", this.scoreNotesChords);
-//   //split chord list into three lists
-//   this._renderMelody();
-// }

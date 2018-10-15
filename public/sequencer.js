@@ -19,8 +19,6 @@ var trigger = false;
 var countSequence = 0;
 
 function setupSequencer () {
-
-  score._renderScore();
   // drums._setScore(score.scoreDrums);
 
   //Slider controls ============================================================
@@ -50,7 +48,7 @@ function setupSequencer () {
 
 function updateParams(){
   // algo._setInterval(intervalSilder.value());
-  fmSynth._setOctave(-1);
+  fmSynth._setOctave(0);
   lead._setOctave(1);
   lead2._setOctave(2);
   lead._setNoteDuration(2);
@@ -59,6 +57,8 @@ function updateParams(){
 
 //update notes moet gekoppeld worden aan de server
 function updateNotes() {
+  score._setMelodyState(1);
+  score._setStringsState(3);
   score._renderScore();
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(score.scoreChords);
@@ -70,6 +70,7 @@ function updateNotes() {
 
   console.log("score melody = ", score.scoreMelody);
   console.log("score chords = ", score.scoreChords);
+  console.log("score drums = ", score.scoreDrums);
 }
 
 function sequence() {
@@ -78,25 +79,15 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    // if(countSequence % 1 == 0) {
-    //   drums._sequence();
-    // }
+    drums._sequence();
 
-    if(countSequence % 2 == 0) {
-      lead._sequence();
-    }
+    lead._sequence();
 
-    // if(countSequence % 2 == 0) {
-    //   lead2._sequence();
-    // }
-    //
-    //
-    if(countSequence % 2 == 0){
-      fmSynth._sequence();
-      }
-    // console.log("count = ", count);
+    lead2._sequence();
+
+    fmSynth._sequence();
+
     trigger = true;
-    countSequence++;
   }
 
   if(d.getMilliseconds() % 125 >= 40 && trigger){
