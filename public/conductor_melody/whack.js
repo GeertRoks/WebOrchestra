@@ -39,7 +39,7 @@ function whackDraw()
 	background(0);
 	
 	// Move and regenerate memory
-	if (frameCount % 60 == 0) {
+	if (frameCount % 30 == 0) {
 		randNullPos = int(random(bitArray.length-5));
 
 		for (var i=0; i<bitArray.length; i++)
@@ -72,11 +72,9 @@ function whackDraw()
 	stroke(255);
 	strokeWeight(2);
 	rect(int(mouseX/bitCharWidth)*bitCharWidth, int(mouseY/bitLineHeight)*bitLineHeight, bitCharWidth, bitLineHeight);
-	// rect(mouseXClick*bitCharWidth, mouseYClick*bitLineHeight, bitCharWidth, bitLineHeight);
 
 	if (memoryProgress > 0)
 		memoryProgress -= 0.3;
-	// print(memoryProgress);
 
 	fill(255, 100);
 	rect(0, 0, windowWidth * memoryProgress * 0.01, bitLineHeight);
@@ -88,9 +86,16 @@ function mouseClicked()
 	mouseYClick = int(mouseY/bitLineHeight);
 	let clickIndex = mouseXClick + (mouseYClick * bitsPerLine);
 
-	if (clickIndex >= randNullPos && clickIndex < randNullPos + 5) {
+	if (clickIndex >= randNullPos && clickIndex < randNullPos + 5) 
+	{
+		// Error
 		memoryProgress += 20;
 		frameCount = -1;
+	} else {
+		// Healthy memory
+		memoryProgress -= 10;
+		if (memoryProgress < 0)
+			memoryProgress = 0;
 	}
 }
 
