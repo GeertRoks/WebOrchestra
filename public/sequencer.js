@@ -12,12 +12,12 @@ function setupSequencer () {
 }
 
 function updateParams(){
-  fmSynth._setOctave(-1);
-  lead._setOctave(2);
+  lead._setOctave(1);
   lead2._setOctave(2);
   lead._setNoteDuration(2);
   lead2._setNoteDuration(2);
 }
+
 
 function updateNotes(scorelist) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
@@ -35,25 +35,15 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    if(countSequence % 1 == 0) {
-      drums._sequence();
-    }
+    drums._sequence();
 
-    if(countSequence % 2 == 0) {
-      lead._sequence();
-    }
+    lead._sequence();
 
-    if(countSequence % 2 == 1) {
-      lead2._sequence();
-    }
+    lead2._sequence();
 
+    fmSynth._sequence();
 
-    if(countSequence % 2 == 0){
-      fmSynth._sequence();
-      }
-    // console.log("count = ", count);
     trigger = true;
-    countSequence++;
   }
 
   if(d.getMilliseconds() % 125 >= 40 && trigger){
