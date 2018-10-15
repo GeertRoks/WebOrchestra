@@ -16,7 +16,7 @@ function setupSequencer () {
   updateParams();
 }
 
-function updateParams(){
+function updateParams () {
   // algo._setInterval(intervalSilder.value());
   fmSynth._setOctave(0);
   lead._setOctave(1);
@@ -27,8 +27,10 @@ function updateParams(){
 
 //update notes moet gekoppeld worden aan de server
 function updateNotes() {
-  score._setMelodyState(3);
-  score._setStringsState(3);
+  // score._setMelodyState(Math.round(Math.random() * 4));
+  // score._setStringsState(Math.round(Math.random() * 4));
+  score._setMelodyState(4);
+  score._setStringsState(4);
   score._renderScore();
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(score.scoreChords);
@@ -55,9 +57,14 @@ function sequence() {
 
     // lead2._sequence();
 
-    fmSynth._sequence();
+    // fmSynth._sequence();
 
     trigger = true;
+
+    if(countSequence % 256 == 0) {
+      updateNotes();
+    }
+    countSequence++;
   }
 
   if(d.getMilliseconds() % 125 >= 40 && trigger){
