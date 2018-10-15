@@ -59,15 +59,14 @@ function updateParams(){
 }
 
 //update notes moet gekoppeld worden aan de server
-function updateNotes() {
-  score._renderScore();
+function updateNotes(scorelist) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  fmSynth._setScore(score.scoreChords);
+  fmSynth._setScore(scorelist.chords);
   //scoreMelody = []
-  lead._setScore(score.scoreMelody);
-  lead2._setScore(score.scoreMelody);
+  lead._setScore(scorelist.melody);
+  lead2._setScore(scorelist.melody);
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  drums._setScore(score.scoreDrums);
+  drums._setScore(scorelist.drums);
 }
 
 function sequence() {

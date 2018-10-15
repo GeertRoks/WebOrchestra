@@ -4,9 +4,9 @@ var count = 0;
 function setup() {
   //Server Setup
   createCanvas(displayWidth, displayHeight);
-  socket = io.connect("https://" + hostname + ":" + port);
+  socket = io.connect(hostname + ":" + port);
 
-//  Time sync code from their socket example ==================================
+  //  Time sync code from their socket example ==================================
   var ts = timesync.create({
     server: socket,
     interval: 5000
@@ -32,21 +32,25 @@ function setup() {
     ts.receive(null, data);
   });
 
+  socket.on('newscore', function (scorelist) {
+    updateNotes(scorelist);
+  });
+
   //P5 setup
-  setupSequencer();
-  // bsodSetup();
+  //setupSequencer();
+  //bsodSetup();
 }
 
 // ================ DRAW
 function draw() {
   sequence();
   if(count % 20 == 0){
-    // bsodDraw();
+    //bsodDraw();
   }
   count++;
 }
 
 function keyTyped()
 {
-	// onNote();
+	//onNote();
 }
