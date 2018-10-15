@@ -78,19 +78,19 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    if(countSequence % 1 == 0) {
-      drums._sequence();
-    }
+    // if(countSequence % 1 == 0) {
+    //   drums._sequence();
+    // }
 
     if(countSequence % 2 == 0) {
       lead._sequence();
     }
 
-    if(countSequence % 2 == 1) {
-      lead2._sequence();
-    }
-
-
+    // if(countSequence % 2 == 0) {
+    //   lead2._sequence();
+    // }
+    //
+    //
     if(countSequence % 2 == 0){
       fmSynth._sequence();
       }

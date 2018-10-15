@@ -27,11 +27,11 @@ class FmStrings {
     this.modFreqs = [4.8, -4.8, 0];
     this.modAmps = [2, 2, 0];
 
-    this.chordList = new Array();
+    this.chordList = [[],[],[]];
 
-    for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
-        this.chordList[beatsPerMeasure] = new Array();
-    }
+    // for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure * this.measures; beatsPerMeasure++){
+    //     this.chordList[beatsPerMeasure] = new Array();
+    // }
 
     for (var y = 0; y < numVoices; y++){
       this.envAmp.push(new p5.Envelope());
@@ -80,6 +80,7 @@ class FmStrings {
 
   _setScore (score) {
     this.chordList = score;
+    console.log("score in strings = ", this.chordList);
   }
 
   _sequence () {
