@@ -1,6 +1,3 @@
-// Server based on oscServer.js by csdhku:
-// https://github.com/csdhku/csdosc/blob/master/oscServer.js
-
 var app = require('http').createServer(handler);
 var fs = require('fs');
 var path = require('path');
@@ -41,6 +38,8 @@ function handler (req, res) {
       fileurl = '/public/conductor_melody/index.html';
     } else if (req.url == '/conductor_drone') {
       fileurl = '/public/conductor_drone/index.html';
+    } else if (req.url == '/algorithm') {
+      fileurl = '/public/algorithm/index.html';
     } else {
        fileurl = '/public' + req.url;
     }
@@ -106,6 +105,11 @@ io.sockets.on('connection', function(socket) {
       id: data && 'id' in data ? data.id : null,
       result: Date.now()
     });
+  });
+
+  socket.on('newscore', function (scorelist) {
+    socket.broadcast.emit('newscore', scorelist);
+    console.log('new score send!');
   });
 });
 

@@ -54,7 +54,7 @@ function matrixDraw()
 	// Progress bar
 	rect(windowWidth*.5 - 200,windowHeight*.5 - 50, hackingProgress * 4, 10);
 
-	hackingProgress = hackingProgress * 0.99;
+	hackingProgress = hackingProgress * 0.995;
 
 	if (hackingProgress > 100 && random(100) > 90)
 		background(random(255));
