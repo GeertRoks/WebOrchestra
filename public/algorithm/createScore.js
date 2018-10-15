@@ -13,7 +13,8 @@ class Score {
     this.melodyArp;
     this.melodyOctave;
     this.melodyOctaveSpread;
-    this.melodyHalfTime = 1;
+    this.melodyHalfTimeVar = 1;
+    this.melodyisHalfTime = true;
     this.melodyOffset;
 
     this.measures = 8;
@@ -42,10 +43,15 @@ class Score {
     switch (state) {
       case 1:
         this.melodyArp = 0;
+        this.melodyisHalfTime = true;
         break;
       case 2:
         this.melodyArp = 1;
+        this.melodyisHalfTime = true;
         break;
+      case 3:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
       }
   }
 
@@ -54,16 +60,24 @@ class Score {
     switch (state) {
       case 1:
         this.stringsArp = 0;
-        this.stringsOctave = -1
+        this.stringsOctaveSpread = 1;
+        this.stringsOctave = 0;
+        this.stringsIsHalfTime = true;
         break;
       case 2:
         this.stringsArp = 0;
-        this.stringsOctaveSpread = -1;
+        this.stringsOctaveSpread = 0;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = true;
         break;
       case 3:
-        this.stringsArp = 0;
+        this.stringsArp = 1;
+        this.stringsOctaveSpread = -1;
+        this.stringsOctave = 0;
+        this.stringsIsHalfTime = true;
+        break;
+      case 4:
+        this.stringsArp = 1;
         this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = false;
@@ -163,6 +177,8 @@ class Score {
 
     for ( let measures = 0; measures < this.measures; measures++ ){
       for ( let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++ ){
+        if (this.melodyHalfTimeVar  == 1 || !this.melodyisHalfTime) {
+
           if ( this.melodyArp == 0 ) {
             if(this.chordRythm[beatsPerMeasure] == 1){
               for ( let voices = 0; voices < 3; voices++ ) {
@@ -186,10 +202,16 @@ class Score {
         }
         melodyVoices = (melodyVoices + 1) % 3;
         notess++;
+        this.melodyHalfTimeVar = 0;
+      } else {
+          for (let stringVoices = 0; stringVoices < 3; stringVoices++){
+            this.melodyList[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
+          }
+          this.melodyHalfTimeVar = 1;
+        }
+        }
       }
     }
-    console.log("melodyList in render melody = ", this.melodyList);
-  }
 
   _renderDrumRhythm () {
 
