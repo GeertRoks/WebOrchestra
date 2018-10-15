@@ -151,6 +151,7 @@ class Score {
       }
     }
     this._renderMelody();
+    console.log("renderchords: " + this.strings);
   }
 }
 

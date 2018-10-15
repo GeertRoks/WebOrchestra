@@ -47,8 +47,10 @@ class Lead {
   }
 
   _setScore (notesList) {
-    for(var j = 0; j < notesList.length; j++) {
-      this.notes.push(notesList.shift());
+    for (var i = 0; i < notesList.length; i ++ ) {
+      for(var j = 0; j < notesList[i].length; j++) {
+        this.notes[i].push(notesList[i].shift());
+      }
     }
     console.log("lead: " + this.notes);
     console.log("leadlength: " + this.notes.length);
