@@ -2,6 +2,7 @@
 
 var bitArray = [];
 var bitsPerLine = 50;
+const bitLineHeight = 40
 var randNullPos = 0;
 
 function whackPreload()
@@ -11,7 +12,13 @@ function whackPreload()
 
 function whackSetup()
 {
-	for (var i=0; i<1000; i++)
+	print((1300/bitsPerLine)*bitLineHeight);
+
+	let nBits = int((windowHeight/bitLineHeight)+0.999) * bitsPerLine;
+
+	print(nBits);
+
+	for (var i=0; i<nBits; i++)
 	{
 		bitArray.push(int(random(2)));
 	}
@@ -29,7 +36,7 @@ function whackDraw()
 	
 
 	if (frameCount % 100 == 0) {
-		randNullPos = int(random(bitArray.length));
+		randNullPos = int(random(bitArray.length-5));
 
 		for (var i=0; i<bitArray.length; i++)
 		{
@@ -52,7 +59,7 @@ function whackDraw()
 		else
 			fill(255);
 
-		text(bitArray[i], (i%bitsPerLine)*(windowWidth/(bitsPerLine+1)) + bitsPerLine*0.5, int(i/bitsPerLine)*50 + 25);
+		text(bitArray[i], (i%bitsPerLine)*(windowWidth/(bitsPerLine+1)) + bitsPerLine*0.5, int(i/bitsPerLine)*bitLineHeight);
 	}
 }
 
