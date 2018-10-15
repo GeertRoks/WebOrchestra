@@ -11,7 +11,7 @@ function preload()
 function setup()
 {
 	createCanvas(displayWidth, displayHeight);
-	socket = io.connect("https://" + hostname + ":" + port);
+	socket = io.connect(hostname + ":" + port);
 
 	matrixSetup();
 }
