@@ -2,6 +2,8 @@ class Score {
 
   constructor () {
 
+    this.countScores = 0;
+
     this.algo = new Algorithm;
 
     this.drumsOn = true;
@@ -126,7 +128,6 @@ class Score {
 
     let stringVoices = 0;
     this.chordRhythm = this.algo.chordRythm;
-    console.log("chordRhythm # renderChords = ", this.chordRhythm)
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
@@ -137,7 +138,6 @@ class Score {
 
             this.scoreNotes = this.algo.notes;
             this.chordNotes = this.scoreNotes.slice();
-            console.log("this.chordNotes @ _renderChords = ", this.chordNotes);
 
             //set octave for strings:
             for (let notes = 0; notes < this.chordNotes.length; notes++){
@@ -246,11 +246,11 @@ class Score {
   }
 
   _renderScore () {
-    let count = 0;
-
+    // let count = 0;
+    // console.log(this.countScores);
     this._renderChords();
     this._renderDrumRhythm();
-
+    // this.countScores++;
   }
 
 

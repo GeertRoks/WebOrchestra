@@ -34,7 +34,7 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    // drums._sequence();
+    drums._sequence();
 
     lead._sequence();
 
@@ -44,9 +44,9 @@ function sequence() {
 
     trigger = true;
 
-    if(countSequence % 256 == 0) {
-      updateNotes();
-    }
+    // if(countSequence % 256 == 0) {
+    //   updateNotes();
+    // }
     countSequence++;
   }
 

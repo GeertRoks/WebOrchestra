@@ -3,10 +3,12 @@ class Algorithm {
 
     constructor () {
       this.drumVoices = 3;
+      this.drumsThresholdValue = 1;
+      this.chordsThresholdValue = 1;
+      this.melodyThresholdValue = 3;
       this.first = true;
       this.notePicked = 0;
       this.chordInterval = 3;
-      // this.numerator = 8;
       this._constructNotes ();
       this._constructMelodyRhythm();
       this._constructChordRhythm();
@@ -35,38 +37,63 @@ class Algorithm {
   }
 
   _constructMelodyRhythm () {
-    const rhythm = [1, 0, 0, 0, 0, 0];
-    const rhythm2 = [1, 0, 0, 1, 0, 0];
-    const rhythm3 = [1, 0, 0, 1, 0, 1];
-    const rhythm4 = [1, 0, 1, 1, 0, 1];
-    const rhythm5 = [1, 0, 0, 0, 1, 0, 1];
-    const rhythm6 = [1, 0, 1, 0, 1, 0, 1];
-    const rhythm7 = [1, 0, 1, 0, 1, 1, 1];
-    return rhythm;
+
+    // const rhythm1 = [1, 0, 0, 0, 0, 0];
+    // const rhythm2 = [1, 0, 0, 1, 0, 0];
+    // const rhythm3 = [1, 0, 0, 1, 0, 1];
+    // const rhythm4 = [1, 0, 1, 1, 0, 1];
+    const melodyRhythm = [];
+    const melodyThresholds = [1, 0, 2, 4, 0, 3];
+
+    for (let melodyIndex = 0; melodyIndex < melodyThresholds.length; melodyIndex++){
+      if(melodyThresholds[melodyIndex] <= this.melodyThresholdValue){
+        melodyRhythm[melodyIndex] = 1;
+      } else {
+        melodyRhythm[melodyIndex] = 0;
+      }
+    }
+
+    return melodyRhythm;
   }
 
   _constructChordRhythm () {
-    //TODO maak een globale maatsoort
-    const chordR = [1, 0, 0, 1];
-    const chordRhythm1 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const chordRhythm2 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
-    const chordRhythm3 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
-    const chordRhythm4 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const chordRhythm5 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const chordRhythm6 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
-    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
 
-    const c = [chordRhythm1, chordRhythm2, chordRhythm3, chordRhythm4,
-    chordRhythm5, chordRhythm6];
+    const chordRhythm = [];
+    // const chordThresholds = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    // 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const chordThresholds = [1, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0,
+    2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0];
 
-    const chordRhythm = this._assignArray(c[2]);
+    for (let chordIndex = 0; chordIndex < chordThresholds.length; chordIndex++){
+      if(chordThresholds[chordIndex] <= this.chordsThresholdValue){
+        chordRhythm[chordIndex] = 1;
+      } else {
+        chordRhythm[chordIndex] = 0;
+      }
+    }
 
-    return chordRhythm;
+    return chordThresholds;
+  }
+
+  _constructDrumRhythm () {
+    const drumRhythm = new Array();
+
+    drumRhythm[0] = new Array();
+    drumRhythm[1] = new Array();
+    drumRhythm[2] = new Array();
+    const drumThresholds = [[1, 8, 6, 11, 10, 11, 5, 11], [11, 11, 9, 11, 1, 11, 10, 0],
+    [9, 5, 7, 6, 8, 5, 9, 5]];
+
+    for (let row = 0; row < 3; row++){
+      for (let drumIndex = 0; drumIndex < drumThresholds[0].length; drumIndex++){
+        if(drumThresholds[row][drumIndex] <= this.drumsThresholdValue){
+          drumRhythm[row][drumIndex] = 1;
+        } else {
+          drumRhythm[row][drumIndex] = 0;
+        }
+      }
+    }
+    return drumRhythm;
   }
 
   _assignArray(array){
@@ -82,44 +109,25 @@ class Algorithm {
     this.chordInterval = chordInterval;
   }
 
-
-  _constructDrumRhythm () {
-    const drumRhythm = new Array();
-
-    drumRhythm[0] = new Array(1, 0, 0, 0, 0, 0, 1, 0);
-    drumRhythm[1] = new Array(0, 0, 0, 0, 1, 0, 0, 0);
-    drumRhythm[2] = new Array(0, 1, 1, 1, 0, 1, 0, 1);
-
-    return drumRhythm;
-  }
-
   _returnDrumVoices(){
     return this.drumVoices;
   }
 
-// //akkoorden of arpeggio ========================================================
-//   _setArpMelody (arpM) {
-//
-//   }
-//
-//   _setArpDrone (arpD) {
-//
-//   }
-
-//nootdichtheid ================================================================
+  //note density ================================================================
   _setNoteDensityMelody (densityMelody) {
+    this.melodyThresholdValue = densityMelody;
 
   }
 
   _setNoteDensityDrone (densityDrone) {
-
+    this.chordsThresholdValue = densityDrone;
   }
 
-  _setNoteDensityRhythm (densityMelody) {
-
+  _setNoteDensityDrums (densityDrums) {
+    this.thresholdValue = densityDrums;
   }
 
-//getters ======================================================================
+  //getters ======================================================================
   get notes () {
     let n = this._notes = this._constructNotes();
     return n;

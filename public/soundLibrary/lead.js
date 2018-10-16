@@ -8,7 +8,7 @@ class Lead {
     this.triOsc = [];
     this.notes = [[],[],[]];
     this.rhythm = [];
-    
+
     this.attackLevel = 0.2;
     this.releaseLevel = 0;
 
