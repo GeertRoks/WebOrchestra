@@ -10,7 +10,7 @@ let nErrors = 10;
 
 var bgImg;
 
-var bugman = 10;
+var bugman = nErrors;
 
 function bugmanPreload() {
 	
@@ -37,8 +37,8 @@ function bugmanDraw()
 	let dy = mouseY - posY;
 	posY += dy * errEasing;
 
-	if (frameCount % 10 === 0) {
-		if (random(100) > 30)
+	if (frameCount % 30 === 0) {
+		if (random(100) > 80)
 			errors.push(new WinErr());
 
 		if (errors.length > nErrors)
@@ -56,17 +56,18 @@ function bugmanDraw()
 	textSize(32);
 	noStroke();
 	fill(255);
-	text('CPU ' + int(bugman * 10) + '%', 10, 10);
+	text('CPU ' + 100 * (bugman / nErrors) + '%', 10, 10);
 }
 
 function bugmanResized() {
 }
 
 function WinErr() {
-	this.x = int(posX);
-	this.y = int(posY);
 	this.xSize = 400;
 	this.ySize = 250;
+
+	this.x = int(posX) - (this.xSize * 0.);
+	this.y = int(posY) - (this.ySize * 0.);
 
 	this.display = function() {
 		// Window
@@ -115,14 +116,15 @@ function WinErr() {
 
 	};
 
-	this.check = function() {
+	this.check = function(removeID) {
 		let cancelPosX = this.x+this.xSize-28;
 		let cancelPosY = this.y+2;
 
 		if (mouseX > cancelPosX && mouseX <= cancelPosX+26)
 		{
-			print('boem');
-			
+			errors.splice(removeID, 1);
+			print(removeID)
+
 		}
 
 	}
@@ -130,6 +132,6 @@ function WinErr() {
 
 function mouseClicked() {
 	for (var i=0; i<errors.length; i++) {
-		errors[i].check();
+		errors[i].check(i);
 	}
 }
