@@ -44,7 +44,27 @@ class Score {
     }
   }
 
+  _setScoreState (conductorName, stateFloat) {
+
+    if(conductorName == 'melody') {
+      this._setMelodyState(stateFloat);
+    }
+    if(conductorName == 'drone') {
+      this._setStringsState(stateFloat);
+    }
+    if(conductorName == 'rhythm') {
+      this._setDrumState(stateFloat);
+    }
+
+  }
+
   _setMelodyState (state) {
+
+    if(state > 100){
+      state = 5
+    } else {
+      state = int(state / 25);
+    }
 
     switch (state) {
       case 1:
@@ -74,7 +94,15 @@ class Score {
 
   _setStringsState (state) {
 
+    if(state > 100){
+      state = 5
+    } else {
+      state = int(state / 25);
+    }
+
     switch (state) {
+
+
       case 1:
         this.stringsArp = 0;
         this.stringsOctaveSpread = 1;
@@ -104,8 +132,24 @@ class Score {
 
   _setDrumState (state) {
 
+    if(state > 100){
+      state = 4
+    } else {
+      state = int(state / 33);
+    }
+
     switch (state) {
       case 1:
+        this.drumsThresholdValue = 1;
+        break;
+      case 2:
+        this.drumsThresholdValue = 2;
+        break;
+      case 3:
+        this.drumsThresholdValue = 3;
+        break;
+      case 4:
+        this.drumsThresholdValue = 4;
         break;
     }
   }
