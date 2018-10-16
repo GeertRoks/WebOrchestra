@@ -2,18 +2,13 @@ class Lead {
 
   constructor () {
 
-    // this.arp = 1;
-    this.octave = 0;
     this.duration = 1;
 
     this.env = [];
     this.triOsc = [];
     this.notes = [[],[],[]];
     this.rhythm = [];
-
-    this.index = 0;
-    this.count = 0;
-
+    
     this.attackLevel = 0.2;
     this.releaseLevel = 0;
 

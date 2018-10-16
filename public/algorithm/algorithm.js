@@ -35,49 +35,47 @@ class Algorithm {
   }
 
   _constructMelodyRhythm () {
-
-    let divideList = []
-    let numerator = Math.round(Math.random() * 10);
-    // console.log("numerator = ", numerator);
-    const deviders = [[],[],[]];
-
-    //kijkt naar hoe de maat onderverdeeld kan worden
-    for (let checkValue = 2; checkValue < 5; checkValue++){
-      let ticksInBar = numerator;
-      // console.log("ticksInBar = ", ticksInBar, " ", "checkValue = ", checkValue);
-
-      while (ticksInBar > 0) {
-        ticksInBar -= checkValue;
-        if (ticksInBar >= 0){
-          deviders[checkValue-2].push(checkValue);
-        }
-      }
-
-      if(ticksInBar < 0){
-        ticksInBar += checkValue;
-        deviders[checkValue-2].push(ticksInBar);
-      }
-    }
-
-    // for(var y = 0; y < deviders.length; y++){
-    //   for (var i = 0; i < deviders[y].length; i++){
-    //     if(deviders[y][i] == 1){
-    //       deviders[y][i - 1]+= deviders[y][i - 1] + 1;
-    //       deviders[y].splice(i, 1);
-    //     }
-    //   }
-    // }
-
-    const rhythm = [1, 0, 1, 0, 1, 1, 1];
+    const rhythm = [1, 0, 0, 0, 0, 0];
+    const rhythm2 = [1, 0, 0, 1, 0, 0];
+    const rhythm3 = [1, 0, 0, 1, 0, 1];
+    const rhythm4 = [1, 0, 1, 1, 0, 1];
+    const rhythm5 = [1, 0, 0, 0, 1, 0, 1];
+    const rhythm6 = [1, 0, 1, 0, 1, 0, 1];
+    const rhythm7 = [1, 0, 1, 0, 1, 1, 1];
     return rhythm;
   }
 
   _constructChordRhythm () {
     //TODO maak een globale maatsoort
+    const chordR = [1, 0, 0, 1];
+    const chordRhythm1 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const chordRhythm2 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0];
+    const chordRhythm3 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
+    const chordRhythm4 = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const chordRhythm5 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    const chordRhythm6 = [1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0,
+    1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0];
 
-    const chrodRhythm = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    return chrodRhythm;
+    const c = [chordRhythm1, chordRhythm2, chordRhythm3, chordRhythm4,
+    chordRhythm5, chordRhythm6];
+
+    const chordRhythm = this._assignArray(c[2]);
+
+    return chordRhythm;
   }
+
+  _assignArray(array){
+    var outputArray;
+    outputArray = array.slice();
+
+    return outputArray;
+  }
+
 
   //beinvloed nootmateriaal
   _setInterval (chordInterval) {

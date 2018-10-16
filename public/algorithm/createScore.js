@@ -4,6 +4,10 @@ class Score {
 
     this.algo = new Algorithm;
 
+    this.drumsOn = true;
+    this.stringsOn = true;
+    this.melodyOn = true;
+
     this.stringsArp;
     this.stringsOctave;
     this.stringsOctaveSpread;
@@ -23,7 +27,7 @@ class Score {
 
     this.scoreNotes = [];
     this.melodyRhythm = [];
-    this.chordRythm = [];
+    this.chordRhythm = [];
 
     this.strings = [[],[],[]];
     this.melodyList = [[],[],[]];
@@ -77,7 +81,7 @@ class Score {
         break;
       case 2:
         this.stringsArp = 0;
-        this.stringsOctaveSpread = 0;
+        this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = true;
         break;
@@ -121,17 +125,19 @@ class Score {
   _renderChords () {
 
     let stringVoices = 0;
-    this.chordRythm = this.algo.chordRythm;
+    this.chordRhythm = this.algo.chordRythm;
+    console.log("chordRhythm # renderChords = ", this.chordRhythm)
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
 
         if (this.stringsHalfTimeVar == 1 || !this.stringsIsHalfTime) {
 
-          if (this.chordRythm[beatsPerMeasure % this.chordRythm.length] == 1){
+          if (this.chordRhythm[beatsPerMeasure % this.chordRhythm.length] == 1){
 
             this.scoreNotes = this.algo.notes;
             this.chordNotes = this.scoreNotes.slice();
+            console.log("this.chordNotes @ _renderChords = ", this.chordNotes);
 
             //set octave for strings:
             for (let notes = 0; notes < this.chordNotes.length; notes++){
@@ -172,11 +178,11 @@ class Score {
             this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
           }
           this.stringsHalfTimeVar = 1;
+        }
       }
+      this._renderMelody();
     }
-    this._renderMelody();
   }
-}
 
   //method that renders the notes from chordList to a melody which is used as a score for lead.js
   _renderMelody () {
@@ -190,7 +196,7 @@ class Score {
         if (this.melodyHalfTimeVar  == 1 || !this.melodyisHalfTime) {
 
           if ( this.melodyArp == 0 ) {
-            if(this.chordRythm[beatsPerMeasure] == 1){
+            if(this.chordRhythm[beatsPerMeasure] == 1){
               for ( let voices = 0; voices < 3; voices++ ) {
                 this.melodyList[voices][beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][notess % 3]
                 + ( 12 * (this.melodyOctaveSpread * voices) + (12 * this.melodyOctave));

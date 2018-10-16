@@ -4,10 +4,6 @@ const fmSynth = new FmStrings(3);
 const lead = new Lead;
 const lead2 = new Lead;
 
-var fmNotes;
-var rhythm;
-var chordRhythm;
-
 var trigger = false;
 var countSequence = 0;
 
@@ -18,7 +14,6 @@ function setupSequencer () {
 
 function updateParams () {
   // algo._setInterval(intervalSilder.value());
-  fmSynth._setOctave(0);
   lead._setOctave(1);
   lead2._setOctave(2);
   lead._setNoteDuration(2);
@@ -30,7 +25,7 @@ function updateNotes() {
   // score._setMelodyState(Math.round(Math.random() * 4));
   // score._setStringsState(Math.round(Math.random() * 4));
   score._setMelodyState(4);
-  score._setStringsState(4);
+  score._setStringsState(2);
   score._renderScore();
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(score.scoreChords);
@@ -57,7 +52,7 @@ function sequence() {
 
     // lead2._sequence();
 
-    // fmSynth._sequence();
+    fmSynth._sequence();
 
     trigger = true;
 
