@@ -60,16 +60,18 @@ class Score {
 
   _setMelodyState (state) {
 
-    if(state > 100){
-      state = 5
-    } else {
-      state = int(state / 25);
-    }
+    // if(state > 100){
+    //   state = 5
+    // } else {
+    //   state = int(state / 25);
+    // }
 
     switch (state) {
       case 1:
-        this.melodyArp = 0;
+        this.melodyArp = 1;
         this.melodyisHalfTime = true;
+        this.melodyOctaveSpread = 0;
+        this.melodyOctave = 2;
         break;
       case 2:
         this.melodyArp = 1;
@@ -94,11 +96,11 @@ class Score {
 
   _setStringsState (state) {
 
-    if(state > 100){
-      state = 5
-    } else {
-      state = int(state / 25);
-    }
+    // if(state > 100){
+    //   state = 5
+    // } else {
+    //   state = int(state / 25);
+    // }
 
     switch (state) {
 
@@ -132,11 +134,11 @@ class Score {
 
   _setDrumState (state) {
 
-    if(state > 100){
-      state = 4
-    } else {
-      state = int(state / 33);
-    }
+    // if(state > 100){
+    //   state = 4
+    // } else {
+    //   state = int(state / 33);
+    // }
 
     switch (state) {
       case 1:
@@ -280,6 +282,8 @@ class Score {
     this.drumRhythm = this.algo.drumRhythm;
     let count = 0;
 
+    this.drumList = [[],[],[]];
+
     for (let measures = 0; measures < this.measures; measures++){
       for (let voices = 0; voices < this.drumVoices; voices++){
         for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
@@ -301,15 +305,17 @@ class Score {
 //Getters=======================================================================
 
   get scoreMelody () {
-
+    console.log("strings @ score = ", this.melodyList);
     return this.melodyList;
   }
 
   get scoreChords () {
+    console.log("strings @ score = ", this.strings);
     return this.strings;
   }
 
   get scoreDrums () {
+    console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 

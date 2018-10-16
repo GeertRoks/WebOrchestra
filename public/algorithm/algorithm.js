@@ -52,17 +52,17 @@ class Algorithm {
         melodyRhythm[melodyIndex] = 0;
       }
     }
-
+    console.log("melodyRhythm = ", melodyRhythm);
     return melodyRhythm;
   }
 
   _constructChordRhythm () {
 
     const chordRhythm = [];
-    // const chordThresholds = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-    // 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-    const chordThresholds = [1, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0,
-    2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0];
+    const chordThresholds = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+    // const chordThresholds = [1, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0,
+    // 2, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0];
 
     for (let chordIndex = 0; chordIndex < chordThresholds.length; chordIndex++){
       if(chordThresholds[chordIndex] <= this.chordsThresholdValue){
@@ -134,8 +134,8 @@ class Algorithm {
   }
 
   get rhythm () {
-    let r = this._rhythm;
-    if (!r) r = this._rhythm = this._constructMelodyRhythm();
+    let r = this._melodyRhythm;
+    if (!r) r = this._melodyRhythm = this._constructMelodyRhythm();
     return r;
   }
 

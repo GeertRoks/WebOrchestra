@@ -25,6 +25,9 @@ function updateNotes(scorelist) {
   lead2._setScore(scorelist.melody.slice());
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   drums._setScore(scorelist.drums);
+  // console.log("chords @ updateNotes = ", scorelist.chords);
+  // console.log("lead @ updateNotes = ", scorelist.melody);
+  // console.log("drums @ updateNotes = ", scorelist.drums);
 }
 
 function sequence() {
@@ -37,7 +40,7 @@ function sequence() {
 
     lead._sequence();
 
-    // lead2._sequence();
+    lead2._sequence();
 
     fmSynth._sequence();
 

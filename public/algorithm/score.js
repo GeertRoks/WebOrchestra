@@ -38,9 +38,13 @@ function sendNewNotes() {
     melody: score.scoreMelody,
     chords: score.scoreChords
   };
+  console.log("scoreDrums @ score.js = ", score.scoreDrums);
+  console.log("scoreList @ score.js = ", scorelist);
 
-  for (var i = 0; i <scorelist.drums[0].length; i++) {
-    ref.push(scorelist.drums[0].shift());
+  var drumRef = scorelist.drums[0].slice();
+
+  for (var i = 0; i <256; i++) {
+    ref.push(0);
   }
   console.log(ref);
 
@@ -52,7 +56,7 @@ function draw() {
 
   if (d.getMilliseconds() % 125 <= 20 && !trigger) {
     ref.shift();
-    console.log('ref shift')
+    // console.log('ref shift')
     trigger = true;
   }
   if(d.getMilliseconds() % 125 >= 40 && trigger){
@@ -61,6 +65,6 @@ function draw() {
 
   if (ref.length < 128) {
     sendNewNotes();
-    //console.log('send new notes');
+    console.log('send new notes');
   }
 }
