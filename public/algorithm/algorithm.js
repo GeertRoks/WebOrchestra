@@ -52,7 +52,7 @@ class Algorithm {
         melodyRhythm[melodyIndex] = 0;
       }
     }
-    console.log("melodyRhythm = ", melodyRhythm);
+    // console.log("melodyRhythm = ", melodyRhythm);
     return melodyRhythm;
   }
 

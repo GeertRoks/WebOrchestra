@@ -305,17 +305,17 @@ class Score {
 //Getters=======================================================================
 
   get scoreMelody () {
-    console.log("strings @ score = ", this.melodyList);
+    // console.log("strings @ score = ", this.melodyList);
     return this.melodyList;
   }
 
   get scoreChords () {
-    console.log("strings @ score = ", this.strings);
+    // console.log("strings @ score = ", this.strings);
     return this.strings;
   }
 
   get scoreDrums () {
-    console.log("drumlist @ score = ", this.drumList);
+    // console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 

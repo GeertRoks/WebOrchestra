@@ -38,15 +38,16 @@ function sendNewNotes() {
     melody: score.scoreMelody,
     chords: score.scoreChords
   };
-  console.log("scoreDrums @ score.js = ", score.scoreDrums);
-  console.log("scoreList @ score.js = ", scorelist);
+  // console.log("scoreDrums @ score.js = ", score.scoreDrums);
+  // console.log("scoreList @ score.js = ", scorelist);
 
   var drumRef = scorelist.drums[0].slice();
+
+  ref = [];
 
   for (var i = 0; i <256; i++) {
     ref.push(0);
   }
-  console.log(ref);
 
   socket.emit('newscore', scorelist);
 }
@@ -62,6 +63,8 @@ function draw() {
   if(d.getMilliseconds() % 125 >= 40 && trigger){
     trigger = false;
   }
+
+  console.log(ref.length);
 
   if (ref.length < 128) {
     sendNewNotes();

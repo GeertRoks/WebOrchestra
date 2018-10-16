@@ -65,15 +65,15 @@ class FmStrings {
 
  _setOctave (octave) {
     this.octave = octave;
- } 
-  
+ }
+
   _setScore (score) {
     for (var i = 0; i < score.length; i++) {
       for (var j = 0; j < score[i].length; j++){
-        this.chordList[i].push(score[i].shift());
+        this.chordList[i].push(score[i][j]);
       }
     }
-    console.log("fmstings: " + this.chordList);
+    // console.log("fmstings: " + this.chordList);
     // console.log("voice1 length: " + this.chordlist[0].length);
     // console.log("voice2 length: " + this.chordlist[1].length);
     // console.log("voice3 length: " + this.chordlist[2].length);
