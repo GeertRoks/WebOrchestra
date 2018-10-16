@@ -11,6 +11,9 @@ var mouseYClick = 0;
 
 var memoryProgress = 0;
 
+let easing = 0.01;
+var whack = 0;
+
 function whackPreload()
 {
 	monoFont = loadFont('fonts/dejavu/ttf/DejaVuSansMono.ttf');
@@ -73,11 +76,14 @@ function whackDraw()
 	strokeWeight(2);
 	rect(int(mouseX/bitCharWidth)*bitCharWidth, int(mouseY/bitLineHeight)*bitLineHeight, bitCharWidth, bitLineHeight);
 
-	if (memoryProgress > 0)
-		memoryProgress -= 0.3;
+	let deltaWhack = memoryProgress - whack;
+	whack += deltaWhack * easing;
 
-	fill(255, 100);
-	rect(0, 0, windowWidth * memoryProgress * 0.01, bitLineHeight);
+	if (memoryProgress > 0)
+		memoryProgress -= 0.2;
+
+	fill(255, 200);
+	rect(0, 0, windowWidth * whack * 0.01, bitLineHeight);
 }
 
 function mouseClicked()

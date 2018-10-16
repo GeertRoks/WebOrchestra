@@ -25,7 +25,7 @@ function draw()
 	if (frameCount % 10 == 0)
 	{
 		socket.emit('melody', {
-			param0:  int(memoryProgress)
+			param0:  int(whack)
 		});
 	}
 }

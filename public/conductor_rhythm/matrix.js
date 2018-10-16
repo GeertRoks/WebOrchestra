@@ -59,7 +59,7 @@ function matrixDraw()
 
 	// hackingProgress = hackingProgress * 0.997;
 	if (hackingProgress > 0)
-		hackingProgress-= 0.5;
+		hackingProgress-= 0.1;
 
 	if (hackingProgress > 100 && random(100) > 90)
 		background(random(255));
