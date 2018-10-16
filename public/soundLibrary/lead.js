@@ -42,9 +42,11 @@ class Lead {
   }
 
   _setScore (notesList) {
-    this.notes = notesList;
-    // this.notes = [[60, 0, 0, 0, 60, 0, 0, 0],[63, 0, 0, 0, 63, 0, 0, 0],[67, 0, 0, 0, 67, 0, 0, 0]]
-    console.log("score @ lead.js", this.notes);
+    for(var j = 0; j < notesList.length; j++) {
+      this.notes.push(notesList.shift());
+    }
+    console.log("lead: " + this.notes);
+    console.log("leadlength: " + this.notes.length);
   }
 
   _setRhythm (rhythmList) {

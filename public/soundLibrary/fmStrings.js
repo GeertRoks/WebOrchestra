@@ -63,9 +63,20 @@ class FmStrings {
   return pow(2.0,(midiPitch-69.0)/12.0) * 440.0;
   }
 
+ _setOctave (octave) {
+    this.octave = octave;
+ } 
+  
   _setScore (score) {
-    this.chordList = score;
-    console.log("score in strings = ", this.chordList);
+    for (var i = 0; i < score.length; i++) {
+      for (var j = 0; j < score[i].length; j++){
+        this.chordList[i].push(score[i].shift());
+      }
+    }
+    console.log("fmstings: " + this.chordList);
+    // console.log("voice1 length: " + this.chordlist[0].length);
+    // console.log("voice2 length: " + this.chordlist[1].length);
+    // console.log("voice3 length: " + this.chordlist[2].length);
   }
 
   _sequence () {

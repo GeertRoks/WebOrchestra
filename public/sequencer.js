@@ -1,4 +1,3 @@
-const score = new Score;
 const drums = new Drums;
 const fmSynth = new FmStrings(3);
 const lead = new Lead;
@@ -8,36 +7,25 @@ var trigger = false;
 var countSequence = 0;
 
 function setupSequencer () {
-  updateNotes();
+  socket.emit('genscore');
   updateParams();
 }
 
-function updateParams () {
-  // algo._setInterval(intervalSilder.value());
+function updateParams(){
   lead._setOctave(1);
   lead2._setOctave(2);
   lead._setNoteDuration(2);
   lead2._setNoteDuration(2);
 }
 
-//update notes moet gekoppeld worden aan de server
-function updateNotes() {
-  // score._setMelodyState(Math.round(Math.random() * 4));
-  // score._setStringsState(Math.round(Math.random() * 4));
-  score._setMelodyState(4);
-  score._setStringsState(2);
-  score._renderScore();
+function updateNotes(scorelist) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  fmSynth._setScore(score.scoreChords);
-  //scoreMelody = [] , used slice() to create a copy of the list
-  lead._setScore(score.scoreMelody.slice());
-  lead2._setScore(score.scoreMelody.slice());
+  fmSynth._setScore(scorelist.chords);
+  //scoreMelody = []
+  lead._setScore(scorelist.melody.slice());
+  lead2._setScore(scorelist.melody.slice());
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  drums._setScore(score.scoreDrums);
-
-  console.log("score melody = ", score.scoreMelody);
-  console.log("score chords = ", score.scoreChords);
-  console.log("score drums = ", score.scoreDrums);
+  drums._setScore(scorelist.drums);
 }
 
 function sequence() {
