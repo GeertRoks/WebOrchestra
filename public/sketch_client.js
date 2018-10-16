@@ -6,7 +6,7 @@ function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
   socket.emit('clienttype', "instrument");
 
-  //  Time sync code from their socket example ==================================
+  //  Time sync code from their socket example vvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvvv
   var ts = timesync.create({
     server: socket,
     interval: 5000
@@ -24,11 +24,16 @@ function setup() {
   socket.on('timesync', function (data) {
     ts.receive(null, data);
   });
+  //  TimeSync^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
 
   socket.on('newscore', function (scorelist) {
     updateNotes(scorelist);
   });
-  //  TimeSync===================================================================
+  socket.on('mask', function (mask) {
+    //TODO implement mask
+    console.log('mask: ' + mask.kick);
+  });
 
   //P5 setup
   setupSequencer();

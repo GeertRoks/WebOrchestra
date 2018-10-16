@@ -1,14 +1,17 @@
-var clients = [];
 
 function setup() {
-  for (var i = 0; i < 1; i++) {
-    clients.push(new Mask([], [], [], [], [], [], [], [], [], [], [], []));
-  }
-
-  makeMask();
+  masks = makeMask(256, 4);
+  // for (let i = 0; i < masks.length; i++) {
+  //   console.log('masks[' + i + ']: ' + masks[i]);
+  // }
+  // console.log('masks.length: ' + masks.length);
 }
 
-function makeMask () {
+function makeMask (notelistlength, clientslength) {
+  let masks = [];
+  for (var i = 0; i < clientslength; i++) {
+    masks.push(new Mask([], [], [], [], [], [], [], [], [], [], [], []));
+  }
   let instname = "undefined";
   for (let instrument = 0; instrument < 12; instrument++) {
     switch (instrument) {
@@ -52,20 +55,21 @@ function makeMask () {
         instame = "undefined";
     }
 
-    for (let i = 0; i < 256; i++) {
-      var hit = getRandomInt(clients.length);
-      clients[hit][instname].push(1);
-      for (let j = 0; j < clients.length; j++) {
+    for (let i = 0; i < notelistlength; i++) {
+      var hit = getRandomInt(masks.length);
+      masks[hit][instname].push(1);
+      for (let j = 0; j < masks.length; j++) {
         if (j != hit) {
-          clients[j][instname].push(0);
+          masks[j][instname].push(0);
         }
       }
     }
-    for (let i = 0; i < clients.length; i++) {
-      console.log('client[' + i + '].' + instname + ': ' + clients[i][instname]);
-      console.log('client[' + i + '].'+ instname + '.length: ' + clients[i][instname].length);
-    }
+    // for (let i = 0; i < masks.length; i++) {
+    //   console.log('masks[' + i + '].' + instname + ': ' + masks[i][instname]);
+    //   console.log('masks[' + i + '].' + instname + '.length: ' + masks[i][instname].length);
+    // }
   }
+  return masks;
 }
 
 function getRandomInt(max) {
