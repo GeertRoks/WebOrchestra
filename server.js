@@ -113,15 +113,15 @@ io.sockets.on('connection', function(socket) {
   });
 
   socket.on('rhythm', function (data) {
-    console.log('rhythm\t' + data.param0);
+    // console.log('rhythm\t' + data.param0);
   })
 
   socket.on('drone', function (data) {
-    console.log('drone\t' + data.param0);
+    // console.log('drone\t' + data.param0);
   })
 
   socket.on('melody', function (data) {
-    console.log('melody\t' + data.param0);
+    // console.log('melody\t' + data.param0);
   })
 });
 

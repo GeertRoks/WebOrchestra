@@ -6,6 +6,9 @@ var input = '';
 
 var hackingProgress = 0;
 
+let easing = 0.01;
+var hack = 0;
+
 
 // ================ PRELOAD
 function matrixPreload()
@@ -61,7 +64,10 @@ function matrixDraw()
 	if (hackingProgress > 0)
 		hackingProgress-= 0.1;
 
-	if (hackingProgress > 100 && random(100) > 90)
+	let deltaHack = hackingProgress - hack;
+	hack += deltaHack * easing;
+
+	if (hack > 100 && random(100) > 90)
 		background(random(255));
 
 	// Makes sure there are at least 10 raindrops
@@ -119,7 +125,7 @@ function keyPressed()
 			for (var i=0; i<(input.length * 15); i++)
 				rain.push(new RainDrop());
 
-			hackingProgress += (input.length) * 5;
+			hackingProgress += (input.length) * 2;
 			input = '';
 			break;
 	}

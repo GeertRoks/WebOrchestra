@@ -26,7 +26,7 @@ function draw()
 	if (frameCount % 10 == 0)
 	{
 		socket.emit('rhythm', {
-			param0:  int(hackingProgress)
+			param0:  int(hack)
 		});
 	}
 }
