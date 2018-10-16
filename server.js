@@ -5,6 +5,7 @@ var io = require('socket.io')(app);
 
 const port = 3000;
 var clients = [];
+var instrumentclients = [];
 
 
 //-----------Http server-------------//
@@ -90,8 +91,8 @@ io.sockets.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('A client disconnect!');
 
-    // remove the right ID out of the clients array.
-    var i = clients.findIndex(i => i.id === socket.id);
+    // find and remove the right ID out of the clients array
+    let i = clients.findIndex(i => i.id === socket.id);
     clients.splice(i, 1);
     console.log('Current clients: ');
     for (var j = 0; j < clients.length; j++) {
@@ -107,11 +108,32 @@ io.sockets.on('connection', function(socket) {
     });
   });
 
+  // Define the client type of a client
+  socket.on('clienttype', function(type) {
+    let i = clients.findIndex(i => i.id === socket.id);
+    clients[i].type = type;
+    console.log('Type added to client[' + i + ']. Type is: ' + clients[i].type);
+    console.log(' ');
+
+    if (type == "instrument") {
+      instrumentclients.push(clients[i].id);
+      console.log('Client[' + i + '] added to the instrumentclients array.');
+      console.log(' ');
+    }
+  });
+
+  // Send the new score to the instrument clients
   socket.on('newscore', function (scorelist) {
     socket.broadcast.emit('newscore', scorelist);
     console.log('new score send!');
   });
+
+  // Send a random mask to the instrument clients
+  socket.on('sendmask', function () {
+
+  });
 });
+
 
 // Building block for a client object
 function Client(type, id) {

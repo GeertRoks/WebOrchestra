@@ -7,6 +7,7 @@ var trigger = false;
 
 function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
+  socket.emit('clienttype', "algorithm");
   sendNewNotes();
 
   var ts = timesync.create({
@@ -45,6 +46,7 @@ function sendNewNotes() {
   console.log(ref);
 
   socket.emit('newscore', scorelist);
+  socket.emit('sendmask', 256);
 }
 
 function draw() {

@@ -4,6 +4,7 @@ function setup() {
   //Server Setup
   createCanvas(displayWidth, displayHeight);
   socket = io.connect("http://" + hostname + ":" + port);
+  socket.emit('clienttype', "instrument");
 
   //  Time sync code from their socket example ==================================
   var ts = timesync.create({

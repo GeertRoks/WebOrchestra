@@ -12,6 +12,7 @@ function setup()
 {
 	createCanvas(displayWidth, displayHeight);
 	socket = io.connect(hostname + ":" + port);
+	socket.emit('clienttype', "rhythm");
 
 	matrixSetup();
 }
