@@ -3,9 +3,6 @@ class FmStrings {
 
   constructor(numVoices){
 
-
-    this.octave = 0;
-
     this.numVoices = numVoices;
     this.numCar = 3;
     // the carrier frequency pre-modulation
@@ -13,9 +10,6 @@ class FmStrings {
 
     this.carriers = []
     this.modulators = []
-
-    this.index = 0;
-    this.carIndex = 0;
 
     this.envAmp = [];
     this.envFilter = [];
@@ -91,7 +85,7 @@ class FmStrings {
 
       for (let strings = 0; strings < this.chordList.length; strings++){
         if (this.chordList[strings][0] > 0){
-          freqq[strings] = this._mtof(this.chordList[strings][0] + (12 * this.octave));
+          freqq[strings] = this._mtof(this.chordList[strings][0]);
         for(let i = 0; i < this.numCar; i++){
             this.carriers[i + strings].freq(freqq[strings]);
             }
