@@ -29,6 +29,8 @@ function setup() {
 }
 
 function sendNewNotes() {
+  score._setMelodyState(1);
+  score._setStringsState(3);
   score._renderScore();
 
   var scorelist = {
@@ -50,15 +52,15 @@ function draw() {
 
   if (d.getMilliseconds() % 125 <= 20 && !trigger) {
     ref.shift();
-    console.log('ref shift ik')
+    console.log('ref shift')
     trigger = true;
   }
   if(d.getMilliseconds() % 125 >= 40 && trigger){
     trigger = false;
   }
 
-  if (ref.length < 64) {
+  if (ref.length < 128) {
     sendNewNotes();
-    console.log('send new notes.')
+    //console.log('send new notes');
   }
 }

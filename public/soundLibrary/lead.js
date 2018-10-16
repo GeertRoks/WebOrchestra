@@ -2,13 +2,13 @@ class Lead {
 
   constructor () {
 
-    this.arp = 1;
+    // this.arp = 1;
     this.octave = 0;
     this.duration = 1;
 
     this.env = [];
     this.triOsc = [];
-    this.notes = [];
+    this.notes = [[],[],[]];
     this.rhythm = [];
 
     this.index = 0;
@@ -47,8 +47,10 @@ class Lead {
   }
 
   _setScore (notesList) {
-    for(var j = 0; j < notesList.length; j++) {
-      this.notes.push(notesList.shift());
+    for (var i = 0; i < notesList.length; i ++ ) {
+      for(var j = 0; j < notesList[i].length; j++) {
+        this.notes[i].push(notesList[i].shift());
+      }
     }
     console.log("lead: " + this.notes);
     console.log("leadlength: " + this.notes.length);
@@ -62,11 +64,6 @@ class Lead {
   return Math.pow(2.0,(midiPitch-69.0)/12.0) * 440.0;
   }
 
-  _setArp (arp) {
-    this.arp = arp;
-  }
-
-  //werkt wel, later nog wat mooier maken
   _setNoteDuration (duration) {
 
     this.duration = duration;
@@ -86,12 +83,12 @@ class Lead {
 
   _sequence() {
 
-    if(this.notes[0] > 0){
-        this.triOsc[this.index % 3].freq(this._mtof(this.notes[0] + (12 * this.octave)));
-        this.env[this.index % 3].play();
-        this.index++;
+    for (let voice = 0; voice < 3; voice++){
+      if (this.notes[voice][0] > 0){
+        this.triOsc[voice].freq(this._mtof(this.notes[voice][0] + (12 * this.octave)));
+        this.env[voice].play();
       }
-      this.notes.shift();
-      // this.count = (this.count + 1) % this.notes.length;
+    this.notes[voice].shift();
+    }
   }
 }
