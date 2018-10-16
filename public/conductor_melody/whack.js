@@ -99,7 +99,7 @@ function mouseClicked()
 		frameCount = -1;
 	} else {
 		// Healthy memory
-		memoryProgress = 0
+		memoryProgress = 0;
 	}
 }
 
