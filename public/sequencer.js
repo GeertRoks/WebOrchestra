@@ -18,7 +18,6 @@ function updateParams(){
   lead2._setNoteDuration(2);
 }
 
-
 function updateNotes(scorelist) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(scorelist.chords);
@@ -35,15 +34,20 @@ function sequence() {
 
   if(d.getMilliseconds() % 125 <= 20 && !trigger){
 
-    drums._sequence();
+    // drums._sequence();
 
     lead._sequence();
 
-    lead2._sequence();
+    // lead2._sequence();
 
     fmSynth._sequence();
 
     trigger = true;
+
+    if(countSequence % 256 == 0) {
+      updateNotes();
+    }
+    countSequence++;
   }
 
   if(d.getMilliseconds() % 125 >= 40 && trigger){
