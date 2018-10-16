@@ -1,10 +1,9 @@
 var socket;
-const matrixColor = [255, 0, 0];
 
 // ================ PRELOAD
 function preload()
 {
-	matrixPreload();
+	whackPreload();
 }
 
 
@@ -14,19 +13,19 @@ function setup()
 	createCanvas(displayWidth, displayHeight);
 	socket = io.connect(hostname + ":" + port);
 
-	matrixSetup();
+	whackSetup();
 }
 
 // ================ DRAW
 function draw()
 {
-	matrixDraw();
+	whackDraw();
 
 	// Send data every now and then
 	if (frameCount % 10 == 0)
 	{
-		socket.emit('rhythm', {
-			param0:  int(hackingProgress)
+		socket.emit('melody', {
+			param0:  int(whack)
 		});
 	}
 }
@@ -36,6 +35,7 @@ function draw()
 function windowResized()
 {
 	resizeCanvas(windowWidth, windowHeight);
+	whackResized();
 	background(0);
 }
 

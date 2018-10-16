@@ -7,7 +7,6 @@ var trigger = false;
 var countSequence = 0;
 
 function setupSequencer () {
-  socket.emit('genscore');
   updateParams();
 }
 

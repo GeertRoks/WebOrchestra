@@ -42,6 +42,7 @@ function draw() {
   }
 }
 
+
 function keyTyped() {
 	onNote();
 }
