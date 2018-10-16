@@ -22,11 +22,10 @@ function draw()
 	whackDraw();
 
 	// Send data every now and then
-	if (frameCount % 30 == 0)
+	if (frameCount % 10 == 0)
 	{
-		socket.emit('conductor', {
-			id: 'melody',
-			val: mouseX
+		socket.emit('melody', {
+			param0:  int(memoryProgress)
 		});
 	}
 }
