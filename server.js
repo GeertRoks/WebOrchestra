@@ -43,24 +43,24 @@ function handler (req, res) {
     } else {
        fileurl = '/public' + req.url;
     }
-     let filepath = path.resolve('./' + fileurl);
+    let filepath = path.resolve('./' + fileurl);
 
-     let fileExt = path.extname(filepath);
-     let mimeType = mimeLookup[fileExt];
+    let fileExt = path.extname(filepath);
+    let mimeType = mimeLookup[fileExt];
 
-     if (!mimeType) {
+    if (!mimeType) {
+     send404(res);
+     return;
+    }
+
+    fs.exists(filepath, (exists) => {
+     if (!exists) {
        send404(res);
        return;
      }
-
-     fs.exists(filepath, (exists) => {
-       if (!exists) {
-         send404(res);
-         return;
-       }
-       res.writeHead(200, {'Content-Type': mimeType});
-       fs.createReadStream(filepath).pipe(res);
-     });
+     res.writeHead(200, {'Content-Type': mimeType});
+     fs.createReadStream(filepath).pipe(res);
+    });
   }
 };
 
@@ -111,6 +111,18 @@ io.sockets.on('connection', function(socket) {
     socket.broadcast.emit('newscore', scorelist);
     console.log('new score send!');
   });
+
+  socket.on('rhythm', function (data) {
+    console.log('rhythm\t' + data.param0);
+  })
+
+  socket.on('drone', function (data) {
+    console.log('drone\t' + data.param0);
+  })
+
+  socket.on('melody', function (data) {
+    console.log('melody\t' + data.param0);
+  })
 });
 
 // Building block for a client object
