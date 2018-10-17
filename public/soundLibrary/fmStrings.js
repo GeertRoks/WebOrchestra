@@ -27,13 +27,13 @@ class FmStrings {
       this.envAmp.push(new p5.Envelope());
       this.envAmp[y].setADSR(1, 1, 0.2, 1);
       // this.envAmp[y].setADSR(0.8, 1, 0.2, 0.2);
-      this.envAmp[y].setRange(0.05 + (y * 0.05 ) , 0);
+      this.envAmp[y].setRange(0.1 + (y * 0.05 ) , 0);
       this.envAmp[y].setExp(1);
 
       this.envFilter.push(new p5.Envelope());
       this.envFilter[y].setADSR(1.2, 1.2, 50, 1);
       // this.envFilter[y].setADSR(0.1, 1, 50, 0.2);
-      this.envFilter[y].setRange(72, 0);
+      this.envFilter[y].setRange(72 * 2, 0);
       this.envFilter[y].setExp(1);
 
       this.filters.push(new p5.LowPass());

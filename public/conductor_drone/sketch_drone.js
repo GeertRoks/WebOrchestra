@@ -1,10 +1,9 @@
 var socket;
-const matrixColor = [255, 0, 0];
 
 // ================ PRELOAD
 function preload()
 {
-	matrixPreload();
+	bugmanPreload();
 }
 
 
@@ -13,21 +12,20 @@ function setup()
 {
 	createCanvas(displayWidth, displayHeight);
 	socket = io.connect(hostname + ":" + port);
-	socket.emit('clienttype', "rhythm");
 
-	matrixSetup();
+	bugmanSetup();
 }
 
 // ================ DRAW
 function draw()
 {
-	matrixDraw();
+	bugmanDraw();
 
 	// Send data every now and then
 	if (frameCount % 10 == 0)
 	{
-		socket.emit('rhythm', {
-			param0:  int(hack)
+		socket.emit('drone', {
+			param0:  int((10-bugman)*10)
 		});
 	}
 }
@@ -37,12 +35,6 @@ function draw()
 function windowResized()
 {
 	resizeCanvas(windowWidth, windowHeight);
+	bugmanResized();
 	background(0);
 }
-
-/*var data = {
-   x: mouseX,
-    y: mouseY
-  }
-  socket.emit('mouse', data);
-  */
