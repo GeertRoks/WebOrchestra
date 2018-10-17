@@ -3,7 +3,7 @@ class Algorithm {
 
     constructor () {
       this.drumVoices = 3;
-      this.drumsThresholdValue = 1;
+      this.drumsThresholdValue = 0;
       this.chordsThresholdValue = 1;
       this.melodyThresholdValue = 3;
       this.first = true;
@@ -81,7 +81,7 @@ class Algorithm {
     drumRhythm[0] = new Array();
     drumRhythm[1] = new Array();
     drumRhythm[2] = new Array();
-    const drumThresholds = [[1, 8, 6, 11, 10, 11, 5, 11], [11, 11, 9, 11, 1, 11, 10, 0],
+    const drumThresholds = [[1, 8, 6, 11, 10, 11, 5, 11], [11, 11, 9, 11, 1, 11, 10, 10],
     [9, 5, 7, 6, 8, 5, 9, 5]];
 
     for (let row = 0; row < 3; row++){
@@ -124,7 +124,7 @@ class Algorithm {
   }
 
   _setNoteDensityDrums (densityDrums) {
-    this.thresholdValue = densityDrums;
+    this.drumsThresholdValue = densityDrums;
   }
 
   //getters ======================================================================

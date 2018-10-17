@@ -13,16 +13,21 @@ function setupSequencer () {
 function updateParams(){
   lead._setOctave(1);
   lead2._setOctave(2);
-  lead._setNoteDuration(2);
-  lead2._setNoteDuration(2);
+  lead._setNoteDuration(3);
+  lead2._setNoteDuration(3);
 }
 
 function updateNotes(scorelist) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   fmSynth._setScore(scorelist.chords);
   //scoreMelody = []
-  lead._setScore(scorelist.melody.slice());
-  lead2._setScore(scorelist.melody.slice());
+  lead._setScore(scorelist.melody);
+  //copy scorelist.melody
+  var melodyTwoScore = scorelist.melody.slice()
+  //create a offset of 1
+  melodyTwoScore.unshift(0);
+  melodyTwoScore.pop();
+  lead2._setScore(melodyTwoScore);
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
   drums._setScore(scorelist.drums);
   // console.log("chords @ updateNotes = ", scorelist.chords);

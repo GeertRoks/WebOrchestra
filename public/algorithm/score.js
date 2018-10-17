@@ -29,8 +29,7 @@ function setup() {
 }
 
 function sendNewNotes() {
-  score._setMelodyState(1);
-  score._setStringsState(3);
+  score._testStateVars(17);
   score._renderScore();
 
   var scorelist = {
@@ -64,7 +63,7 @@ function draw() {
     trigger = false;
   }
 
-  console.log(ref.length);
+  // console.log(ref.length);
 
   if (ref.length < 128) {
     sendNewNotes();
