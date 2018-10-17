@@ -91,8 +91,14 @@ io.sockets.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('A client disconnect!');
 
-    // find and remove the right ID out of the clients array
+    // find the right ID out of the clients array
     let i = clients.findIndex(i => i.id === socket.id);
+    if (clients[i].type == 'instrument') {
+      // remove the client out of the instrumentclients array
+      let j = instrumentclients.indexOf(socket.id);
+      instrumentclients.splice(j, 1);
+    }
+    // remove the right ID out of the client array
     clients.splice(i, 1);
     console.log('Current clients: ');
     for (var j = 0; j < clients.length; j++) {
