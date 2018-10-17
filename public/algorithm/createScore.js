@@ -167,16 +167,16 @@ class Score {
         this.melodyOctave = 0;
         break;
       case 2:
-        this.melodyArp = 1;
+        this.melodyArp = 0;
         this.melodyisHalfTime = true;
-        this.melodyOctaveSpread = 0;
-        this.melodyOctave = 0;
+        this.melodyOctaveSpread = 1;
+        this.melodyOctave = -1;
         break;
       case 3:
         this.melodyArp = 1;
         this.melodyisHalfTime = false;
-        this.melodyOctaveSpread = 0;
-        this.melodyOctave = 0;
+        this.melodyOctaveSpread = 1;
+        this.melodyOctave = -2;
         break;
       case 4:
         this.melodyArp = 1;
@@ -205,20 +205,20 @@ class Score {
         this.stringsIsHalfTime = true;
         break;
       case 2:
-        this.stringsArp = 0;
+        this.stringsArp = 1;
         this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = true;
         break;
       case 3:
-        this.stringsArp = 0;
-        this.stringsOctaveSpread = -1;
-        this.stringsOctave = 0;
+        this.stringsArp = 1;
+        this.stringsOctaveSpread = -2;
+        this.stringsOctave = 1;
         this.stringsIsHalfTime = true;
         break;
       case 4:
         this.stringsArp = 1;
-        this.stringsOctaveSpread = 0;
+        this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = false;
         break;
@@ -319,8 +319,8 @@ class Score {
         }
         this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.chordNotes;
       }
-      console.log("scoreChordNotes = ", this.scoreNotesChords);
-      console.log("scoreChords = ", this.strings);
+      // console.log("scoreChordNotes = ", this.scoreNotesChords);
+      // console.log("scoreChords = ", this.strings);
       this._renderMelody();
     }
   }
@@ -371,7 +371,7 @@ class Score {
         }
         }
       }
-      console.log("melodyList @ _renderMelody = ", this.melodyList);
+      // console.log("melodyList @ _renderMelody = ", this.melodyList);
     }
 
   _renderDrumRhythm () {
@@ -403,17 +403,17 @@ class Score {
 //Getters=======================================================================
 
   get scoreMelody () {
-    console.log("melody @ score = ", this.melodyList);
+    // console.log("melody @ score = ", this.melodyList);
     return this.melodyList;
   }
 
   get scoreChords () {
-    console.log("strings @ score = ", this.strings);
+    // console.log("strings @ score = ", this.strings);
     return this.strings;
   }
 
   get scoreDrums () {
-    console.log("drumlist @ score = ", this.drumList);
+    // console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 

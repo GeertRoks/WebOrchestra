@@ -8,6 +8,7 @@ var switchState = 0;
 
 function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
+  socket.emit('clienttype', "algorithm");
   sendNewNotes();
 
   var ts = timesync.create({
@@ -31,10 +32,11 @@ function setup() {
 
 function sendNewNotes() {
 
-  score._testStateVars(17);
+  score._testStateVars(switchState);
   score._renderScore();
-
-  // switchState = (switchState + 1) % 18;
+  console.log("switchState = ", switchState);
+  
+  switchState = (switchState + 1) % 18;
 
   var scorelist = {
     drums: score.scoreDrums,
@@ -52,6 +54,7 @@ function sendNewNotes() {
   }
 
   socket.emit('newscore', scorelist);
+  socket.emit('sendmask', 256);
 }
 
 function draw() {

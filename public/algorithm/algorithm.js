@@ -22,6 +22,7 @@ class Algorithm {
 
     if(this.first){
       this.notePicked = Math.round((Math.random() * 10) % 8);
+      this.first = false;
     }
 
       for (let i = 0; i < 3; i++){
