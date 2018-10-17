@@ -159,6 +159,8 @@ class Score {
       state = int(state / 10);
     }
 
+    console.log('mel: '+state);
+
     switch (state) {
       case 1:
         this.melodyArp = 1;
@@ -249,6 +251,8 @@ class Score {
       state = int(state / 25);
     }
 
+    console.log('str: '+state);
+
     switch (state) {
 
 
@@ -287,11 +291,13 @@ class Score {
 
   _setDrumState (state) {
 
-    // if(state > 100){
-    //   state = 4
-    // } else {
-    //   state = int(state / 33);
-    // }
+    if(state > 100){
+      state = 11
+    } else {
+      state = int(state / 10);
+    }
+
+    console.log('dru: '+state);
 
     switch (state) {
       case 1:
