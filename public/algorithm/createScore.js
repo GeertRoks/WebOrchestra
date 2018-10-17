@@ -154,9 +154,9 @@ class Score {
   _setMelodyState (state) {
 
     if(state > 100){
-      state = 5
+      state = 11;
     } else {
-      state = int(state / 25);
+      state = int(state / 10);
     }
 
     console.log('mel: '+state);
@@ -190,15 +190,65 @@ class Score {
         this.melodyOctave = -1;
         this.melodyThresholdValue = 4;
         break;
+      case 5:
+        this.melodyArp = 0;
+        this.melodyisHalfTime = true;
+        this.melodyOctaveSpread = -1;
+        this.melodyOctave = 2;
+        this.melodyThresholdValue = 1;
+        break;
+      case 6:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
+        this.melodyOctaveSpread = -2;
+        this.melodyOctave = 2;
+        this.melodyThresholdValue = 2;
+        break;
+      case 7:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
+        this.melodyOctaveSpread = 0;
+        this.melodyOctave = 2;
+        this.melodyThresholdValue = 3;
+        break;
+      case 8:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
+        this.melodyOctaveSpread = -3;
+        this.melodyOctave = 3;
+        this.melodyThresholdValue = 4;
+        break;
+      case 9:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = true;
+        this.melodyOctaveSpread = 2;
+        this.melodyOctave = -1;
+        this.melodyThresholdValue = 2;
+        break;
+      case 10:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
+        this.melodyOctaveSpread = -1;
+        this.melodyOctave = 1;
+        this.melodyThresholdValue = 3;
+        break;
+      case 11:
+        this.melodyArp = 1;
+        this.melodyisHalfTime = false;
+        this.melodyOctaveSpread = -1;
+        this.melodyOctave = 1;
+        this.melodyThresholdValue = 3;
+        break;
+
       }
   }
 
   _setStringsState (state) {
 
     if(state > 100){
-      state = 4
+      state = 5
     } else {
-      state = int(state / 33);
+      state = int(state / 25);
     }
 
     console.log('str: '+state);
@@ -229,6 +279,12 @@ class Score {
         this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
         this.stringsIsHalfTime = true;
+        break;
+      case 5:
+        this.stringsArp = 1;
+        this.stringsOctaveSpread = -1;
+        this.stringsOctave = 0;
+        this.stringsIsHalfTime = false;
         break;
       }
   }

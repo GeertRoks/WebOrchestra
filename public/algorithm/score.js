@@ -44,13 +44,14 @@ function setup() {
 }
 
 function sendNewNotes() {
-
   score._setStringsState(droneVar);
   score._setDrumState(rhythmVar);
   score._setMelodyState(melodyVar);
   score._renderScore();
   console.log(droneVar+' '+rhythmVar+' '+melodyVar);
 
+
+// score._testStateVars(switchState + 1);
   // switchState = (switchState + 1) % 17;
 
 
