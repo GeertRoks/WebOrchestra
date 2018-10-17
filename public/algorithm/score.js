@@ -32,10 +32,10 @@ function setup() {
 
 function sendNewNotes() {
 
-  score._testStateVars(8);
+  score._testStateVars(switchState + 1);
   score._renderScore();
 
-  // switchState = (switchState + 1) % 18;
+  switchState = (switchState + 1) % 17;
 
   var scorelist = {
     drums: score.scoreDrums,

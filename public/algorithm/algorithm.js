@@ -45,11 +45,7 @@ class Algorithm {
 
   _constructMelodyRhythm () {
 
-    // const rhythm1 = [1, 0, 0, 0, 0, 0];
-    // const rhythm2 = [1, 0, 0, 1, 0, 0];
-    // const rhythm3 = [1, 0, 0, 1, 0, 1];
-    // const rhythm4 = [1, 0, 1, 1, 0, 1];
-    const melodyRhythm = [];
+    var melodyRhythm = [];
     const melodyThresholds = [1, 0, 2, 4, 0, 3];
 
     for (let melodyIndex = 0; melodyIndex < melodyThresholds.length; melodyIndex++){
@@ -65,7 +61,7 @@ class Algorithm {
 
   _constructChordRhythm () {
 
-    const chordRhythm = [];
+    var chordRhythm = [];
     const chordThresholds = [1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     // const chordThresholds = [1, 0, 0, 0, 3, 0, 0, 0, 2, 0, 0, 0, 3, 0, 0, 0,
@@ -83,7 +79,7 @@ class Algorithm {
   }
 
   _constructDrumRhythm () {
-    const drumRhythm = new Array();
+    var drumRhythm = new Array();
 
     drumRhythm[0] = new Array();
     drumRhythm[1] = new Array();

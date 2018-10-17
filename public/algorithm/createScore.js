@@ -65,72 +65,72 @@ class Score {
       case 1:
         this._setMelodyState(1);
         this._setStringsState(1);
-        // this._setDrumState(1);
+        this._setDrumState(10);
         break;
       case 2:
         this._setMelodyState(1);
         this._setStringsState(2);
-        // this._setDrumState(1);
+        this._setDrumState(2);
         break;
       case 3:
         this._setMelodyState(2);
         this._setStringsState(1);
-        // this._setDrumState(1);
+        this._setDrumState(3);
         break;
       case 4:
         this._setMelodyState(1);
         this._setStringsState(1);
-        // this._setDrumState(2);
+        this._setDrumState(4);
         break;
       case 5:
         this._setMelodyState(2);
         this._setStringsState(1);
-        // this._setDrumState(1);
+        this._setDrumState(4);
         break;
       case 6:
         this._setMelodyState(2);
         this._setStringsState(2);
-        // this._setDrumState(1);
+        this._setDrumState(5);
         break;
       case 7:
         this._setMelodyState(2);
         this._setStringsState(1);
-        // this._setDrumState(2);
+        this._setDrumState(6);
         break;
       case 8:
         this._setMelodyState(3);
         this._setStringsState(2);
-        // this._setDrumState(2);
+        this._setDrumState(7);
         break;
       case 9:
         this._setMelodyState(2);
         this._setStringsState(2);
-        // this._setDrumState(3);
+        this._setDrumState(8);
         break;
       case 10:
         this._setMelodyState(2);
         this._setStringsState(3);
-        // this._setDrumState(2);
+        this._setDrumState(9);
         break;
       case 11:
         this._setMelodyState(3);
         this._setStringsState(3);
-        // this._setDrumState(5);
+        this._setDrumState(5);
         break;
       case 12:
         this._setMelodyState(3);
         this._setStringsState(3);
-        // this._setDrumState(3);
+        this._setDrumState(3);
         break;
       case 13:
         this._setMelodyState(4);
         this._setStringsState(3);
-        // this._setDrumState(3);
+        this._setDrumState(3);
         break;
       case 14:
         this._setMelodyState(3);
         this._setStringsState(4);
-        // this._setDrumState(3);
+        this._setDrumState(3);
         break;
       case 15:
         this._setMelodyState(3);
@@ -140,12 +140,12 @@ class Score {
       case 16:
         this._setMelodyState(3);
         this._setStringsState(4);
-        // this._setDrumState(4);
+        this._setDrumState(4);
         break;
       case 17:
-        this._setMelodyState(1);
-        this._setStringsState(1);
-        // this._setDrumState(1);
+        this._setMelodyState(4);
+        this._setStringsState(4);
+        this._setDrumState(10);
         break;
     }
 
@@ -165,24 +165,28 @@ class Score {
         this.melodyisHalfTime = true;
         this.melodyOctaveSpread = 0;
         this.melodyOctave = 0;
+        this.melodyThresholdValue = 1;
         break;
       case 2:
         this.melodyArp = 1;
         this.melodyisHalfTime = true;
-        this.melodyOctaveSpread = 0;
-        this.melodyOctave = 0;
+        this.melodyOctaveSpread = 1;
+        this.melodyOctave = -1;
+        this.melodyThresholdValue = 2;
         break;
       case 3:
-        this.melodyArp = 1;
+        this.melodyArp = 0;
         this.melodyisHalfTime = false;
-        this.melodyOctaveSpread = 0;
-        this.melodyOctave = 0;
+        this.melodyOctaveSpread = 1;
+        this.melodyOctave = -1;
+        this.melodyThresholdValue = 3;
         break;
       case 4:
         this.melodyArp = 1;
         this.melodyisHalfTime = true;
         this.melodyOctaveSpread = -1;
         this.melodyOctave = -1;
+        this.melodyThresholdValue = 4;
         break;
       }
   }
@@ -206,8 +210,8 @@ class Score {
         break;
       case 2:
         this.stringsArp = 0;
-        this.stringsOctaveSpread = -1;
-        this.stringsOctave = 0;
+        this.stringsOctaveSpread = -2;
+        this.stringsOctave = 2;
         this.stringsIsHalfTime = true;
         break;
       case 3:
@@ -218,9 +222,9 @@ class Score {
         break;
       case 4:
         this.stringsArp = 1;
-        this.stringsOctaveSpread = 0;
+        this.stringsOctaveSpread = -1;
         this.stringsOctave = 0;
-        this.stringsIsHalfTime = false;
+        this.stringsIsHalfTime = true;
         break;
       }
   }
@@ -235,19 +239,44 @@ class Score {
 
     switch (state) {
       case 1:
-        this.algo._setNoteDensityDrums(0);
-        break;
-      case 2:
         this.algo._setNoteDensityDrums(1);
         break;
-      case 3:
+      case 2:
         this.algo._setNoteDensityDrums(2);
         break;
-      case 4:
+      case 3:
         this.algo._setNoteDensityDrums(3);
         break;
+      case 4:
+        this.algo._setNoteDensityDrums(4);
+        break;
+      case 4:
+        this.algo._setNoteDensityDrums(5);
+        break;
+      case 5:
+        this.algo._setNoteDensityDrums(6);
+        break;
+      case 6:
+        this.algo._setNoteDensityDrums(7);
+        break;
+      case 7:
+        this.algo._setNoteDensityDrums(8);
+        break;
+      case 8:
+        this.algo._setNoteDensityDrums(9);
+        break;
+      case 9:
+        this.algo._setNoteDensityDrums(10);
+        break;
+      case 10:
+        this.algo._setNoteDensityDrums(10);
+        break;
+      case 11:
+        this.algo._setNoteDensityDrums(11);
+        break;
+
+      }
     }
-  }
 
   _getAlgorithmDrumRhythm () {
     this.drumVoices = this.algo.drumVoices;
@@ -413,7 +442,7 @@ class Score {
   }
 
   get scoreDrums () {
-    // console.log("drumlist @ score = ", this.drumList);
+    console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 
