@@ -33,8 +33,8 @@ class Drums {
     this.envKickPitch.setADSR(0.01, 0.16, 0, 0);
     this.envKickPitch.setRange(500, 0);
     this.envKickPitch.setExp(true);
-    this.envKickNoise.setADSR(0., 0.05, 0, 0);
-    this.envKickNoise.setRange(0.3, 0);
+    this.envKickNoise.setADSR(0, 0.15, 0, 0);
+    this.envKickNoise.setRange(0.1, 0);
     this.envSnare.setADSR(attackTimeDrums, decayTimeDrums, susPercentDrums, 0.5);
     this.envSnare.setRange(0.5, releaseLevelDrums);
     this.envHihat.setADSR(0.01, 0.02, 0.02, 0.01);
