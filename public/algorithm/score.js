@@ -31,7 +31,7 @@ function setup() {
 }
 
 function sendNewNotes() {
-
+  
   score._testStateVars(switchState + 1);
   score._renderScore();
 
