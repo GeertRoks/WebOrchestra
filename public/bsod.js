@@ -16,7 +16,11 @@ const qrOffset = 240;
 const qrSize = 230;
 const qrBlock = qrSize / 29;
 
-var instrumentType = 0;
+var instrumentType = 3;
+// 0	blauw	drums
+// 1	zalm	strings
+// 2	oranje	lead 1
+// 3	groen	lead 2	
 
 // ================ SETUP
 function bsodSetup()

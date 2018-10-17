@@ -94,23 +94,24 @@ class FmStrings {
         if (this.chordList[strings][0] > 0 && this.maskList[strings][0]){
           this.maskList[strings][0];
           freqq[strings] = this._mtof(this.chordList[strings][0]);
-        for(let i = 0; i < this.numCar; i++){
-            this.carriers[i + strings].freq(freqq[strings]);
+          for(let i = 0; i < this.numCar; i++){
+              this.carriers[i + strings].freq(freqq[strings]);
+              }
+              this.envAmp[strings].triggerAttack();
+              this.envFilter[strings].triggerAttack();
+              instrumentType = 1
+            } else {
+              if (this.chordList[strings][0] > 0 && !this.maskList[strings][0]){
+                this.envAmp[strings].triggerRelease();
+                this.envFilter[strings].triggerRelease();
+              }
+              }
             }
-            this.envAmp[strings].triggerAttack();
-            this.envFilter[strings].triggerAttack();
-          } else {
-            if (this.chordList[strings][0] > 0 && !this.maskList[strings][0]){
-              this.envAmp[strings].triggerRelease();
-              this.envFilter[strings].triggerRelease();
-            }
+            for (var numStrings = 0; numStrings < this.chordList.length; numStrings++){
+              this.chordList[numStrings].shift();
+              this.maskList[numStrings].shift();
             }
           }
-          for (var numStrings = 0; numStrings < this.chordList.length; numStrings++){
-            this.chordList[numStrings].shift();
-            this.maskList[numStrings].shift();
-          }
-        }
 
 
 
