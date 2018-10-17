@@ -78,13 +78,16 @@ class Drums {
       this.envKick.play();
       this.envKickPitch.play();
       this.envKickNoise.play();
+      onNote(100);
     }
     if(this.drumRhythm[1][0] == 1 && this.maskList[1][0]){
       this.envSnare.play();
+      onNote(10);
     }
     if(this.drumRhythm[2][0] == 1 && this.maskList[2][0]){
       // console.log("this.drumRhythm = ", this.drumRhythm);
       this.envHihat.play();
+      onNote(10);
       // console.log("play");
     }
     for (let drumIndex = 0; drumIndex < this.drumRhythm.length; drumIndex++){
