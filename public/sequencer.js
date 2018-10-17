@@ -17,19 +17,19 @@ function updateParams(){
   lead2._setNoteDuration(3);
 }
 
-function updateNotes(scorelist) {
+function updateNotes(scorelist, mask) {
   //scoreChords = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  fmSynth._setScore(scorelist.chords);
+  fmSynth._setScore(scorelist.chords, mask);
   //scoreMelody = []
-  lead._setScore(scorelist.melody);
+  lead._setScore(scorelist.melody, mask);
   //copy scorelist.melody
   var melodyTwoScore = scorelist.melody.slice()
   //create a offset of 1
   melodyTwoScore.unshift(0);
   melodyTwoScore.pop();
-  lead2._setScore(melodyTwoScore);
+  lead2._setScore(melodyTwoScore ,mask);
   //scoreDrums = [[],[],[]] een lijst van 256 indexen voor iedere voice een lijst
-  drums._setScore(scorelist.drums);
+  drums._setScore(scorelist.drums, mask);
   // console.log("chords @ updateNotes = ", scorelist.chords);
   // console.log("lead @ updateNotes = ", scorelist.melody);
   // console.log("drums @ updateNotes = ", scorelist.drums);
