@@ -5,6 +5,7 @@ var io = require('socket.io')(app);
 
 const port = 3000;
 var clients = [];
+var instrumentclients = [];
 
 
 //-----------Http server-------------//
@@ -90,8 +91,8 @@ io.sockets.on('connection', function(socket) {
   socket.on('disconnect', function() {
     console.log('A client disconnect!');
 
-    // remove the right ID out of the clients array.
-    var i = clients.findIndex(i => i.id === socket.id);
+    // find and remove the right ID out of the clients array
+    let i = clients.findIndex(i => i.id === socket.id);
     clients.splice(i, 1);
     console.log('Current clients: ');
     for (var j = 0; j < clients.length; j++) {
@@ -107,26 +108,140 @@ io.sockets.on('connection', function(socket) {
     });
   });
 
+  // Define the client type of a client
+  socket.on('clienttype', function(type) {
+    let i = clients.findIndex(i => i.id === socket.id);
+    clients[i].type = type;
+    console.log('Type added to client[' + i + ']. Type is: ' + clients[i].type);
+    console.log(' ');
+
+    if (type == "instrument") {
+      instrumentclients.push(clients[i].id);
+      console.log('Client[' + i + '] added to the instrumentclients array.');
+      console.log(' ');
+    }
+  });
+
+  // Send the new score to the instrument clients
   socket.on('newscore', function (scorelist) {
     socket.broadcast.emit('newscore', scorelist);
     console.log('new score send!');
   });
 
+
+  // Send a random mask to the instrument clients
+  socket.on('sendmask', function (listlength) {
+    let masks = makeMasks(listlength, instrumentclients.length);
+    for (let i = 0; i < instrumentclients.length; i++) {
+      io.sockets.connected[instrumentclients[i]].emit('mask', masks[i]);
+    }
+  });
+
+  // Send data from Conductors to instruments and algorithm
   socket.on('rhythm', function (data) {
     console.log('rhythm\t' + data.param0);
-  })
+  });
 
   socket.on('drone', function (data) {
     console.log('drone\t' + data.param0);
-  })
+  });
 
   socket.on('melody', function (data) {
     console.log('melody\t' + data.param0);
-  })
+  });
 });
+
 
 // Building block for a client object
 function Client(type, id) {
   this.type = type;
   this.id = id;
+};
+
+function makeMasks (notelistlength, clientslength) {
+  let masks = [];
+  for (var i = 0; i < clientslength; i++) {
+    masks.push(new Mask([], [], [], [], [], [], [], [], [], [], [], []));
+  }
+  let instname = "undefined";
+  for (let instrument = 0; instrument < 12; instrument++) {
+    switch (instrument) {
+      case 0:
+        instname = "kick";
+        break;
+      case 1:
+        instname = "snare";
+        break;
+      case 2:
+        instname = "hihat";
+        break;
+      case 3:
+        instname = "stringsvoice1";
+        break;
+      case 4:
+        instname = "stringsvoice2";
+        break;
+      case 5:
+        instname = "stringsvoice3";
+        break;
+      case 6:
+        instname = "lead1voice1";
+        break;
+      case 7:
+        instname = "lead1voice2";
+        break;
+      case 8:
+        instname = "lead1voice3";
+        break;
+      case 9:
+        instname = "lead2voice1";
+        break;
+      case 10:
+        instname = "lead2voice2";
+        break;
+      case 11:
+        instname = "lead2voice3";
+        break;
+      default:
+        instame = "undefined";
+    }
+
+    for (let i = 0; i < notelistlength; i++) {
+      //choose a random number between 0 and the amount of instrument clients. That is the one that plays a note.
+      var hit = getRandomInt(masks.length);
+      masks[hit][instname].push(1);
+      for (let j = 0; j < masks.length; j++) {
+        // give the not playing clients a 0
+        if (j != hit) {
+          masks[j][instname].push(0);
+        }
+      }
+    }
+    // for (let i = 0; i < masks.length; i++) {
+    //   console.log('masks[' + i + '].' + instname + ': ' + masks[i][instname]);
+    //   console.log('masks[' + i + '].' + instname + '.length: ' + masks[i][instname].length);
+    // }
+  }
+  return masks;
+}
+
+// Gives random integer between 0 and max
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
+// mask building block
+function Mask(kick, snare, hihat, stringsvoice1, stringsvoice2, stringsvoice3, lead1voice1, lead1voice2, lead1voice3, lead2voice1, lead2voice2, lead2voice3) {
+  this.kick = kick;
+  this.snare = snare;
+  this.hihat = hihat;
+  this.stringsvoice1 = stringsvoice1;
+  this.stringsvoice2 = stringsvoice2;
+  this.stringsvoice3 = stringsvoice3;
+  this.lead1voice1 = lead1voice1;
+  this.lead1voice2 = lead1voice2;
+  this.lead1voice3 = lead1voice3;
+  this.lead2voice1 = lead2voice1;
+  this.lead2voice2 = lead2voice2;
+  this.lead2voice3 = lead2voice3;
 };
