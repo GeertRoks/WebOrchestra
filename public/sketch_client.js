@@ -47,5 +47,5 @@ function draw() {
 
 
 function keyTyped() {
-	onNote();
+	// onNote();
 }
