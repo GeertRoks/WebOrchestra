@@ -46,9 +46,9 @@ class Lead {
 
     var maskTemp = [mask.lead1voice1, mask.lead1voice2, mask.lead1voice3];
 
-    for (var i = 0; i < notesList.length; i ++ ) {
-      for(var j = 0; j < notesList[i].length; j++) {
-        this.notes[i].push(notesList[i][j]);
+    for (var i = 0; i < score.length; i ++ ) {
+      for(var j = 0; j < score[i].length; j++) {
+        this.notes[i].push(score[i][j]);
         this.maskList[i].push(maskTemp[i][j]);
       }
     }

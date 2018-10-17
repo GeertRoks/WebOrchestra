@@ -80,9 +80,9 @@ class FmStrings {
     }
 
     // console.log("fmstings: " + this.chordList);
-    console.log("voice1 length: " + this.chordList[0].length);
-    console.log("voice2 length: " + this.chordList[1].length);
-    console.log("voice3 length: " + this.chordList[2].length);
+    // console.log("voice1 length: " + this.chordList[0].length);
+    // console.log("voice2 length: " + this.chordList[1].length);
+    // console.log("voice3 length: " + this.chordList[2].length);
   }
 
   _sequence () {
@@ -90,7 +90,7 @@ class FmStrings {
     var freqq = [];
 
       for (let strings = 0; strings < this.chordList.length; strings++){
-        console.log("chordList.length = ", this.chordList.length);
+        // console.log("chordList.length = ", this.chordList.length);
         if (this.chordList[strings][0] > 0 && this.maskList[strings][0]){
           this.maskList[strings][0];
           freqq[strings] = this._mtof(this.chordList[strings][0]);
@@ -99,11 +99,16 @@ class FmStrings {
             }
             this.envAmp[strings].triggerAttack();
             this.envFilter[strings].triggerAttack();
+          } else {
+            if (this.chordList[strings][0] > 0 && !this.maskList[strings][0]){
+              this.envAmp[strings].triggerRelease();
+              this.envFilter[strings].triggerRelease();
+            }
             }
           }
           for (var numStrings = 0; numStrings < this.chordList.length; numStrings++){
             this.chordList[numStrings].shift();
-            this.maskList[strings].shift();
+            this.maskList[numStrings].shift();
           }
         }
 

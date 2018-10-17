@@ -29,7 +29,7 @@ function setup() {
 
   socket.on('newscore', function (data) {
     updateNotes(data.score, data.mask);
-    console.log('mask: ' + data.mask.kick);
+    // console.log('mask: ' + data.mask.kick);
   });
 
   //P5 setup

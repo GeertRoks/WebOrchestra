@@ -319,8 +319,8 @@ class Score {
         }
         this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.chordNotes;
       }
-      console.log("scoreChordNotes = ", this.scoreNotesChords);
-      console.log("scoreChords = ", this.strings);
+      // console.log("scoreChordNotes = ", this.scoreNotesChords);
+      // console.log("scoreChords = ", this.strings);
       this._renderMelody();
     }
   }
@@ -371,7 +371,7 @@ class Score {
         }
         }
       }
-      console.log("melodyList @ _renderMelody = ", this.melodyList);
+      // console.log("melodyList @ _renderMelody = ", this.melodyList);
     }
 
   _renderDrumRhythm () {
@@ -403,17 +403,17 @@ class Score {
 //Getters=======================================================================
 
   get scoreMelody () {
-    console.log("melody @ score = ", this.melodyList);
+    // console.log("melody @ score = ", this.melodyList);
     return this.melodyList;
   }
 
   get scoreChords () {
-    console.log("strings @ score = ", this.strings);
+    // console.log("strings @ score = ", this.strings);
     return this.strings;
   }
 
   get scoreDrums () {
-    console.log("drumlist @ score = ", this.drumList);
+    // console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 
