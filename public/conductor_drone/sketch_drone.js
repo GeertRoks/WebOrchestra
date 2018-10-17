@@ -25,9 +25,8 @@ function draw()
 	if (frameCount % 10 == 0)
 	{
 		socket.emit('drone', {
-			param0:  int(bugman)
+			param0:  int((10-bugman)*10)
 		});
-		
 	}
 }
 

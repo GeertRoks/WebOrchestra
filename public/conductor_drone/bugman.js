@@ -56,18 +56,24 @@ function bugmanDraw()
 	textSize(32);
 	noStroke();
 	fill(255);
-	text('CPU ' + 100 * (bugman / nErrors) + '%', 10, 10);
+	text('CPU ' + int(100 * (bugman / nErrors)) + '%', 10, 10);
 }
 
 function bugmanResized() {
 }
 
 function WinErr() {
+	this.x = int(posX);
+	this.y = int(posY);
+
 	this.xSize = 400;
 	this.ySize = 250;
 
-	this.x = int(posX) - (this.xSize * 0.);
-	this.y = int(posY) - (this.ySize * 0.);
+	if (this.x > windowWidth - this.xSize)
+		this.x = windowWidth - this.xSize;
+
+	if (this.y > windowHeight - this.ySize)
+		this.y = windowHeight - this.ySize;
 
 	this.display = function() {
 		// Window
@@ -117,20 +123,40 @@ function WinErr() {
 	};
 
 	this.check = function(removeID) {
-		let cancelPosX = this.x+this.xSize-28;
-		let cancelPosY = this.y+2;
+		// Red X
+		this.redX = this.x+this.xSize-28;
+		this.redY = this.y+2;
 
-		if (mouseX > cancelPosX && mouseX <= cancelPosX+26)
-		{
+		if (mouseX > this.redX && mouseX <= this.redX+26 && mouseY > this.redY && mouseY <= this.redY+26) {
 			errors.splice(removeID, 1);
-			print(removeID)
-
+			print('X');
 		}
 
+		// Cancel
+		this.cancelX = this.x+this.xSize-100+20;
+		this.cancelY = this.y+this.ySize-37;
+		if (mouseX > this.cancelX && mouseX <= this.cancelX+80 && mouseY > this.cancelY && mouseY <= this.cancelY+25) {
+			errors.splice(removeID, 1);
+			print('Cancel');
+		}
+
+		// End now
+		this.endX = this.x+this.xSize-190
+		this.endY = this.y+this.ySize-45;
+		if (mouseX > this.endX && mouseX <= this.endX+80 && mouseY > this.endY && mouseY <= this.endY+25) {
+			while(errors.length < 10) {
+				posX = random(windowWidth);
+				posY = random(windowHeight);
+				errors.push(new WinErr());
+				print(mouseX+' '+mouseY);
+			}
+			print('End Now');
+		}
 	}
 }
 
 function mouseClicked() {
+
 	for (var i=0; i<errors.length; i++) {
 		errors[i].check(i);
 	}
