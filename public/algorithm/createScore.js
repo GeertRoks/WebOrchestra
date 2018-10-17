@@ -59,6 +59,7 @@ class Score {
 
   }
 
+  //function to test different combinations of states
   _testStateVars(state) {
 
     switch (state) {
@@ -361,14 +362,16 @@ class Score {
 
     for (let measures = 0; measures < this.measures; measures++){
       for (let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++){
-
+        //if this.stringIsHalfTime = true this part toggles between if and else....
+        //this means that the first time a note is added, second time a 0
         if (this.stringsHalfTimeVar == 1 || !this.stringsIsHalfTime) {
 
           if (this.chordRhythm[beatsPerMeasure % this.chordRhythm.length] == 1){
 
             this.scoreNotes = this.algo.notes;
+            //create a copy of list to use later in _renderMelody
             this.chordNotes = this.scoreNotes.slice();
-            // this.chordNotes = this.scoreNotes;
+
             //set octave for strings:
             for (let notes = 0; notes < this.chordNotes.length; notes++){
               this.chordNotes[notes] = this.chordNotes[notes] +
@@ -376,13 +379,13 @@ class Score {
               (12 * this.stringsOctave);
             }
 
-            // this.scoreNotes = this._reverseArray(this.scoreNotes);
-            if (this.stringsArp == 0){ // if no arpeggio
+            if (this.stringsArp == 0){ // if no arpeggio write chord
               this.chordList[beatsPerMeasure + (measures * 32)][beatsPerMeasure] = this.chordNotes;
               for (let stringVoices = 0; stringVoices < 3; stringVoices++){
                 this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.chordNotes[stringVoices];
               }
             } else {
+                //writes one note in one 2d list and sets other elements of ohter lists at the same index to zero
               this.strings[stringVoices][beatsPerMeasure + (measures * 32)] = this.chordNotes[stringVoices];
               this.strings[(stringVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
               this.strings[(stringVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
@@ -408,10 +411,9 @@ class Score {
           }
           this.stringsHalfTimeVar = 1;
         }
+        //make a list for _renderMelody, for example it changes [60, 0, 70, 0] to [60, 60, 70, 70]
         this.scoreNotesChords[beatsPerMeasure + (measures * 32)] = this.chordNotes;
       }
-      // console.log("scoreChordNotes = ", this.scoreNotesChords);
-      // console.log("scoreChords = ", this.strings);
       this._renderMelody();
     }
   }
@@ -425,8 +427,10 @@ class Score {
 
     for ( let measures = 0; measures < this.measures; measures++ ){
       for ( let beatsPerMeasure = 0; beatsPerMeasure < this.beatsPerMeasure; beatsPerMeasure++ ){
+        //if this.melodyisHalfTime = true this part toggles between if and else....
+        //this means that the first time a note is added, second time a 0
         if (this.melodyHalfTimeVar  == 1 || !this.melodyisHalfTime) {
-
+          //if this.melodyArp == 0 it creates a chord
           if ( this.melodyArp == 0 ) {
             if(this.chordRhythm[beatsPerMeasure] == 1){
               for ( let voices = 0; voices < 3; voices++ ) {
@@ -438,16 +442,16 @@ class Score {
                 this.melodyList[voices][beatsPerMeasure + (measures * 32)] = 0;
               }
             }
-          } else {
+          } else { // if this.melodyArp == 1 it creates a arpeggio
               if ( this.melodyRhythm[beatsPerMeasure % this.melodyRhythm.length] == 1 ){
-              this.melodyList[melodyVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][melodyVoices];
-              + ( 12 * (this.melodyOctaveSpread * melodyVoices) + (12 * this.melodyOctave));
-              this.melodyList[(melodyVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
-              this.melodyList[(melodyVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
+                //writes one note in one 2d list and sets other elements of ohter lists at the same index to zero
+                this.melodyList[melodyVoices][beatsPerMeasure + (measures * 32)] = this.scoreNotesChords[beatsPerMeasure + (measures * 32)][melodyVoices];
+                + ( 12 * (this.melodyOctaveSpread * melodyVoices) + (12 * this.melodyOctave));
+                this.melodyList[(melodyVoices + 1) % 3][beatsPerMeasure + (measures * 32)] = 0;
+                this.melodyList[(melodyVoices + 2) % 3][beatsPerMeasure + (measures * 32)] = 0;
               } else {
-              // console.log("this melodyList = ", this.melodyList);
-              for ( let voices = 0; voices < 3; voices++ ) {
-                this.melodyList[voices][beatsPerMeasure + (measures * 32)] = 0;
+                  for ( let voices = 0; voices < 3; voices++ ) {
+                    this.melodyList[voices][beatsPerMeasure + (measures * 32)] = 0;
               }
             }
         }
@@ -455,6 +459,7 @@ class Score {
         notess++;
         this.melodyHalfTimeVar = 0;
       } else {
+          //add zero's if this.melodyisHalfTime = true
           for (let stringVoices = 0; stringVoices < 3; stringVoices++){
             this.melodyList[stringVoices][beatsPerMeasure + (measures * 32)] = 0;
           }
@@ -462,11 +467,10 @@ class Score {
         }
         }
       }
-      // console.log("melodyList @ _renderMelody = ", this.melodyList);
     }
 
   _renderDrumRhythm () {
-
+    //retrieve information from algorithm. each time this.algo.drumRhythm is called it generates a new list
     this.drumVoices = this.algo.drumVoices;
     this.drumRhythm = this.algo.drumRhythm;
     let count = 0;
@@ -482,29 +486,25 @@ class Score {
     }
   }
 
+  //function that renders the score, first _renderChords calls algorithm and get a new list of chord notes
+  //in render chords _renderMelody is called which uses the list retrieved in _renderChords to create melody part
   _renderScore () {
-    // let count = 0;
-    // console.log(this.countScores);
     this._renderChords();
     this._renderDrumRhythm();
-    // this.countScores++;
   }
 
 
 //Getters=======================================================================
 
   get scoreMelody () {
-    // console.log("melody @ score = ", this.melodyList);
     return this.melodyList;
   }
 
   get scoreChords () {
-    // console.log("strings @ score = ", this.strings);
     return this.strings;
   }
 
   get scoreDrums () {
-    console.log("drumlist @ score = ", this.drumList);
     return this.drumList;
   }
 
