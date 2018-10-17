@@ -2,17 +2,13 @@ class Lead {
 
   constructor () {
 
-    // this.arp = 1;
-    this.octave = 0;
     this.duration = 1;
 
     this.env = [];
     this.triOsc = [];
     this.notes = [[],[],[]];
     this.rhythm = [];
-
-    this.index = 0;
-    this.count = 0;
+    this.maskList = [[],[],[]];
 
     this.attackLevel = 0.2;
     this.releaseLevel = 0;
@@ -46,14 +42,18 @@ class Lead {
     }
   }
 
-  _setScore (notesList) {
-    for (var i = 0; i < notesList.length; i ++ ) {
-      for(var j = 0; j < notesList[i].length; j++) {
-        this.notes[i].push(notesList[i].shift());
+  _setScore (score, mask) {
+
+    var maskTemp = [mask.lead1voice1, mask.lead1voice2, mask.lead1voice3];
+
+    for (var i = 0; i < score.length; i ++ ) {
+      for(var j = 0; j < score[i].length; j++) {
+        this.notes[i].push(score[i][j]);
+        this.maskList[i].push(maskTemp[i][j]);
       }
     }
-    console.log("lead: " + this.notes);
-    console.log("leadlength: " + this.notes.length);
+    // console.log("lead: " + this.notes);
+    // console.log("leadlength: " + this.notes.length);
   }
 
   _setRhythm (rhythmList) {
@@ -84,11 +84,12 @@ class Lead {
   _sequence() {
 
     for (let voice = 0; voice < 3; voice++){
-      if (this.notes[voice][0] > 0){
+      if (this.notes[voice][0] > 0 && this.maskList[voice][0]){
         this.triOsc[voice].freq(this._mtof(this.notes[voice][0] + (12 * this.octave)));
         this.env[voice].play();
       }
     this.notes[voice].shift();
+    this.maskList[voice].shift();
     }
   }
 }
