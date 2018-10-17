@@ -53,6 +53,7 @@ function sendNewNotes() {
   }
 
   socket.emit('newscore', scorelist);
+  socket.emit('sendmask', 256);
 }
 
 function draw() {

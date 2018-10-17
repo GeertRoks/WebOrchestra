@@ -1,9 +1,11 @@
 class Drums {
 
   constructor () {
-
+    //init lists================================================================
+    this.maskList = [[],[],[]];
     this.drumRhythm = [[],[],[]];
-    //Envelope======================================================================
+
+    //Envelope vars=============================================================
     let attackLevelDrums = 0.4;
     let releaseLevelDrums = 0;
 
@@ -13,7 +15,7 @@ class Drums {
     let releaseTimeDrums = 0.05;
     //==========================================================================
 
-    //==========================================================================
+    //init p5 objects===========================================================
 
     this.kick = new p5.Oscillator('sine');
     this.snare = new p5.Noise('pink');
@@ -40,10 +42,15 @@ class Drums {
     this.hihat.start();
     }
 
-  _setScore (score) {
+  //put score into list for sequencer
+  _setScore (score, mask) {
+
+    var maskTemp = [mask.kick, mask.snare, mask.hihat];
+
     for (var i = 0; i < score.length; i++) {
       for (var j = 0; j < score[i].length; j++){
         this.drumRhythm[i].push(score[i][j]);
+        this.maskList[i].push(maskTemp[i][j]);
       }
     }
     // console.log("kick: " + this.drumRhythm[0].length);
@@ -51,21 +58,23 @@ class Drums {
     // console.log("hihat: " + this.drumRhythm[2].length);
   }
 
+  //trigger events
   _sequence () {
 
-    if(this.drumRhythm[0][0] == 1){
+    if(this.drumRhythm[0][0] == 1 && this.maskList[0][0]){
       this.envKick.play();
     }
-    if(this.drumRhythm[1][0] == 1){
+    if(this.drumRhythm[1][0] == 1 && this.maskList[1][0]){
       this.envSnare.play();
     }
-    if(this.drumRhythm[2][0] == 1){
+    if(this.drumRhythm[2][0] == 1 && this.maskList[2][0]){
       // console.log("this.drumRhythm = ", this.drumRhythm);
       this.envHihat.play();
       // console.log("play");
     }
     for (let drumIndex = 0; drumIndex < this.drumRhythm.length; drumIndex++){
       this.drumRhythm[drumIndex].shift();
+      this.maskList[drumIndex].shift();
     }
   }
 }//end Drums

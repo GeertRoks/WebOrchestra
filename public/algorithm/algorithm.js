@@ -3,12 +3,18 @@ class Algorithm {
 
     constructor () {
       this.drumVoices = 3;
+
       this.drumsThresholdValue = 4;
       this.chordsThresholdValue = 1;
       this.melodyThresholdValue = 3;
+
       this.first = true;
       this.notePicked = 0;
+
+      //init a interval on which the chords are based, in this case a chord that is based on 3ths
       this.chordInterval = 3;
+
+      //create note and rhythm output
       this._constructNotes ();
       this._constructMelodyRhythm();
       this._constructChordRhythm();
@@ -22,11 +28,12 @@ class Algorithm {
 
     if(this.first){
       this.notePicked = Math.round((Math.random() * 10) % 8);
+      // this.first = false //TODO deze uitcommenten en kijken hoe het klinkt
     }
 
       for (let i = 0; i < 3; i++){
           notes[i] = scale[this.notePicked];
-        if (!this.first) {
+        if (!this.first) {//TODO hier nog naar kijken, dit wordt nooit uitgevoerd?
           this.notePicked = notes[Math.round((Math.random() * 2) % 3)];
         }
         //noot afstand = 5 (1, 2, 3, 4)
