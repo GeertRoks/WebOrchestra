@@ -4,6 +4,7 @@ var socket;
 var ref = [];
 var countSequence = 0;
 var trigger = false;
+var switchState = 0;
 
 function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
@@ -29,20 +30,26 @@ function setup() {
 }
 
 function sendNewNotes() {
-  score._setMelodyState(1);
-  score._setStringsState(3);
+
+  score._testStateVars(17);
   score._renderScore();
+
+  // switchState = (switchState + 1) % 18;
 
   var scorelist = {
     drums: score.scoreDrums,
     melody: score.scoreMelody,
     chords: score.scoreChords
   };
+  // console.log("scoreDrums @ score.js = ", score.scoreDrums);
+  // console.log("scoreList @ score.js = ", scorelist);
 
-  for (var i = 0; i <scorelist.drums[0].length; i++) {
-    ref.push(scorelist.drums[0].shift());
+
+  ref = [];
+
+  for (var i = 0; i <256; i++) {
+    ref.push(0);
   }
-  console.log(ref);
 
   socket.emit('newscore', scorelist);
 }
@@ -52,15 +59,17 @@ function draw() {
 
   if (d.getMilliseconds() % 125 <= 20 && !trigger) {
     ref.shift();
-    console.log('ref shift')
+    // console.log('ref shift')
     trigger = true;
   }
   if(d.getMilliseconds() % 125 >= 40 && trigger){
     trigger = false;
   }
 
+  // console.log(ref.length);
+
   if (ref.length < 128) {
     sendNewNotes();
-    //console.log('send new notes');
+    console.log('send new notes');
   }
 }

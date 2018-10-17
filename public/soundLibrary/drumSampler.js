@@ -43,12 +43,12 @@ class Drums {
   _setScore (score) {
     for (var i = 0; i < score.length; i++) {
       for (var j = 0; j < score[i].length; j++){
-        this.drumRhythm[i].push(score[i].shift());
+        this.drumRhythm[i].push(score[i][j]);
       }
     }
-    console.log("kick: " + this.drumRhythm[0].length);
-    console.log("snare: " + this.drumRhythm[1].length);
-    console.log("hihat: " + this.drumRhythm[2].length);
+    // console.log("kick: " + this.drumRhythm[0].length);
+    // console.log("snare: " + this.drumRhythm[1].length);
+    // console.log("hihat: " + this.drumRhythm[2].length);
   }
 
   _sequence () {

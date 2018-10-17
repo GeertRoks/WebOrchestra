@@ -2,17 +2,12 @@ class Lead {
 
   constructor () {
 
-    // this.arp = 1;
-    this.octave = 0;
     this.duration = 1;
 
     this.env = [];
     this.triOsc = [];
     this.notes = [[],[],[]];
     this.rhythm = [];
-
-    this.index = 0;
-    this.count = 0;
 
     this.attackLevel = 0.2;
     this.releaseLevel = 0;
@@ -49,11 +44,11 @@ class Lead {
   _setScore (notesList) {
     for (var i = 0; i < notesList.length; i ++ ) {
       for(var j = 0; j < notesList[i].length; j++) {
-        this.notes[i].push(notesList[i].shift());
+        this.notes[i].push(notesList[i][j]);
       }
     }
-    console.log("lead: " + this.notes);
-    console.log("leadlength: " + this.notes.length);
+    // console.log("lead: " + this.notes);
+    // console.log("leadlength: " + this.notes.length);
   }
 
   _setRhythm (rhythmList) {

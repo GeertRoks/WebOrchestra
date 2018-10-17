@@ -16,7 +16,7 @@
 
   - Voeg dingen toe aan de To Do, zodat iedereen weet van elkaar hoe ver ieder is en of er misschien geholpen kan worden.
 
-### To Do
+### To Do:
 
 Network:
   - [x] Sync computers over their timestamp
