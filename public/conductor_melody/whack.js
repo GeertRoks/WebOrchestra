@@ -95,7 +95,7 @@ function mouseClicked()
 	if (clickIndex >= randNullPos && clickIndex < randNullPos + 5) 
 	{
 		// Error
-		memoryProgress += 20;
+		memoryProgress += 30;
 		frameCount = -1;
 	} else {
 		// Healthy memory

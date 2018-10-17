@@ -153,11 +153,13 @@ class Score {
 
   _setMelodyState (state) {
 
-    // if(state > 100){
-    //   state = 5
-    // } else {
-    //   state = int(state / 25);
-    // }
+    if(state > 100){
+      state = 5
+    } else {
+      state = int(state / 25);
+    }
+
+    console.log('mel: '+state);
 
     switch (state) {
       case 1:
@@ -193,11 +195,13 @@ class Score {
 
   _setStringsState (state) {
 
-    // if(state > 100){
-    //   state = 5
-    // } else {
-    //   state = int(state / 25);
-    // }
+    if(state > 100){
+      state = 4
+    } else {
+      state = int(state / 33);
+    }
+
+    console.log('str: '+state);
 
     switch (state) {
 
@@ -231,11 +235,13 @@ class Score {
 
   _setDrumState (state) {
 
-    // if(state > 100){
-    //   state = 4
-    // } else {
-    //   state = int(state / 33);
-    // }
+    if(state > 100){
+      state = 11
+    } else {
+      state = int(state / 10);
+    }
+
+    console.log('dru: '+state);
 
     switch (state) {
       case 1:

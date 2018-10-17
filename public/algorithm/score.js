@@ -6,6 +6,10 @@ var countSequence = 0;
 var trigger = false;
 var switchState = 0;
 
+let melodyVar = 0;
+let droneVar = 0;
+let rhythmVar = 0;
+
 function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
   socket.emit('clienttype', "algorithm");
@@ -28,14 +32,27 @@ function setup() {
   socket.on('timesync', function (data) {
     ts.receive(null, data);
   });
+  socket.on('melody', function (data) {
+    melodyVar = data.param0 + 1;
+  });
+  socket.on('drone', function (data) {
+    droneVar = data.param0 + 1;
+  });
+  socket.on('rhythm', function (data) {
+    rhythmVar = data.param0 + 1;
+  });
 }
 
 function sendNewNotes() {
 
-  score._testStateVars(switchState + 1);
+  score._setStringsState(droneVar);
+  score._setDrumState(rhythmVar);
+  score._setMelodyState(melodyVar);
   score._renderScore();
+  console.log(droneVar+' '+rhythmVar+' '+melodyVar);
 
-  switchState = (switchState + 1) % 17;
+  // switchState = (switchState + 1) % 17;
+
 
   var scorelist = {
     drums: score.scoreDrums,
