@@ -32,7 +32,7 @@ function setup() {
 
 function sendNewNotes() {
 
-  score._testStateVars(17);
+  score._testStateVars(8);
   score._renderScore();
 
   // switchState = (switchState + 1) % 18;
