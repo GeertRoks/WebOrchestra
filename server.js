@@ -146,14 +146,20 @@ io.sockets.on('connection', function(socket) {
   // Send data from Conductors to instruments and algorithm
   socket.on('rhythm', function (data) {
     // console.log('rhythm\t' + data.param0);
+    let i = clients.findIndex(i => i.type === "algorithm");
+    socket.connected[clients[i]].emit('rhythm', data);
   })
 
   socket.on('drone', function (data) {
     // console.log('drone\t' + data.param0);
+    let i = clients.findIndex(i => i.type === "algorithm");
+    socket.connected[clients[i]].emit('drone', data);
   })
 
   socket.on('melody', function (data) {
     // console.log('melody\t' + data.param0);
+    let i = clients.findIndex(i => i.type === "algorithm");
+    socket.connected[clients[i]].emit('melody', data);
   })
 });
 
