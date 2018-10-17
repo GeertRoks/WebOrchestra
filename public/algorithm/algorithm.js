@@ -149,8 +149,8 @@ class Algorithm {
   }
 
   get drumRhythm () {
-    let d = this._drumRhythm;
-    if (!d) d = this._drumRhythm = this._constructDrumRhythm();
+    // let d = this._drumRhythm;
+    let d = this._drumRhythm = this._constructDrumRhythm();
     return d;
   }
 
