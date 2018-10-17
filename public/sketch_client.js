@@ -27,12 +27,9 @@ function setup() {
   //  TimeSync^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-  socket.on('newscore', function (scorelist) {
-    updateNotes(scorelist);
-  });
-  socket.on('mask', function (mask) {
-    //TODO implement mask
-    console.log('mask: ' + mask.kick);
+  socket.on('newscore', function (data) {
+    updateNotes(data.score, data.mask);
+    console.log('mask: ' + data.mask.kick);
   });
 
   //P5 setup

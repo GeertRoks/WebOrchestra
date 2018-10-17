@@ -124,18 +124,17 @@ io.sockets.on('connection', function(socket) {
 
   // Send the new score to the instrument clients
   socket.on('newscore', function (scorelist) {
-    socket.broadcast.emit('newscore', scorelist);
-    console.log('new score send!');
-  });
-
-
-  // Send a random mask to the instrument clients
-  socket.on('sendmask', function (listlength) {
-    let masks = makeMasks(listlength, instrumentclients.length);
+    let masks = makeMasks(256, instrumentclients.length);
     for (let i = 0; i < instrumentclients.length; i++) {
-      io.sockets.connected[instrumentclients[i]].emit('mask', masks[i]);
+      let data = {
+        mask: masks[i],
+        score: scorelist
+      }
+      io.sockets.connected[instrumentclients[i]].emit('newscore', data);
     }
+    console.log('new score + mask send!');
   });
+
 
   // Send data from Conductors to instruments and algorithm
   socket.on('rhythm', function (data) {
