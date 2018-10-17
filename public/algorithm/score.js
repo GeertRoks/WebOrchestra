@@ -4,6 +4,7 @@ var socket;
 var ref = [];
 var countSequence = 0;
 var trigger = false;
+var switchState = 0;
 
 function setup() {
   socket = io.connect("http://" + hostname + ":" + port);
@@ -29,8 +30,11 @@ function setup() {
 }
 
 function sendNewNotes() {
+
   score._testStateVars(17);
   score._renderScore();
+
+  // switchState = (switchState + 1) % 18;
 
   var scorelist = {
     drums: score.scoreDrums,
@@ -40,7 +44,6 @@ function sendNewNotes() {
   // console.log("scoreDrums @ score.js = ", score.scoreDrums);
   // console.log("scoreList @ score.js = ", scorelist);
 
-  var drumRef = scorelist.drums[0].slice();
 
   ref = [];
 

@@ -3,7 +3,7 @@ class Algorithm {
 
     constructor () {
       this.drumVoices = 3;
-      this.drumsThresholdValue = 0;
+      this.drumsThresholdValue = 4;
       this.chordsThresholdValue = 1;
       this.melodyThresholdValue = 3;
       this.first = true;

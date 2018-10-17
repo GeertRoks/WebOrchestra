@@ -74,9 +74,9 @@ class FmStrings {
       }
     }
     // console.log("fmstings: " + this.chordList);
-    // console.log("voice1 length: " + this.chordlist[0].length);
-    // console.log("voice2 length: " + this.chordlist[1].length);
-    // console.log("voice3 length: " + this.chordlist[2].length);
+    console.log("voice1 length: " + this.chordList[0].length);
+    console.log("voice2 length: " + this.chordList[1].length);
+    console.log("voice3 length: " + this.chordList[2].length);
   }
 
   _sequence () {

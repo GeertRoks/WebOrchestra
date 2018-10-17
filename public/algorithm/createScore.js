@@ -115,22 +115,22 @@ class Score {
       case 11:
         this._setMelodyState(3);
         this._setStringsState(3);
-        this._setDrumState(5);
+        // this._setDrumState(5);
         break;
       case 12:
         this._setMelodyState(3);
         this._setStringsState(3);
-        this._setDrumState(3);
+        // this._setDrumState(3);
         break;
       case 13:
         this._setMelodyState(4);
         this._setStringsState(3);
-        this._setDrumState(3);
+        // this._setDrumState(3);
         break;
       case 14:
         this._setMelodyState(3);
         this._setStringsState(4);
-        this._setDrumState(3);
+        // this._setDrumState(3);
         break;
       case 15:
         this._setMelodyState(3);
@@ -140,12 +140,12 @@ class Score {
       case 16:
         this._setMelodyState(3);
         this._setStringsState(4);
-        this._setDrumState(4);
+        // this._setDrumState(4);
         break;
       case 17:
         this._setMelodyState(1);
         this._setStringsState(1);
-        this._setDrumState(1);
+        // this._setDrumState(1);
         break;
     }
 
