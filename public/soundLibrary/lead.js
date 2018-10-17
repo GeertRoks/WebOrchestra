@@ -87,6 +87,7 @@ class Lead {
       if (this.notes[voice][0] > 0 && this.maskList[voice][0]){
         this.triOsc[voice].freq(this._mtof(this.notes[voice][0] + (12 * this.octave)));
         this.env[voice].play();
+        instrumentType = 2;
       }
     this.notes[voice].shift();
     this.maskList[voice].shift();

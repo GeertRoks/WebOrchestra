@@ -17,8 +17,7 @@ function bugmanPreload() {
 }
 
 function bugmanSetup() {
-	// bgImg = loadImage("http://www.mytinyphone.com/uploads/users/mcpalmer19/588923.jpg");
-	// bgImg = loadImage("conductor_drone/background.jpeg");
+	bgImg = loadImage("conductor_drone/background.jpg");
 
 	for (var i=0; i<nErrors; i++) {
 		errors.push(new WinErr());
@@ -29,13 +28,15 @@ function bugmanSetup() {
 
 function bugmanDraw()
 {
-	background(0);
+	background(bgImg);
 
 	let dx = mouseX - posX;
 	posX += dx * errEasing;
 
 	let dy = mouseY - posY;
 	posY += dy * errEasing;
+
+
 
 	if (frameCount % 30 === 0) {
 		if (random(100) > 80)
@@ -55,7 +56,7 @@ function bugmanDraw()
 
 	textSize(32);
 	noStroke();
-	fill(255);
+	fill(0);
 	text('CPU ' + int(100 * (bugman / nErrors)) + '%', 10, 10);
 }
 

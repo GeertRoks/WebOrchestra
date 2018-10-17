@@ -30,10 +30,11 @@ class Drums {
 
     this.envKick.setADSR(attackTimeDrums, 0.3, susPercentDrums, releaseTimeDrums);
     this.envKick.setRange(attackLevelDrums, releaseLevelDrums);
-    this.envKickPitch.setADSR(0.01, 0.12, 0, 0);
-    this.envKickPitch.setRange(250, 0);
-    this.envKickNoise.setADSR(0., 0.05, 0, 0);
-    this.envKickNoise.setRange(0.3, 0);
+    this.envKickPitch.setADSR(0.01, 0.16, 0, 0);
+    this.envKickPitch.setRange(500, 0);
+    this.envKickPitch.setExp(true);
+    this.envKickNoise.setADSR(0, 0.15, 0, 0);
+    this.envKickNoise.setRange(0.1, 0);
     this.envSnare.setADSR(attackTimeDrums, decayTimeDrums, susPercentDrums, 0.5);
     this.envSnare.setRange(0.5, releaseLevelDrums);
     this.envHihat.setADSR(0.01, 0.02, 0.02, 0.01);
@@ -77,14 +78,19 @@ class Drums {
       this.envKick.play();
       this.envKickPitch.play();
       this.envKickNoise.play();
+      onNote(100);
+      instrumentType = 0;
     }
     if(this.drumRhythm[1][0] == 1 && this.maskList[1][0]){
       this.envSnare.play();
+      onNote(10);
+      instrumentType = 0;
     }
     if(this.drumRhythm[2][0] == 1 && this.maskList[2][0]){
       // console.log("this.drumRhythm = ", this.drumRhythm);
       this.envHihat.play();
-      // console.log("play");
+      onNote(10);
+      instrumentType = 0;
     }
     for (let drumIndex = 0; drumIndex < this.drumRhythm.length; drumIndex++){
       this.drumRhythm[drumIndex].shift();

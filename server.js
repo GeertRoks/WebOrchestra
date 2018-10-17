@@ -20,7 +20,8 @@ const mimeLookup = {
   '.html': 'text/html',
   '.wav': 'audio/wave',
   '.otf': 'application/x-font-otf',
-  '.ttf': 'application/x-font-ttf'
+  '.ttf': 'application/x-font-ttf',
+  '.jpg': 'image/jpeg'
 };
 
 // Start the server on the given port

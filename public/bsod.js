@@ -16,7 +16,11 @@ const qrOffset = 240;
 const qrSize = 230;
 const qrBlock = qrSize / 29;
 
-var instrumentType = 0;
+var instrumentType = 3;
+// 0	blauw	drums
+// 1	zalm	strings
+// 2	oranje	lead 1
+// 3	groen	lead 2	
 
 // ================ SETUP
 function bsodSetup()
@@ -46,13 +50,13 @@ function bsodDraw()
 
 	lineGlitch();
 	
-	progress = int(progress * 0.95);
+	progress = int(progress * 0.8);
 
 }
 
-function onNote()
+function onNote(intensity)
 {
-	progress += 50;
+	progress += intensity;
 }
 
 function lineGlitch()
@@ -82,14 +86,14 @@ function drawText()
 		text(":(", hOffset, vOffset); // sad
 
 	textSize(32 + (progress * progress * (0.0001) * (0.8 + random(0.2))));
-	text(stringGlitch(line1, progress), hOffset, vOffset + 200);
-	text(stringGlitch(line2, progress), hOffset, vOffset + 240);
+	text(stringGlitch(line1, progress*0.5), hOffset, vOffset + 200);
+	text(stringGlitch(line2, progress*0.5), hOffset, vOffset + 240);
 	text(progress + stringGlitch("% complete", progress * 0.1), hOffset, vOffset + 320);
-	text(stringGlitch(line3, progress), hOffset + qrOffset, vOffset + 400);
-	text(stringGlitch(line4, progress), hOffset + qrOffset, vOffset + 440);
+	text(stringGlitch(line3, progress*0.5), hOffset + qrOffset, vOffset + 400);
+	text(stringGlitch(line4, progress*0.5), hOffset + qrOffset, vOffset + 440);
 	text(stringGlitch(line5, progress * 0.05), hOffset + qrOffset, vOffset + 480);
-	text(stringGlitch(line6, progress), hOffset + qrOffset, vOffset + 560);
-	text(stringGlitch(line7, progress * 0.03), hOffset + qrOffset, vOffset + 600);
+	text(stringGlitch(line6, progress*0.5), hOffset + qrOffset, vOffset + 560);
+	text(stringGlitch(line7, progress *0.5 * 0.03), hOffset + qrOffset, vOffset + 600);
 }
 
 function drawQR()
