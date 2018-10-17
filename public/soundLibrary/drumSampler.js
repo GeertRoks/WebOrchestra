@@ -7,7 +7,7 @@ class Drums {
     let attackLevelDrums = 0.4;
     let releaseLevelDrums = 0;
 
-    let attackTimeDrums = 0.001
+    let attackTimeDrums = 0.01;
     let decayTimeDrums = 0.02;
     let susPercentDrums = 0.02;
     let releaseTimeDrums = 0.05;
@@ -15,30 +15,42 @@ class Drums {
 
     //==========================================================================
 
-    this.kick = new p5.Oscillator('sine');
-    this.snare = new p5.Noise('pink');
-    this.hihat = new p5.Noise('white');
+    this.kick             = new p5.Oscillator('sine');
+    this.kickNoise        = new p5.Noise('brown');
+    this.snare            = new p5.Noise('pink');
+    this.hihat            = new p5.Noise('white');
 
-    this.envKick = new p5.Envelope();
-    this.envSnare = new p5.Envelope();
-    this.envHihat = new p5.Envelope();
+    this.envKick          = new p5.Envelope();
+    this.envKickPitch     = new p5.Envelope();
+    this.envKickNoise     = new p5.Envelope();
+    this.envSnare         = new p5.Envelope();
+    this.envHihat         = new p5.Envelope();
 
-    this.envKick.setADSR(attackTimeDrums, 0.2, susPercentDrums, releaseTimeDrums);
+    this.envKick.setADSR(attackTimeDrums, 0.3, susPercentDrums, releaseTimeDrums);
     this.envKick.setRange(attackLevelDrums, releaseLevelDrums);
+    this.envKickPitch.setADSR(0.01, 0.12, 0, 0);
+    this.envKickPitch.setRange(250, 0);
+    this.envKickNoise.setADSR(0., 0.05, 0, 0);
+    this.envKickNoise.setRange(0.3, 0);
     this.envSnare.setADSR(attackTimeDrums, decayTimeDrums, susPercentDrums, 0.5);
     this.envSnare.setRange(0.5, releaseLevelDrums);
     this.envHihat.setADSR(0.01, 0.02, 0.02, 0.01);
     this.envHihat.setRange(0.05, releaseLevelDrums);
 
     this.kick.amp(this.envKick);
-    this.kick.freq(40);
+    this.kickNoise.amp(this.envKickNoise);
+    this.kick.freq(65.4);
+    this.kick.freq(this.envKickPitch);
+
     this.snare.amp(this.envSnare);
+    
     this.hihat.amp(this.envHihat);
 
     this.kick.start();
+    this.kickNoise.start();
     this.snare.start();
     this.hihat.start();
-    }
+  }
 
   _setScore (score) {
     for (var i = 0; i < score.length; i++) {
@@ -55,6 +67,8 @@ class Drums {
 
     if(this.drumRhythm[0][0] == 1){
       this.envKick.play();
+      this.envKickPitch.play();
+      this.envKickNoise.play();
     }
     if(this.drumRhythm[1][0] == 1){
       this.envSnare.play();
