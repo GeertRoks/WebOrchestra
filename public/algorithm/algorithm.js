@@ -2,6 +2,8 @@
 class Algorithm {
 
     constructor () {
+      //stets number of drumVoices each voice represents one list. in this case
+      //kick, snare, hihat
       this.drumVoices = 3;
 
       this.drumsThresholdValue = 4;
@@ -25,12 +27,13 @@ class Algorithm {
     const scale = [60, 62, 63, 65, 67, 68, 70, 72];
     const notes = [];
 
-
+    //pick random notes in scale
     if(this.first){
       this.notePicked = Math.round((Math.random() * 10) % 8);
-      // this.first = false //TODO deze uitcommenten en kijken hoe het klinkt
+      this.first = false
     }
-
+      //take first picked note or if !first a previous picked note and create a
+      //new chord by set interval
       for (let i = 0; i < 3; i++){
           notes[i] = scale[this.notePicked];
         if (!this.first) {//TODO hier nog naar kijken, dit wordt nooit uitgevoerd?
@@ -59,6 +62,9 @@ class Algorithm {
     return melodyRhythm;
   }
 
+
+  //these following rhythm functions work with a threshold value. if the drumsThresholdValue
+  //is higher more notes are added
   _constructChordRhythm () {
 
     var chordRhythm = [];
@@ -84,9 +90,11 @@ class Algorithm {
     drumRhythm[0] = new Array();
     drumRhythm[1] = new Array();
     drumRhythm[2] = new Array();
+    //first row resembles threshold values for a drum voice, first is kick, second is snare etc.
     const drumThresholds = [[1, 8, 6, 11, 10, 11, 5, 11], [11, 11, 9, 11, 1, 11, 10, 10],
     [9, 5, 7, 6, 8, 5, 9, 5]];
 
+    //compare threshold value in list with this.drumsThresholdValue
     for (let row = 0; row < 3; row++){
       for (let drumIndex = 0; drumIndex < drumThresholds[0].length; drumIndex++){
         if(drumThresholds[row][drumIndex] <= this.drumsThresholdValue){
@@ -107,11 +115,12 @@ class Algorithm {
   }
 
 
-  //beinvloed nootmateriaal
+  //sets interval between the notes in the generated chords
   _setInterval (chordInterval) {
     this.chordInterval = chordInterval;
   }
 
+  //returns amount of drum voices
   _returnDrumVoices(){
     return this.drumVoices;
   }
